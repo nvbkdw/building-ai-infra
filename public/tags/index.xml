@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Building AI Infra</title>
+    <link>https://ruoyuhuang.com/building-ai-infra/tags/</link>
+    <description>Recent content in Tags on Building AI Infra</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 11 Feb 2024 09:30:00 -0800</lastBuildDate>
+    <atom:link href="https://ruoyuhuang.com/building-ai-infra/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Best-Practices</title>
+      <link>https://ruoyuhuang.com/building-ai-infra/tags/best-practices/</link>
+      <pubDate>Sun, 11 Feb 2024 09:30:00 -0800</pubDate>
+      <guid>https://ruoyuhuang.com/building-ai-infra/tags/best-practices/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Data</title>
+      <link>https://ruoyuhuang.com/building-ai-infra/tags/data/</link>
+      <pubDate>Sun, 11 Feb 2024 09:30:00 -0800</pubDate>
+      <guid>https://ruoyuhuang.com/building-ai-infra/tags/data/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Observability</title>
+      <link>https://ruoyuhuang.com/building-ai-infra/tags/observability/</link>
+      <pubDate>Sun, 11 Feb 2024 09:30:00 -0800</pubDate>
+      <guid>https://ruoyuhuang.com/building-ai-infra/tags/observability/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Evaluation</title>
+      <link>https://ruoyuhuang.com/building-ai-infra/tags/evaluation/</link>
+      <pubDate>Sun, 28 Jan 2024 08:15:00 -0800</pubDate>
+      <guid>https://ruoyuhuang.com/building-ai-infra/tags/evaluation/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Platforms</title>
+      <link>https://ruoyuhuang.com/building-ai-infra/tags/platforms/</link>
+      <pubDate>Sun, 28 Jan 2024 08:15:00 -0800</pubDate>
+      <guid>https://ruoyuhuang.com/building-ai-infra/tags/platforms/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Rag</title>
+      <link>https://ruoyuhuang.com/building-ai-infra/tags/rag/</link>
+      <pubDate>Sun, 28 Jan 2024 08:15:00 -0800</pubDate>
+      <guid>https://ruoyuhuang.com/building-ai-infra/tags/rag/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>

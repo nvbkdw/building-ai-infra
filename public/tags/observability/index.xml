@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Observability on Building AI Infra</title>
+    <link>https://ruoyuhuang.com/building-ai-infra/tags/observability/</link>
+    <description>Recent content in Observability on Building AI Infra</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 11 Feb 2024 09:30:00 -0800</lastBuildDate>
+    <atom:link href="https://ruoyuhuang.com/building-ai-infra/tags/observability/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Designing Trustworthy Data Pipelines for AI Infra</title>
+      <link>https://ruoyuhuang.com/building-ai-infra/posts/trustworthy-data-pipelines/</link>
+      <pubDate>Sun, 11 Feb 2024 09:30:00 -0800</pubDate>
+      <guid>https://ruoyuhuang.com/building-ai-infra/posts/trustworthy-data-pipelines/</guid>
+      <description>&lt;p&gt;The most painful outages I&amp;rsquo;ve handled during the past year were silent regressions introduced in data pipelines. Models happily retrained on corrupted data, dashboards stayed green, and we only noticed something was wrong after customer tickets piled up. Since then, I&amp;rsquo;ve adopted a three-layer strategy that keeps pipelines honest without requiring a new platform team.&lt;/p&gt;&#xA;&lt;h2 id=&#34;1-declare-the-contract-up-front&#34;&gt;1. Declare the contract up front&lt;/h2&gt;&#xA;&lt;p&gt;Every dataset that feeds a model gets a machine-readable schema, ownership tag, and data-sensitivity label stored alongside the code that produces it. The contract lives in Git, can be imported into tests, and powers automated alerts whenever a breaking change shows up in CI.&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

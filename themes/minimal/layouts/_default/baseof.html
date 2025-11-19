@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Lang | default "en" }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      {{- if .IsHome -}}
+        {{- site.Title -}}
+      {{- else -}}
+        {{- .Title }} | {{ site.Title -}}
+      {{- end -}}
+    </title>
+    {{ with site.Params.description }}
+      <meta name="description" content="{{ . }}" />
+    {{ end }}
+    <link rel="stylesheet" href="{{ "css/theme.css" | relURL }}" />
+    {{ block "extra_head" . }}{{ end }}
+  </head>
+  <body class="page">
+    <header class="site-header">
+      <div class="brand">
+        <a href="{{ "/" | relURL }}" class="site-title">{{ site.Title }}</a>
+        {{ with site.Params.tagline }}
+          <p class="tagline">{{ . }}</p>
+        {{ end }}
+      </div>
+      <nav class="site-nav">
+        {{ $current := . }}
+        {{ range site.Menus.main }}
+          <a
+            class="nav-link{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }} active{{ end }}"
+            href="{{ .URL }}"
+            >{{ .Name }}</a
+          >
+        {{ end }}
+      </nav>
+      {{ if site.Params.enableDarkMode }}
+        <button class="theme-toggle" data-color-mode="dark">Toggle theme</button>
+      {{ end }}
+    </header>
+    <main class="content">
+      {{ block "main" . }}{{ end }}
+    </main>
+    <footer class="site-footer">
+      <small>&copy; {{ now.Format "2006" }} {{ site.Title }}. Built with Hugo.</small>
+      {{ with site.Params.social }}
+        <div class="social-links">
+          {{ range . }}
+            <a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a>
+          {{ end }}
+        </div>
+      {{ end }}
+    </footer>
+    {{ if site.Params.enableDarkMode }}
+      <script>
+        const body = document.body;
+        const toggle = document.querySelector(".theme-toggle");
+        const stored = window.localStorage.getItem("color-mode");
+        if (stored) body.dataset.theme = stored;
+        toggle?.addEventListener("click", () => {
+          const next = body.dataset.theme === "dark" ? "light" : "dark";
+          body.dataset.theme = next;
+          window.localStorage.setItem("color-mode", next);
+        });
+      </script>
+    {{ end }}
+  </body>
+</html>

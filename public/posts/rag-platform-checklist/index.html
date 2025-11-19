@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A Pragmatic Checklist for RAG Platforms | Building AI Infra</title>
+    
+      <meta name="description" content="Field notes on building reliable AI infrastructure—from datasets to deployment." />
+    
+    <link rel="stylesheet" href="/building-ai-infra/css/theme.css" />
+    
+  </head>
+  <body class="page">
+    <header class="site-header">
+      <div class="brand">
+        <a href="/" class="site-title">Building AI Infra</a>
+        
+          <p class="tagline">Practical stories for builders shipping AI products.</p>
+        
+      </div>
+      <nav class="site-nav">
+        
+        
+          <a
+            class="nav-link"
+            href="/building-ai-infra/"
+            >Home</a
+          >
+        
+          <a
+            class="nav-link"
+            href="/building-ai-infra/posts/"
+            >Posts</a
+          >
+        
+          <a
+            class="nav-link"
+            href="/building-ai-infra/about/"
+            >About</a
+          >
+        
+      </nav>
+      
+        <button class="theme-toggle" data-color-mode="dark">Toggle theme</button>
+      
+    </header>
+    <main class="content">
+      
+  <article class="post">
+    <p class="post-meta">
+      Jan 28, 2024
+       • 2 min read
+    </p>
+    <h1>A Pragmatic Checklist for RAG Platforms</h1>
+    <p class="lead">Shipping retrieval-augmented generation at scale demands boring fundamentals. This is the checklist I run through with every team.</p>
+    <div class="post-body">
+      <p>Every company building copilots or knowledge assistants eventually converges on the same RAG platform requirements. I keep this checklist handy whenever we plan the next quarter of work; it helps anchor ambitious ideas to operational reality.</p>
+<h2 id="1-version-everything">1. Version everything</h2>
+<ul>
+<li>Snapshot documents, chunks, and embeddings together so rollbacks are trivial.</li>
+<li>Tag retrieval pipelines with semantic versions and store the metadata in the index.</li>
+<li>Promote new releases the same way you ship code: via tracked environments and change logs.</li>
+</ul>
+<h2 id="2-plan-for-smart-retrieval-not-just-nearest-neighbors">2. Plan for smart retrieval, not just nearest neighbors</h2>
+<p>Experiments consistently show that routing requests to specialized retrievers beats a single monolithic index. Invest in:</p>
+<ul>
+<li>Metadata-rich chunking (field boosts, doc importance, filters).</li>
+<li>Lightweight heuristic routing before LLM-powered routing—cheaper and shockingly effective.</li>
+<li>Hybrid search (sparse + dense) for product surfaces where recall matters more than latency.</li>
+</ul>
+<h2 id="3-keep-evaluations-close-to-real-users">3. Keep evaluations close to real users</h2>
+<ul>
+<li>Build goldens directly from support tickets, CRM notes, or actual prompts.</li>
+<li>Evaluate both recall and answer quality—LLMs must cite documents that were actually retrieved.</li>
+<li>Wire evaluations into deployment gates. If accuracy regresses, the release blocks itself.</li>
+</ul>
+<h2 id="4-instrumentation-is-non-negotiable">4. Instrumentation is non-negotiable</h2>
+<p>Operate the RAG platform like a multi-tenant service:</p>
+<ul>
+<li>Emit per-tenant latency, cost, and relevance metrics.</li>
+<li>Add request tracing from the entry point through retrieval, re-ranking, and generation.</li>
+<li>Store sampled request/response payloads with redaction so product teams can debug without tailing logs.</li>
+</ul>
+<h2 id="5-build-guardrails-for-drift">5. Build guardrails for drift</h2>
+<ul>
+<li>Alert when document mix or query vocabulary drifts from what the index expects.</li>
+<li>Run automated <code>diff</code> jobs comparing the current ranked list with previous versions.</li>
+<li>Schedule load tests whenever corpus size or traffic doubles—retrievers often degrade non-linearly.</li>
+</ul>
+<hr>
+<p>Fancy features like agentic orchestration or on-the-fly knowledge graphs are exciting, but they only compound complexity. Nail this checklist first and you&rsquo;ll have a reliable, diagnosable platform that can actually sustain those future experiments.*** End Patch</p>
+
+    </div>
+    
+      <div class="tag-list">
+        <span class="tag">rag</span><span class="tag">platforms</span><span class="tag">evaluation</span>
+      </div>
+    
+  </article>
+
+    </main>
+    <footer class="site-footer">
+      <small>&copy; 2025 Building AI Infra. Built with Hugo.</small>
+      
+        <div class="social-links">
+          
+            <a href="https://github.com/ruoyuhuang" target="_blank" rel="noopener">GitHub</a>
+          
+            <a href="https://www.linkedin.com/in/ruoyuhuang/" target="_blank" rel="noopener">LinkedIn</a>
+          
+        </div>
+      
+    </footer>
+    
+      <script>
+        const body = document.body;
+        const toggle = document.querySelector(".theme-toggle");
+        const stored = window.localStorage.getItem("color-mode");
+        if (stored) body.dataset.theme = stored;
+        toggle?.addEventListener("click", () => {
+          const next = body.dataset.theme === "dark" ? "light" : "dark";
+          body.dataset.theme = next;
+          window.localStorage.setItem("color-mode", next);
+        });
+      </script>
+    
+  </body>
+</html>
