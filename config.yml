@@ -1,4 +1,4 @@
-baseURL: "https://pascalmichaillat.org/building-ai-infrastructure/" 
+baseURL: "https://nvbkdw.github.io/building-ai-infrastructure/" 
 title: Building AI Infrastructure 
 theme: PaperMod
 
@@ -54,8 +54,8 @@ params:
     math: true
     profileMode:
           enabled: true
-          title: Professor Dr von Igelfeld
-          subtitle: "I am a Professor in the Institute of Romance Philology at the University of Regensburg, Germany. My research focuses on Portuguese irregular verbs. I was a doctoral student of Professor Dr Dieter Vogelsang in Munich, and later a second assistant of Professor Walter Schoeffler-Henschell at the University of Wiesbaden."
+          title: Ryan H.
+          subtitle: "I am a Software Engineer at Google. I build infrastructure for AI applications."
           imageUrl: "picture.jpeg"
           imageWidth: 160
           imageHeight: 160
