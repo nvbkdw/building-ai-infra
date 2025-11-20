@@ -15,21 +15,18 @@ menu:
         - name: Books
           url: books/
           weight: 5 
-        - name: Papers
-          url: papers/
+        - name: Blog
+          url: blogs/
           weight: 2
         - name: Courses
           url: courses/
           weight: 3
         - name: Data
           url: data/
-          weight: 4 
-        - name: Blog
-          url: https://en.wikipedia.org/wiki/Moritz-Maria_von_Igelfeld_(character)
-          weight: 6
+          weight: 4
 
 params:
-    description: "This website hosts Moritz-Maria von Igelfeld's research papers, books, course materials, data, curriculum vitae, and contact information."
+    description: "This website hosts Ryan H.'s blog posts, books, course materials, data, curriculum vitae, and contact information."
     author: Ryan H.
     # googleAnalyticsID: "G-XXXXX"
     DateFormat: "January 2006"
@@ -60,8 +57,8 @@ params:
           imageWidth: 160
           imageHeight: 160
           buttons:
-            - name: Papers
-              url: papers/
+            - name: Blog 
+              url: blogs/
             - name: Data
               url: data/
             - name: Books
@@ -72,9 +69,7 @@ params:
               url: tags/
             - name: Archive
               url: archive/
-            - name: Blog
-              url: https://en.wikipedia.org/wiki/Moritz-Maria_von_Igelfeld_(character)
-
+            
     socialIcons:
         - name: CV
           url: cv.pdf
@@ -105,7 +100,7 @@ params:
         hiddenInList: false
         hiddenInSingle: true
     label:
-      text: "Moritz-Maria von Igelfeld"
+      text: "Ryan H."
       icon: favicon.ico
       iconHeight: 18
 

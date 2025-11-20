@@ -2,135 +2,147 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313//building-ai-infrastructure/</loc>
+    <loc>http://localhost:1313/building-ai-infra/blogs/</loc>
+    <lastmod>2025-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/building-ai-infra/</loc>
+    <lastmod>2025-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/building-ai-infra/tags/deep-learning/</loc>
+    <lastmod>2025-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/building-ai-infra/tags/math/</loc>
+    <lastmod>2025-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/building-ai-infra/blogs/math-for-deep-learning/</loc>
+    <lastmod>2025-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/building-ai-infra/tags/</loc>
+    <lastmod>2025-11-19T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/building-ai-infra/location/</loc>
     <lastmod>2024-05-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/location/</loc>
+    <loc>http://localhost:1313/building-ai-infra/officehours/</loc>
     <lastmod>2024-05-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/officehours/</loc>
-    <lastmod>2024-05-08T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/academia/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/academia/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/experimental-psychology/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/experimental-psychology/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/inner-hedgehog/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/inner-hedgehog/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/invasive-thoughts/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/invasive-thoughts/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/papers/</loc>
+    <loc>http://localhost:1313/building-ai-infra/papers/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/social-psychology/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/social-psychology/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/</loc>
+    <loc>http://localhost:1313/building-ai-infra/papers/paper3/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/papers/paper3/</loc>
-    <lastmod>2021-04-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/data/</loc>
+    <loc>http://localhost:1313/building-ai-infra/data/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/dataset/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/dataset/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/french/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/french/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/irregular-verbs/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/irregular-verbs/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/italian/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/italian/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/data/data1/</loc>
+    <loc>http://localhost:1313/building-ai-infra/data/data1/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/philology/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/philology/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/portuguese/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/portuguese/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/python/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/python/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/romance-languages/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/romance-languages/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/simulations/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/simulations/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/spanish/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/spanish/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/history-of-oil/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/history-of-oil/</loc>
     <lastmod>2013-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/mediterranean-world/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/mediterranean-world/</loc>
     <lastmod>2013-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/oleic-science/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/oleic-science/</loc>
     <lastmod>2013-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/papers/paper1/</loc>
+    <loc>http://localhost:1313/building-ai-infra/papers/paper1/</loc>
     <lastmod>2013-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/canine-pulmonary-efficiency/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/canine-pulmonary-efficiency/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/canine-science/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/canine-science/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/experimental-zoology/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/experimental-zoology/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/sausage-dogs/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/sausage-dogs/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/papers/paper2/</loc>
+    <loc>http://localhost:1313/building-ai-infra/papers/paper2/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/zoology/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/zoology/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/courses/</loc>
+    <loc>http://localhost:1313/building-ai-infra/courses/</loc>
     <lastmod>2003-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/courses/course1/</loc>
+    <loc>http://localhost:1313/building-ai-infra/courses/course1/</loc>
     <lastmod>2003-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/books/</loc>
+    <loc>http://localhost:1313/building-ai-infra/books/</loc>
     <lastmod>1997-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/portugese/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/portugese/</loc>
     <lastmod>1997-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/books/book1/</loc>
+    <loc>http://localhost:1313/building-ai-infra/books/book1/</loc>
     <lastmod>1997-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/celtic-languages/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/celtic-languages/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/irish/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/irish/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/language-modernization/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/language-modernization/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/tags/profanity/</loc>
+    <loc>http://localhost:1313/building-ai-infra/tags/profanity/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/courses/course2/</loc>
+    <loc>http://localhost:1313/building-ai-infra/courses/course2/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313//building-ai-infrastructure/archive/</loc>
+    <loc>http://localhost:1313/building-ai-infra/archive/</loc>
   </url>
 </urlset>
