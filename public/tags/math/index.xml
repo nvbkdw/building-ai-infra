@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Math on Building AI Infrastructure</title>
-    <link>http://localhost:1313/building-ai-infra/tags/math/</link>
+    <link>http://localhost:1313/tags/math/</link>
     <description>Recent content in Math on Building AI Infrastructure</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en</language>
     <lastBuildDate>Wed, 19 Nov 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/building-ai-infra/tags/math/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/math/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Math for Deep Learning</title>
-      <link>http://localhost:1313/building-ai-infra/blogs/math-for-deep-learning/</link>
+      <link>http://localhost:1313/blogs/math-for-deep-learning/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/building-ai-infra/blogs/math-for-deep-learning/</guid>
+      <guid>http://localhost:1313/blogs/math-for-deep-learning/</guid>
       <description>This blog post covers the math behind deep learning.</description>
     </item>
   </channel>

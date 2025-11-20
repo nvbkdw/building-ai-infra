@@ -17,4 +17,4 @@ cover:
 
 ## Calculus
 
-## Probability & Statistics
+## Probability

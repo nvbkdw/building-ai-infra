@@ -1,4 +1,4 @@
-baseURL: "https://nvbkdw.github.io/building-ai-infra/" 
+baseURL: "https://nvbkdw.github.io/" 
 title: Building AI Infrastructure 
 theme: PaperMod
 
@@ -74,25 +74,15 @@ params:
         - name: CV
           url: cv.pdf
         - name: Email
-          url: mailto:igelfeld@regensburg.edu
-        - name: Zoom
-          url: https://www.zoom.us/my/igelfeld
+          url: mailto:ry.danger.huang@gmail.com
         - name: Location
           url: location/
-        - name: Office Hours
-          url: officehours/
-        - name: Google Scholar
-          url: https://scholar.google.com/citations?user=cL23w-4AAAAJ
         - name: GitHub
-          url: https://github.com/pmichaillat
-        - name: Substack
-          url: https://pmichaillat.substack.com
+          url: https://github.com/nvbkdw
         - name: YouTube
-          url: https://www.youtube.com/@pmichaillat
+          url: https://www.youtube.com/@nvbkdw
         - name: Twitter
-          url: https://x.com/pmichaillat
-        - name: Bluesky
-          url: https://bsky.app/profile/pmichaillat.bsky.social
+          url: https://x.com/nvbkdw
 
     assets:
         disableScrollBarStyle: true
