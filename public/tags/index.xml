@@ -1,53 +1,207 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Tags on Building AI Infra</title>
-    <link>https://ruoyuhuang.com/building-ai-infra/tags/</link>
-    <description>Recent content in Tags on Building AI Infra</description>
-    <generator>Hugo</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 11 Feb 2024 09:30:00 -0800</lastBuildDate>
-    <atom:link href="https://ruoyuhuang.com/building-ai-infra/tags/index.xml" rel="self" type="application/rss+xml" />
+    <title>Tags on Building AI Infrastructure</title>
+    <link>http://localhost:1313/building-ai-infrastructure/tags/</link>
+    <description>Recent content in Tags on Building AI Infrastructure</description>
+    <generator>Hugo -- 0.152.2</generator>
+    <language>en</language>
+    <lastBuildDate>Tue, 06 Apr 2021 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://localhost:1313/building-ai-infrastructure/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Best-Practices</title>
-      <link>https://ruoyuhuang.com/building-ai-infra/tags/best-practices/</link>
-      <pubDate>Sun, 11 Feb 2024 09:30:00 -0800</pubDate>
-      <guid>https://ruoyuhuang.com/building-ai-infra/tags/best-practices/</guid>
+      <title>Academia</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/academia/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/academia/</guid>
       <description></description>
     </item>
     <item>
-      <title>Data</title>
-      <link>https://ruoyuhuang.com/building-ai-infra/tags/data/</link>
-      <pubDate>Sun, 11 Feb 2024 09:30:00 -0800</pubDate>
-      <guid>https://ruoyuhuang.com/building-ai-infra/tags/data/</guid>
+      <title>Experimental Psychology</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/experimental-psychology/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/experimental-psychology/</guid>
       <description></description>
     </item>
     <item>
-      <title>Observability</title>
-      <link>https://ruoyuhuang.com/building-ai-infra/tags/observability/</link>
-      <pubDate>Sun, 11 Feb 2024 09:30:00 -0800</pubDate>
-      <guid>https://ruoyuhuang.com/building-ai-infra/tags/observability/</guid>
+      <title>Inner Hedgehog</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/inner-hedgehog/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/inner-hedgehog/</guid>
       <description></description>
     </item>
     <item>
-      <title>Evaluation</title>
-      <link>https://ruoyuhuang.com/building-ai-infra/tags/evaluation/</link>
-      <pubDate>Sun, 28 Jan 2024 08:15:00 -0800</pubDate>
-      <guid>https://ruoyuhuang.com/building-ai-infra/tags/evaluation/</guid>
+      <title>Invasive Thoughts</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/invasive-thoughts/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/invasive-thoughts/</guid>
       <description></description>
     </item>
     <item>
-      <title>Platforms</title>
-      <link>https://ruoyuhuang.com/building-ai-infra/tags/platforms/</link>
-      <pubDate>Sun, 28 Jan 2024 08:15:00 -0800</pubDate>
-      <guid>https://ruoyuhuang.com/building-ai-infra/tags/platforms/</guid>
+      <title>Social Psychology</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/social-psychology/</link>
+      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/social-psychology/</guid>
       <description></description>
     </item>
     <item>
-      <title>Rag</title>
-      <link>https://ruoyuhuang.com/building-ai-infra/tags/rag/</link>
-      <pubDate>Sun, 28 Jan 2024 08:15:00 -0800</pubDate>
-      <guid>https://ruoyuhuang.com/building-ai-infra/tags/rag/</guid>
+      <title>Dataset</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/dataset/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/dataset/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>French</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/french/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/french/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Irregular Verbs</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/irregular-verbs/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/irregular-verbs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Italian</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/italian/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/italian/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Philology</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/philology/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/philology/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Portuguese</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/portuguese/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/portuguese/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Python</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/python/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/python/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Romance Languages</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/romance-languages/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/romance-languages/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Simulations</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/simulations/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/simulations/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Spanish</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/spanish/</link>
+      <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/spanish/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>History of Oil</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/history-of-oil/</link>
+      <pubDate>Tue, 15 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/history-of-oil/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Mediterranean World</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/mediterranean-world/</link>
+      <pubDate>Tue, 15 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/mediterranean-world/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Oleic Science</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/oleic-science/</link>
+      <pubDate>Tue, 15 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/oleic-science/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Canine Pulmonary Efficiency</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/canine-pulmonary-efficiency/</link>
+      <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/canine-pulmonary-efficiency/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Canine Science</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/canine-science/</link>
+      <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/canine-science/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Experimental Zoology</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/experimental-zoology/</link>
+      <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/experimental-zoology/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Sausage Dogs</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/sausage-dogs/</link>
+      <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/sausage-dogs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zoology</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/zoology/</link>
+      <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/zoology/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Portugese</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/portugese/</link>
+      <pubDate>Wed, 01 Jan 1997 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/portugese/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Celtic Languages</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/celtic-languages/</link>
+      <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/celtic-languages/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Irish</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/irish/</link>
+      <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/irish/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Language Modernization</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/language-modernization/</link>
+      <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/language-modernization/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Profanity</title>
+      <link>http://localhost:1313/building-ai-infrastructure/tags/profanity/</link>
+      <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infrastructure/tags/profanity/</guid>
       <description></description>
     </item>
   </channel>

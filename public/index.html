@@ -1,131 +1,296 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-	<meta name="generator" content="Hugo 0.152.2">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Building AI Infra</title>
-    
-      <meta name="description" content="Field notes on building reliable AI infrastructure—from datasets to deployment." />
-    
-    <link rel="stylesheet" href="/building-ai-infra/css/theme.css" />
-    
-  </head>
-  <body class="page">
-    <header class="site-header">
-      <div class="brand">
-        <a href="/" class="site-title">Building AI Infra</a>
-        
-          <p class="tagline">Practical stories for builders shipping AI products.</p>
-        
-      </div>
-      <nav class="site-nav">
-        
-        
-          <a
-            class="nav-link"
-            href="/building-ai-infra/"
-            >Home</a
-          >
-        
-          <a
-            class="nav-link"
-            href="/building-ai-infra/posts/"
-            >Posts</a
-          >
-        
-          <a
-            class="nav-link"
-            href="/building-ai-infra/about/"
-            >About</a
-          >
-        
-      </nav>
-      
-        <button class="theme-toggle" data-color-mode="dark">Toggle theme</button>
-      
-    </header>
-    <main class="content">
-      
-  
-    <section class="hero">
-      <p class="eyebrow">Field Notes</p>
-      <h1>Building AI Infrastructure</h1>
-      <p class="lead">
-        Opinionated guides, experiments, and architectures for running modern AI workloads in production.
-      </p>
-      
-        <a class="button" href="/posts/">Read the latest post</a>
-      
-    </section>
-  
+<html lang="en" dir="auto">
 
-  
-  
-    
-  
+<head>
+	<meta name="generator" content="Hugo 0.152.2"><script src="/building-ai-infrastructure/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=building-ai-infrastructure/livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Building AI Infrastructure</title>
 
-  
-    <section class="post-grid">
-      
-        <article class="post-card">
-          <p class="post-meta">
-            Feb 11, 2024 • 2 min read
-          </p>
-          <h2><a href="/building-ai-infra/posts/trustworthy-data-pipelines/">Designing Trustworthy Data Pipelines for AI Infra</a></h2>
-          
-            <p>Data issues are silent regressions for AI systems. Here is the rubric I use to keep pipelines honest without slowing teams down.</p>
-          
-          
-            <p class="tag-list">
-              <span class="tag">data</span><span class="tag">observability</span><span class="tag">best-practices</span>
-            </p>
-          
-        </article>
-      
-        <article class="post-card">
-          <p class="post-meta">
-            Jan 28, 2024 • 2 min read
-          </p>
-          <h2><a href="/building-ai-infra/posts/rag-platform-checklist/">A Pragmatic Checklist for RAG Platforms</a></h2>
-          
-            <p>Before wiring together yet another embedding service, make sure the fundamentals—datasets, routing, evaluation, and observability—are in place.</p>
-          
-          
-            <p class="tag-list">
-              <span class="tag">rag</span><span class="tag">platforms</span><span class="tag">evaluation</span>
-            </p>
-          
-        </article>
-      
-    </section>
-  
+<meta name="description" content="This website hosts Moritz-Maria von Igelfeld&#39;s research papers, books, course materials, data, curriculum vitae, and contact information.">
+<meta name="author" content="Ryan H.">
+<link rel="canonical" href="http://localhost:1313/building-ai-infrastructure/">
+<link crossorigin="anonymous" href="/building-ai-infrastructure/assets/css/stylesheet.ac30954b7ea20660ca1cb473400ecede9e601f17674446536180d3ca00f03328.css" integrity="sha256-rDCVS36iBmDKHLRzQA7O3p5gHxdnREZTYYDTygDwMyg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/building-ai-infrastructure/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/building-ai-infrastructure/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/building-ai-infrastructure/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/building-ai-infrastructure/apple-touch-icon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/building-ai-infrastructure/index.xml">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/building-ai-infrastructure/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:url" content="http://localhost:1313/building-ai-infrastructure/">
+  <meta property="og:site_name" content="Building AI Infrastructure">
+  <meta property="og:title" content="Building AI Infrastructure">
+  <meta property="og:description" content="This website hosts Moritz-Maria von Igelfeld&#39;s research papers, books, course materials, data, curriculum vitae, and contact information.">
+  <meta property="og:locale" content="en">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Building AI Infrastructure">
+<meta name="twitter:description" content="This website hosts Moritz-Maria von Igelfeld&#39;s research papers, books, course materials, data, curriculum vitae, and contact information.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Building AI Infrastructure",
+  "url": "http://localhost:1313/building-ai-infrastructure/",
+  "description": "This website hosts Moritz-Maria von Igelfeld's research papers, books, course materials, data, curriculum vitae, and contact information.",
+  "logo": "http://localhost:1313/building-ai-infrastructure/favicon.ico",
+  "sameAs": [
+      "cv.pdf", "mailto:igelfeld@regensburg.edu", "https://www.zoom.us/my/igelfeld", "location/", "officehours/", "https://scholar.google.com/citations?user=cL23w-4AAAAJ", "https://github.com/pmichaillat", "https://pmichaillat.substack.com", "https://www.youtube.com/@pmichaillat", "https://x.com/pmichaillat", "https://bsky.app/profile/pmichaillat.bsky.social"
+  ]
+}
+</script>
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css" integrity="sha384-wcIxkf4k558AjM3Yz3BBFQUbk/zgIYC2R0QpeeYb+TwlBVMrlgLqwRjRtGZiK7ww" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js" integrity="sha384-hIoBPJpTUs74ddyc4bFZSM1TVlQDA60VBbJS0oA934VSz82sBx1X7kSx2ATBDIyd" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+  onload="renderMathInElement(document.body);"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: "\\begin{equation}", right: "\\end{equation}", display: true},
+            {left: "\\begin{equation*}", right: "\\end{equation*}", display: true},
+            {left: "\\begin{align}", right: "\\end{align}", display: true},
+            {left: "\\begin{align*}", right: "\\end{align*}", display: true},
+            {left: "\\begin{alignat}", right: "\\end{alignat}", display: true},
+            {left: "\\begin{gather}", right: "\\end{gather}", display: true},
+            {left: "\\begin{CD}", right: "\\end{CD}", display: true},
+          ],
+          throwOnError : false
+        });
+    });
+</script>
+ 
+
+
+</head>
+
+<body class="list" id="top">
+    <main class="main"><div class="profile">
+    <div class="profile_inner">
+        <img draggable="false" src="http://localhost:1313/building-ai-infrastructure/picture.jpeg" alt="profile image" title=""
+            height="160" width="160" />
+        <h1>Professor Dr von Igelfeld</h1>
+        <span>I am a Professor in the Institute of Romance Philology at the University of Regensburg, Germany. My research focuses on Portuguese irregular verbs. I was a doctoral student of Professor Dr Dieter Vogelsang in Munich, and later a second assistant of Professor Walter Schoeffler-Henschell at the University of Wiesbaden.</span><div class="social-icons" >
+    <a href="cv.pdf" target="_blank" rel="noopener noreferrer me"
+        title="CV">
+        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 4v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.342a2 2 0 0 0-.602-1.43l-4.44-4.342A2 2 0 0 0 13.56 2H6a2 2 0 0 0-2 2z" />
+<path d="M9 13h6" />
+<path d="M9 17h3" />
+<path d="M14 2v4a2 2 0 0 0 2 2h4" />
+</svg>
+    </a>
+    <a href="mailto:igelfeld@regensburg.edu" target="_blank" rel="noopener noreferrer me"
+        title="Email">
+        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 21" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+    <polyline points="22,6 12,13 2,6"></polyline>
+</svg>
+    </a>
+    <a href="https://www.zoom.us/my/igelfeld" target="_blank" rel="noopener noreferrer me"
+        title="Zoom">
+        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" stroke="currentColor">
+  <path
+    d="M24,60H152a32,32,0,0,1,32,32v96a8,8,0,0,1-8,8H48a32,32,0,0,1-32-32V68A8,8,0,0,1,24,60Z"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="21.6"
+  />
+  <polyline
+    points="184 112 240 80 240 176 184 144"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="22"
+  />
+</svg>
+
+    </a>
+    <a href="location/" target="_blank" rel="noopener noreferrer me"
+        title="Location">
+        
+<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+<path fill="currentColor" d="M12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5M12 2a7 7 0 0 1 7 7c0 5.25-7 13-7 13S5 14.25 5 9a7 7 0 0 1 7-7m0 2a5 5 0 0 0-5 5c0 1 0 3 5 9.71C17 12 17 10 17 9a5 5 0 0 0-5-5Z"/>
+</svg>
+    </a>
+    <a href="officehours/" target="_blank" rel="noopener noreferrer me"
+        title="Office Hours">
+        
+<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"> 
+<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+<path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" /> 
+<circle cx="18" cy="18" r="4" /> 
+<path d="M15 3v4" /> 
+<path d="M7 3v4" /> 
+<path d="M3 11h16" /> 
+<path d="M18 16.496v1.504l1 1" /> 
+</svg>
+    </a>
+    <a href="https://scholar.google.com/citations?user=cL23w-4AAAAJ" target="_blank" rel="noopener noreferrer me"
+        title="Google Scholar">
+        
+<svg viewBox="0 0 24 25" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">     
+<path d="M5.242 13.769L0.5 9.5 12 1l11.5 9-5.242 3.769C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z" />
+</svg>
+    </a>
+    <a href="https://github.com/pmichaillat" target="_blank" rel="noopener noreferrer me"
+        title="GitHub">
+        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+    </path>
+</svg>
+    </a>
+    <a href="https://pmichaillat.substack.com" target="_blank" rel="noopener noreferrer me"
+        title="Substack">
+        
+<svg viewBox="-2 -2 27 27" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/>
+</svg>
+
+    </a>
+    <a href="https://www.youtube.com/@pmichaillat" target="_blank" rel="noopener noreferrer me"
+        title="YouTube">
+        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z">
+    </path>
+    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+</svg>
+    </a>
+    <a href="https://x.com/pmichaillat" target="_blank" rel="noopener noreferrer me"
+        title="Twitter">
+        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path
+        d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+    </path>
+</svg>
+    </a>
+    <a href="https://bsky.app/profile/pmichaillat.bsky.social" target="_blank" rel="noopener noreferrer me"
+        title="Bluesky">
+        
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-25 0 400 320" fill="none" stroke="currentColor" stroke-width="30">
+    <path
+        d="M180 141.964C163.699 110.262 119.308 51.1817 78.0347 22.044C38.4971 -5.86834 23.414 -1.03207 13.526 3.43594C2.08093 8.60755 0 26.1785 0 36.5164C0 46.8542 5.66748 121.272 9.36416 133.694C21.5786 174.738 65.0603 188.607 105.104 184.156C107.151 183.852 109.227 183.572 111.329 183.312C109.267 183.642 107.19 183.924 105.104 184.156C46.4204 192.847 -5.69621 214.233 62.6582 290.33C137.848 368.18 165.705 273.637 180 225.702C194.295 273.637 210.76 364.771 295.995 290.33C360 225.702 313.58 192.85 254.896 184.158C252.81 183.926 250.733 183.645 248.671 183.315C250.773 183.574 252.849 183.855 254.896 184.158C294.94 188.61 338.421 174.74 350.636 133.697C354.333 121.275 360 46.8568 360 36.519C360 26.1811 357.919 8.61012 346.474 3.43851C336.586 -1.02949 321.503 -5.86576 281.965 22.0466C240.692 51.1843 196.301 110.262 180 141.964Z" />
+</svg>
+    </a>
+</div>
+
+        <div class="buttons">
+            <a class="button" href="papers/" rel="noopener" title="Papers">
+                <span class="button-inner">
+                    Papers
+                </span>
+            </a>
+            <a class="button" href="data/" rel="noopener" title="Data">
+                <span class="button-inner">
+                    Data
+                </span>
+            </a>
+            <a class="button" href="books/" rel="noopener" title="Books">
+                <span class="button-inner">
+                    Books
+                </span>
+            </a>
+            <a class="button" href="courses/" rel="noopener" title="Courses">
+                <span class="button-inner">
+                    Courses
+                </span>
+            </a>
+            <a class="button" href="tags/" rel="noopener" title="Tags">
+                <span class="button-inner">
+                    Tags
+                </span>
+            </a>
+            <a class="button" href="archive/" rel="noopener" title="Archive">
+                <span class="button-inner">
+                    Archive
+                </span>
+            </a>
+            <a class="button" href="https://en.wikipedia.org/wiki/Moritz-Maria_von_Igelfeld_%28character%29" rel="noopener" title="Blog">
+                <span class="button-inner">
+                    Blog&nbsp;
+                    <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+                        stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="14" width="14">
+                        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+                        <path d="M15 3h6v6"></path>
+                        <path d="M10 14L21 3"></path>
+                    </svg>
+                </span>
+            </a>
+        </div>
+    </div>
+</div>
 
     </main>
-    <footer class="site-footer">
-      <small>&copy; 2025 Building AI Infra. Built with Hugo.</small>
-      
-        <div class="social-links">
-          
-            <a href="https://github.com/ruoyuhuang" target="_blank" rel="noopener">GitHub</a>
-          
-            <a href="https://www.linkedin.com/in/ruoyuhuang/" target="_blank" rel="noopener">LinkedIn</a>
-          
-        </div>
-      
-    </footer>
     
-      <script>
-        const body = document.body;
-        const toggle = document.querySelector(".theme-toggle");
-        const stored = window.localStorage.getItem("color-mode");
-        if (stored) body.dataset.theme = stored;
-        toggle?.addEventListener("click", () => {
-          const next = body.dataset.theme === "dark" ? "light" : "dark";
-          body.dataset.theme = next;
-          window.localStorage.setItem("color-mode", next);
+<footer class="footer">
+    <span>&copy; 2025 Building AI Infrastructure</span> ·     
+    <span>
+    Powered by 
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">hugo</a>, <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">papermod</a>, &amp;
+        <a href="https://github.com/pmichaillat/hugo-website/" rel="noopener" target="_blank">hugo-website</a>.
+    </span>
+</footer>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
         });
-      </script>
-    
-  </body>
+    });
+
+</script>
+</body>
 </html>

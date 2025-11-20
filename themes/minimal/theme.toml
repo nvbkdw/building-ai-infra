@@ -1,8 +1,0 @@
-name = "Minimal"
-license = "MIT"
-licenselink = "https://opensource.org/licenses/MIT"
-description = "Lightweight Hugo theme tailored for the Building AI Infra blog."
-homepage = "https://example.org/"
-tags = ["blog", "minimal", "responsive"]
-features = ["blog", "responsive", "dark mode toggle"]
-min_version = "0.120.0"
