@@ -125,7 +125,7 @@ $$
 Outer product of two vectors:
 
 $$
-\mathbf{x} \mathbf{y}^T = \begin{bmatrix} x_1 y_1 & x_1 y_2 & \ldots & x_1 y_N \\ x_2 y_1 & x_2 y_2 & \ldots & x_2 y_N \\ \vdots & \vdots & \ddots & \vdots \\ x_N y_1 & x_N y_2 & \ldots & x_N y_N \end{bmatrix}
+\mathbf{x} \mathbf{y}^T = \begin{bmatrix} x_1 y_1 & x_1 y_2 \\ x_2 y_1 & x_2 y_2 \end{bmatrix}
 $$
 
 #### Matrix Multiplication Properties
