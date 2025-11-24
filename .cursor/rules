@@ -1,0 +1,105 @@
+# Building AI Infrastructure - Cursor Rules
+
+## Repository Overview
+This is a Hugo-based static site using the PaperMod theme. It hosts technical blog posts, books, courses, and data about AI infrastructure and programming. The site is deployed at https://nvbkdw.github.io/
+
+## Content Structure
+
+### Blog Post Format
+All blog posts must follow this frontmatter structure:
+```yaml
+---
+title: "Post Title Here"
+date: YYYY-MM-DD
+tags: ["tag1","tag2","tag3"]
+author: "Ryan H."
+description: "Brief description of the post"
+summary: "Brief summary of the post"
+cover:
+    image: "post-image.png"
+    alt: "Alt text for image"
+    relative: true
+---
+```
+
+### Content Organization
+- Blog posts: `/content/blogs/`
+- Books: `/content/books/`
+- Courses: `/content/courses/`
+- Data: `/content/data/`
+- Papers: `/content/papers/`
+
+## Writing Guidelines
+
+### Math and LaTeX
+- Use inline math with single dollar signs: `$x = y + z$`
+- Use display math with double dollar signs: `$$\int_0^1 f(x) dx$$`
+- Common math sets: `$\mathbb{R}$`, `$\mathbb{N}$`, `$\mathbb{S}$`
+- The site has math rendering enabled (`math: true` in config)
+- Use proper LaTeX commands for mathematical expressions
+
+### Code Blocks
+- Use fenced code blocks with language specification:
+  ````markdown
+  ```python
+  def example():
+      return True
+  ```
+  ````
+- Code copy buttons are enabled in the theme
+- Supported languages include Python, JavaScript, CUDA, C++, etc.
+
+### Markdown Structure
+- Use H2 (`##`) for main sections (H1 is reserved for the title)
+- Use bullet points (`-`) for lists
+- Keep descriptions and summaries concise
+- Use relative paths for images in the same directory
+
+### Tags
+- Use lowercase for tags
+- Use hyphens for multi-word tags (e.g., "deep-learning", "gpu-kernel")
+- Keep tags specific and relevant to AI infrastructure topics
+- Common tags: "deep learning", "gpu", "inference", "distributed-training", "llm"
+
+## Technical Details
+
+### Hugo Configuration
+- Theme: PaperMod
+- Default theme: light (theme toggle disabled)
+- Code highlighting: autumn style
+- Date format: "January 2006"
+- Pagination: 20 items per page
+
+### Build and Deployment
+- Hugo static site generator
+- Deployed to GitHub Pages
+- Base URL: https://nvbkdw.github.io/
+
+## File Naming Conventions
+- Blog post files: Use kebab-case (e.g., `gpu-kernel-programming-101.md`)
+- Image files: Match the blog post name (e.g., `gpu-kernel-programming-101.png`)
+- Use descriptive, SEO-friendly names
+
+## Content Guidelines
+- Focus on AI infrastructure, machine learning systems, and programming
+- Include practical examples and code snippets where relevant
+- Explain complex concepts clearly with proper mathematical notation
+- Use diagrams and images to illustrate concepts
+- Keep technical accuracy as the top priority
+
+## When Creating New Blog Posts
+1. Create a new `.md` file in `/content/blogs/`
+2. Include complete frontmatter with all required fields
+3. Add a corresponding cover image if available
+4. Use proper heading hierarchy (start with H2)
+5. Include relevant tags for discoverability
+6. Ensure proper LaTeX formatting for mathematical content
+7. Test locally before committing
+
+## Avoid
+- Don't use H1 headings in content (reserved for page title)
+- Don't forget the frontmatter
+- Don't use absolute paths for local images (use relative paths)
+- Don't mix inline and display math syntax incorrectly
+- Don't commit without testing Hugo build locally
+
