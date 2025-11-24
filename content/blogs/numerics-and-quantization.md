@@ -96,13 +96,20 @@ illustrate with a plot - TBD:
 
 comparison of various FP formats:
 
-![Floating Point Format Comparison - Exponent vs Precision](/fp-format-exp-precision.png)
+![Floating Point Format Comparison - Exponent vs Precision](/static/fp-format-exp-precision.png)
 
 Questions?
 - why IEEE FP is such format? how does it relates to FP arithmetic circuit design?
 - new number format, BF16, FP8, FP8, MX4, etc? and implementation in tensor core?
 
 ## Quantization:
+
+Motivation for using smaller number format?
+- reduce memory footprint
+- reduce memory bandwidth pressure
+- enables packing more math units into same silicon area
+
+
 
 ### Linear Operations Can Cheaply Deal with Scales
 
