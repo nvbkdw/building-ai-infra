@@ -11,8 +11,6 @@ cover:
     relative: true
 ---
 
-## Introduction
-
 This blog post provides a refresher on the essential math for deep learning. We will cover the following topics:
 - Linear Algebra
 - Calculus
