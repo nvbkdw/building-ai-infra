@@ -11,6 +11,13 @@ cover:
     relative: true
 ---
 
+## Introduction
+
+This blog post provides a refresher on the essential math for deep learning. We will cover the following topics:
+- Linear Algebra
+- Calculus
+- Probability
+
 ## Table of Contents
 - [Introduction](#introduction)
 - [Linear Algebra](#linear-algebra)
@@ -26,13 +33,6 @@ cover:
     - [Multiplication](#multiplication)
   - [Mutiplication](#mutiplication)
     - [Matrix Multiplication Properties](#matrix-multiplication-properties)
-
-## Introduction
-
-This blog post provides a refresher on the essential math for deep learning. We will cover the following topics:
-- Linear Algebra
-- Calculus
-- Probability
 
 ## Linear Algebra
 
