@@ -29,7 +29,7 @@ cover:
 
 ## Introduction
 
-This blog post covers the minimal math behind necessary for deep learning. We will cover the following topics:
+This blog post provides a refresher on the essential math for deep learning. We will cover the following topics:
 - Linear Algebra
 - Calculus
 - Probability
