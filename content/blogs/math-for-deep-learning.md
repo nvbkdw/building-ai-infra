@@ -58,12 +58,13 @@ A vector is a array of numbers with specific order.
 - If $x \in \mathbb{R}$, then $\mathbf{x} = [x_1, x_2, \ldots, x_n] $ is a vector of $n$ real numbers. 
 - $\mathbf{x}$ is in set $\mathbb{R}^n$ which is the cartesian product of $\mathbb{R} \times \mathbb{R} \times \ldots \times \mathbb{R}$. 
 - We can think of vector $\mathbf{x}$ as a point in an $n$-dimensional space.
+- By default, a vector $a_{i}$ is column vector. $a_{i}^T$ with tranpose sign means it represents a row vector.
 
 #### Matrices
 A matrix is a 2D array of numbers. If a real-valued matrics has M rows and N columns, we write $A \in \mathbb{R}^{M \times N}$. 
 - $a_{ij}$ is the element in the $i$-th row and $j$-th column of $A$. 
-- $\mathbf{a}_{j} = A_{:j}$ is the $j$-th column of $A$. By default, a vector $a_{ij}$ is column vector.
-- $\mathbf{a}_{i}^T = A_{i:}$ is the $i$-th row of $A$. Tranpose sign means it represents a row vector.
+- $\mathbf{a}_{j} = A_{:j}$ is the $j$-th column of $A$. 
+- $\mathbf{a}_{i}^T = A_{i:}$ is the $i$-th row of $A$. 
 - Matrix can be thought of as a collection of column vectors, i.e. $\mathbf{A} = [\mathbf{a}_1, \mathbf{a}_2, \ldots, \mathbf{a}_N]$.
 - Alternatively, Matrix can be represented as a vector, a.k.a. vectorization. $M \times N = T, A \in  \mathbb{R}^{M \times N} = \mathbb{R}^T$ $\Leftrightarrow$ Matrix $A$ is a point in an $T$-dimensional space.
 
