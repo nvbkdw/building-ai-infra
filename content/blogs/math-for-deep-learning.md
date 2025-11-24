@@ -11,6 +11,22 @@ cover:
     relative: true
 ---
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Linear Algebra](#linear-algebra)
+  - [Sets, Scalars, Vectors, Matrices, Tensors](#sets-scalars-vectors-matrices-tensors)
+    - [Sets](#sets)
+    - [Scalars](#scalars)
+    - [Vectors](#vectors)
+    - [Matrices](#matrices)
+    - [Tensors](#tensors)
+    - [Transpose](#transpose)
+  - [Addition and Multiplication](#addition-and-multiplication)
+    - [Addition](#addition)
+    - [Multiplication](#multiplication)
+  - [Mutiplication](#mutiplication)
+    - [Matrix Multiplication Properties](#matrix-multiplication-properties)
+
 ## Introduction
 
 ## Linear Algebra
