@@ -16,6 +16,7 @@ Motivation for using smaller number format?
 - reduce memory footprint
 - reduce memory bandwidth pressure
 - enables packing more math units into same silicon area
+- consume less energy
 
 
 

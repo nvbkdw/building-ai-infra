@@ -33,10 +33,7 @@ Integers can be represented in different ways:
 
 ### Floating Point
 
-
-#### IEEE Floating Point Encoding
-
-**Bit fields (ExMy):**
+** IEEE Floating Point Encoding (ExMy):**
 - **Sign:** 1 bit (0: positive, 1: negative)
 - **Exponent:** E bits
   - Exponent for a power of 2
