@@ -109,6 +109,9 @@ Questions?
 
 
 ### FP Quirks
+
+Routing is the culprit!
+
 #### Non-associativity
 
 **In FP the order of additions matters:**
@@ -119,9 +122,45 @@ Questions?
 - Different HW: different dot-product instruction sizes
 - Same HW: different compiler optimizations, use of atomics, work-queue based implementations
 
+**FP "Swamping" occurs when addition of two different magnitudes results in a sum that's just the larger magnitude**
+
+**Example with E5M2:**
+- $32 + 3.5 = 32$
+- $1.00_2 \times 2^5 + 1.11_2 \times 2^1 = 1.00_2 \times 2^5 + 0.000111_2 \times 2^5 = 1.0001112 \times 2^5 = 1.00_2 \times 2^5$
+  - last step: round the result mantissa to 2 bits (in this case loses precision) to get $1.00_2 \times 2^5$
+
+**Example with E5M2:**
+- Decimal: $32 + 3.5 + 4$
+- Binary E5M2: $1.00_2 \times 2^5 + 1.11_2 \times 2^1 + 1.00_2 \times 2^2$
+
+**Case 1: $(32 + 3.5) + 4 = 32$**
+- $32 + 3.5 = 1.00_2 \times 2^5 + 0.000111_2 \times 2^5 = 1.000111_2 \times 2^5 = 1.00_2 \times 2^5 = 32$
+- $32 + 4 = 1.00_2 \times 2^5 + 1.00_2 \times 2^2 = 1.00_2 \times 2^5 + 0.001_2 \times 2^5 = 1.001 \times 2^5 = 1.00 \times 2^5 = 32$
+
+**Case 2: $32 + (3.5 + 4) = 40$**
+- $3.5 + 4 = 1.11_2 \times 2^1 + 1.00_2 \times 2^2 = 0.111_2 \times 2^2 + 1.00_2 \times 2^2 = 1.111_2 \times 2^2 = 1.00_2 \times 2^3 = 8$
+- $32 + 8 = 1.00_2 \times 2^5 + 1.00_2 \times 2^3 = 1.00_2 \times 2^5 + 0.01_2 \times 2^5 = 1.01_2 \times 2^5 = 40$
+
 #### FMA?
 
-#### Routing is the culprit
+**Performs $a * b + c$ in a single instruction**
+- Defined by IEEE 754, implemented by most modern chips (GPUs, CPUs)
+- Product $a * b$ required to be kept in full precision (i.e. no rounding prior to addition)
+
+**In most cases FMA is more accurate than FMUL, FADD pair**
+
+**But can lead to results that are surprising at first**
+- Classical example by Kahan: $x * x - y * y$ may not be 0 even if $x = y$
+  - Occurs when $x * x$ product requires more bits than available in format (we round)
+  - FMA implementation:
+    - `temp = y * y`      // Rounding will happen
+    - `FMA(x, x, -temp)`  // No rounding of $x * x$
+  - FMUL, FADD implementation:
+    - rounding for both $x * x$ and $y * y$
+
+**Compiler optimizations affect how much FMA is used**
+- Compilers usually provide flags to control this
+
 
 ## Quantization:
 
