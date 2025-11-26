@@ -1,20 +1,20 @@
 ---
-title: "Math for Deep Learning"
+title: "Math for Deep Learning - Part 1"
 date: 2025-11-19
 tags: ["deep learning","math"]
 author: "Ryan H."
-description: "This blog post covers the math behind deep learning."
-summary: "This blog post covers the math behind deep learning."
+description: "This blog post covers the math behind deep learning - part 1."
+summary: "This blog post covers the math behind deep learning - part 1."
 cover:
     image: "math-for-deep-learning.png"
-    alt: "Math for Deep Learning"
+    alt: "Math for Deep Learning - Part 1"
     relative: true
 ---
 
 This blog post provides a refresher on the essential math for deep learning. We will cover the following topics:
-- Linear Algebra
-- Calculus
-- Probability
+- Part 1: Linear Algebra 
+- Part 2: Calculus
+- Part 3: Probability
 
 ## Table of Contents
 - [Introduction](#introduction)
