@@ -2,228 +2,230 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/blogs/</loc>
+    <loc>https://example.com/sub/blogs/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://example.com/sub/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/deep-learning/</loc>
+    <loc>https://example.com/sub/tags/deep-learning/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/numerics/</loc>
+    <loc>https://example.com/sub/tags/numerics/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/numerics-and-quantization/</loc>
+    <loc>https://example.com/sub/blogs/numerics-and-quantization/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/quantization/</loc>
+    <loc>https://example.com/sub/tags/quantization/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://example.com/sub/tags/</loc>
     <lastmod>2025-11-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/anology/</loc>
+    <loc>https://example.com/sub/tags/anology/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/anology-of-diffusion-models/</loc>
+    <loc>https://example.com/sub/blogs/anology-of-diffusion-models/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/data-loading/</loc>
+    <loc>https://example.com/sub/tags/data-loading/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/dataloading-for-ml-training/</loc>
+    <loc>https://example.com/sub/blogs/dataloading-for-ml-training/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/diffusion-models/</loc>
+    <loc>https://example.com/sub/tags/diffusion-models/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/distributed-database/</loc>
+    <loc>https://example.com/sub/blogs/distributed-database/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/distributed-system/</loc>
+    <loc>https://example.com/sub/tags/distributed-system/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/distributed-training/</loc>
+    <loc>https://example.com/sub/blogs/distributed-training/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/distributed-training/</loc>
+    <loc>https://example.com/sub/tags/distributed-training/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/gpu/</loc>
+    <loc>https://example.com/sub/tags/gpu/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/gpu-kernel-programming-101/</loc>
+    <loc>https://example.com/sub/blogs/gpu-kernel-programming-101/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/inference/</loc>
+    <loc>https://example.com/sub/tags/inference/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/kernel/</loc>
+    <loc>https://example.com/sub/tags/kernel/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/llm/</loc>
+    <loc>https://example.com/sub/tags/llm/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/llm-inference-system/</loc>
+    <loc>https://example.com/sub/blogs/llm-inference-system/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/machine-learning/</loc>
+    <loc>https://example.com/sub/tags/machine-learning/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/machine-learning-for-system-biology/</loc>
+    <loc>https://example.com/sub/blogs/machine-learning-for-system-biology/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/math/</loc>
+    <loc>https://example.com/sub/tags/math/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/math-for-deep-learning-part-1/</loc>
+    <loc>https://example.com/sub/blogs/math-for-deep-learning-part-1/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/math-for-deep-learning-part-2/</loc>
+    <loc>https://example.com/sub/blogs/math-for-deep-learning-part-2/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/math-for-deep-learning-part-3/</loc>
+    <loc>https://example.com/sub/blogs/math-for-deep-learning-part-3/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/mlops/</loc>
+    <loc>https://example.com/sub/tags/mlops/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blogs/mlops-platform-for-research-lab/</loc>
+    <loc>https://example.com/sub/blogs/mlops-platform-for-research-lab/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/platform/</loc>
+    <loc>https://example.com/sub/tags/platform/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/programming/</loc>
+    <loc>https://example.com/sub/tags/programming/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/system-biology/</loc>
+    <loc>https://example.com/sub/tags/system-biology/</loc>
     <lastmod>2025-11-19T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/location/</loc>
+    <loc>https://example.com/sub/location/</loc>
     <lastmod>2024-05-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/officehours/</loc>
+    <loc>https://example.com/sub/officehours/</loc>
     <lastmod>2024-05-08T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/academia/</loc>
+    <loc>https://example.com/sub/tags/academia/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/experimental-psychology/</loc>
+    <loc>https://example.com/sub/tags/experimental-psychology/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/inner-hedgehog/</loc>
+    <loc>https://example.com/sub/tags/inner-hedgehog/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/invasive-thoughts/</loc>
+    <loc>https://example.com/sub/tags/invasive-thoughts/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/papers/</loc>
+    <loc>https://example.com/sub/papers/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/social-psychology/</loc>
+    <loc>https://example.com/sub/tags/social-psychology/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/papers/paper3/</loc>
+    <loc>https://example.com/sub/papers/paper3/</loc>
     <lastmod>2021-04-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/data/</loc>
+    <loc>https://example.com/sub/data/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/dataset/</loc>
+    <loc>https://example.com/sub/tags/dataset/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/french/</loc>
+    <loc>https://example.com/sub/tags/french/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/irregular-verbs/</loc>
+    <loc>https://example.com/sub/tags/irregular-verbs/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/italian/</loc>
+    <loc>https://example.com/sub/tags/italian/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/data/data1/</loc>
+    <loc>https://example.com/sub/data/data1/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/philology/</loc>
+    <loc>https://example.com/sub/tags/philology/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/portuguese/</loc>
+    <loc>https://example.com/sub/tags/portuguese/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/python/</loc>
+    <loc>https://example.com/sub/tags/python/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/romance-languages/</loc>
+    <loc>https://example.com/sub/tags/romance-languages/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/simulations/</loc>
+    <loc>https://example.com/sub/tags/simulations/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/spanish/</loc>
+    <loc>https://example.com/sub/tags/spanish/</loc>
     <lastmod>2013-03-07T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/history-of-oil/</loc>
+    <loc>https://example.com/sub/tags/history-of-oil/</loc>
     <lastmod>2013-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/mediterranean-world/</loc>
+    <loc>https://example.com/sub/tags/mediterranean-world/</loc>
     <lastmod>2013-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/oleic-science/</loc>
+    <loc>https://example.com/sub/tags/oleic-science/</loc>
     <lastmod>2013-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/papers/paper1/</loc>
+    <loc>https://example.com/sub/papers/paper1/</loc>
     <lastmod>2013-01-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/canine-pulmonary-efficiency/</loc>
+    <loc>https://example.com/sub/tags/canine-pulmonary-efficiency/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/canine-science/</loc>
+    <loc>https://example.com/sub/tags/canine-science/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/experimental-zoology/</loc>
+    <loc>https://example.com/sub/tags/experimental-zoology/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/sausage-dogs/</loc>
+    <loc>https://example.com/sub/tags/sausage-dogs/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/papers/paper2/</loc>
+    <loc>https://example.com/sub/papers/paper2/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/zoology/</loc>
+    <loc>https://example.com/sub/tags/zoology/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/courses/</loc>
+    <loc>https://example.com/sub/courses/</loc>
     <lastmod>2003-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/courses/course1/</loc>
+    <loc>https://example.com/sub/courses/course1/</loc>
     <lastmod>2003-03-10T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/books/</loc>
+    <loc>https://example.com/sub/books/</loc>
     <lastmod>1997-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/portugese/</loc>
+    <loc>https://example.com/sub/tags/portugese/</loc>
     <lastmod>1997-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/books/book1/</loc>
+    <loc>https://example.com/sub/books/book1/</loc>
     <lastmod>1997-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/celtic-languages/</loc>
+    <loc>https://example.com/sub/tags/celtic-languages/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/irish/</loc>
+    <loc>https://example.com/sub/tags/irish/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/language-modernization/</loc>
+    <loc>https://example.com/sub/tags/language-modernization/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/profanity/</loc>
+    <loc>https://example.com/sub/tags/profanity/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/courses/course2/</loc>
+    <loc>https://example.com/sub/courses/course2/</loc>
     <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/archive/</loc>
+    <loc>https://example.com/sub/archive/</loc>
+  </url><url>
+    <loc>https://example.com/sub/showrel/</loc>
   </url>
 </urlset>

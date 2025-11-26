@@ -2,158 +2,165 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Building AI Infrastructure</title>
-    <link>http://localhost:1313/</link>
+    <link>https://example.com/sub/</link>
     <description>Recent content on Building AI Infrastructure</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en</language>
     <lastBuildDate>Mon, 24 Nov 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://example.com/sub/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Numerics and Quantization</title>
-      <link>http://localhost:1313/blogs/numerics-and-quantization/</link>
+      <link>https://example.com/sub/blogs/numerics-and-quantization/</link>
       <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/numerics-and-quantization/</guid>
+      <guid>https://example.com/sub/blogs/numerics-and-quantization/</guid>
       <description>This blog post covers the numerics and quantization in deep learning.</description>
     </item>
     <item>
       <title>Anology of Diffusion Models</title>
-      <link>http://localhost:1313/blogs/anology-of-diffusion-models/</link>
+      <link>https://example.com/sub/blogs/anology-of-diffusion-models/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/anology-of-diffusion-models/</guid>
+      <guid>https://example.com/sub/blogs/anology-of-diffusion-models/</guid>
       <description>This blog post covers the anology of diffusion models.</description>
     </item>
     <item>
       <title>Data Loading for ML Training</title>
-      <link>http://localhost:1313/blogs/dataloading-for-ml-training/</link>
+      <link>https://example.com/sub/blogs/dataloading-for-ml-training/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/dataloading-for-ml-training/</guid>
+      <guid>https://example.com/sub/blogs/dataloading-for-ml-training/</guid>
       <description>This blog post covers the data loading for machine learning training.</description>
     </item>
     <item>
       <title>Distributed System</title>
-      <link>http://localhost:1313/blogs/distributed-database/</link>
+      <link>https://example.com/sub/blogs/distributed-database/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/distributed-database/</guid>
+      <guid>https://example.com/sub/blogs/distributed-database/</guid>
       <description>This blog post covers the distributed system.</description>
     </item>
     <item>
       <title>Distributed Training</title>
-      <link>http://localhost:1313/blogs/distributed-training/</link>
+      <link>https://example.com/sub/blogs/distributed-training/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/distributed-training/</guid>
+      <guid>https://example.com/sub/blogs/distributed-training/</guid>
       <description>This blog post covers the distributed training.</description>
     </item>
     <item>
       <title>GPU Kernel Programming 101</title>
-      <link>http://localhost:1313/blogs/gpu-kernel-programming-101/</link>
+      <link>https://example.com/sub/blogs/gpu-kernel-programming-101/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/gpu-kernel-programming-101/</guid>
+      <guid>https://example.com/sub/blogs/gpu-kernel-programming-101/</guid>
       <description>This blog post covers the GPU kernel programming 101.</description>
     </item>
     <item>
       <title>LLM Inference</title>
-      <link>http://localhost:1313/blogs/llm-inference-system/</link>
+      <link>https://example.com/sub/blogs/llm-inference-system/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/llm-inference-system/</guid>
+      <guid>https://example.com/sub/blogs/llm-inference-system/</guid>
       <description>This blog post covers the LLM inference.</description>
     </item>
     <item>
       <title>Machine Learning for System Biology</title>
-      <link>http://localhost:1313/blogs/machine-learning-for-system-biology/</link>
+      <link>https://example.com/sub/blogs/machine-learning-for-system-biology/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/machine-learning-for-system-biology/</guid>
+      <guid>https://example.com/sub/blogs/machine-learning-for-system-biology/</guid>
       <description>This blog post covers the machine learning for system biology.</description>
     </item>
     <item>
       <title>Math for Deep Learning - Part 1</title>
-      <link>http://localhost:1313/blogs/math-for-deep-learning-part-1/</link>
+      <link>https://example.com/sub/blogs/math-for-deep-learning-part-1/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/math-for-deep-learning-part-1/</guid>
+      <guid>https://example.com/sub/blogs/math-for-deep-learning-part-1/</guid>
       <description>This blog post covers the math behind deep learning - part 1.</description>
     </item>
     <item>
       <title>Math for Deep Learning - Part 2</title>
-      <link>http://localhost:1313/blogs/math-for-deep-learning-part-2/</link>
+      <link>https://example.com/sub/blogs/math-for-deep-learning-part-2/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/math-for-deep-learning-part-2/</guid>
+      <guid>https://example.com/sub/blogs/math-for-deep-learning-part-2/</guid>
       <description>This blog post covers the math behind deep learning.</description>
     </item>
     <item>
       <title>Math for Deep Learning - Part 3</title>
-      <link>http://localhost:1313/blogs/math-for-deep-learning-part-3/</link>
+      <link>https://example.com/sub/blogs/math-for-deep-learning-part-3/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/math-for-deep-learning-part-3/</guid>
+      <guid>https://example.com/sub/blogs/math-for-deep-learning-part-3/</guid>
       <description>This blog post covers the math behind deep learning.</description>
     </item>
     <item>
       <title>MLOps Platform for Research Lab</title>
-      <link>http://localhost:1313/blogs/mlops-platform-for-research-lab/</link>
+      <link>https://example.com/sub/blogs/mlops-platform-for-research-lab/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/blogs/mlops-platform-for-research-lab/</guid>
+      <guid>https://example.com/sub/blogs/mlops-platform-for-research-lab/</guid>
       <description>This blog post covers the MLOps platform for research lab.</description>
     </item>
     <item>
       <title>Location</title>
-      <link>http://localhost:1313/location/</link>
+      <link>https://example.com/sub/location/</link>
       <pubDate>Wed, 08 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/location/</guid>
+      <guid>https://example.com/sub/location/</guid>
       <description>Professor Dr von Igelfeld&amp;#39;s mailing and office addresses at the Institute of Romance Philology.</description>
     </item>
     <item>
       <title>Office Hours</title>
-      <link>http://localhost:1313/officehours/</link>
+      <link>https://example.com/sub/officehours/</link>
       <pubDate>Wed, 08 May 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/officehours/</guid>
+      <guid>https://example.com/sub/officehours/</guid>
       <description>Schedule and location for Professor Dr von Igelfeld&amp;#39;s office hours.</description>
     </item>
     <item>
       <title>Your Inner Hedgehog</title>
-      <link>http://localhost:1313/papers/paper3/</link>
+      <link>https://example.com/sub/papers/paper3/</link>
       <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/papers/paper3/</guid>
+      <guid>https://example.com/sub/papers/paper3/</guid>
       <description>This paper describes the inner hedgehog, a psychological condition widespread in academia. Published in the Journal of Socio-Experimental Psychology, 2021.</description>
     </item>
     <item>
       <title>List of Irregular Verbs Across Romance Languages</title>
-      <link>http://localhost:1313/data/data1/</link>
+      <link>https://example.com/sub/data/data1/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/data/data1/</guid>
+      <guid>https://example.com/sub/data/data1/</guid>
       <description>This dataset contains all irregular verbs in known Romance languages.</description>
     </item>
     <item>
       <title>Unusual Uses For Olive Oil</title>
-      <link>http://localhost:1313/papers/paper1/</link>
+      <link>https://example.com/sub/papers/paper1/</link>
       <pubDate>Tue, 15 Jan 2013 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/papers/paper1/</guid>
+      <guid>https://example.com/sub/papers/paper1/</guid>
       <description>This paper reviews unusual uses for olive oil throughout the Mediterranean world. Published in the Journal of Oleic Science, 2013.</description>
     </item>
     <item>
       <title>The Finer Points of Sausage Dogs</title>
-      <link>http://localhost:1313/papers/paper2/</link>
+      <link>https://example.com/sub/papers/paper2/</link>
       <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/papers/paper2/</guid>
+      <guid>https://example.com/sub/papers/paper2/</guid>
       <description>This paper studies the pulmonary efficiency of sausage dogs. Published in the Journal of Canine Science, 2004.</description>
     </item>
     <item>
       <title>Lectures at the Villa of Reduced Circumstances</title>
-      <link>http://localhost:1313/courses/course1/</link>
+      <link>https://example.com/sub/courses/course1/</link>
       <pubDate>Mon, 10 Mar 2003 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/courses/course1/</guid>
+      <guid>https://example.com/sub/courses/course1/</guid>
       <description>This graduate course presents classical results in Romance philology.</description>
     </item>
     <item>
       <title>Portugese Irregular Verbs</title>
-      <link>http://localhost:1313/books/book1/</link>
+      <link>https://example.com/sub/books/book1/</link>
       <pubDate>Wed, 01 Jan 1997 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/books/book1/</guid>
+      <guid>https://example.com/sub/books/book1/</guid>
       <description>This book discusses Portugese irregular verbs in great details.</description>
     </item>
     <item>
       <title>Profanity in Early Irish</title>
-      <link>http://localhost:1313/courses/course2/</link>
+      <link>https://example.com/sub/courses/course2/</link>
       <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/courses/course2/</guid>
+      <guid>https://example.com/sub/courses/course2/</guid>
       <description>This undergraduate course discusses profanity in Early Irish.</description>
+    </item>
+    <item>
+      <title>Show Rel</title>
+      <link>https://example.com/sub/showrel/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>https://example.com/sub/showrel/</guid>
+      <description>rel: /sub/fp-sampling.png abs: https://example.com/sub/fp-sampling.png</description>
     </item>
   </channel>
 </rss>

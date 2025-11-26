@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Numerics and Quantization | Building AI Infrastructure</title>
 <meta name="keywords" content="numerics, quantization, deep learning">
 <meta name="description" content="This blog post covers the numerics and quantization in deep learning.">
 <meta name="author" content="Ryan H.">
-<link rel="canonical" href="http://localhost:1313/blogs/numerics-and-quantization/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.ac30954b7ea20660ca1cb473400ecede9e601f17674446536180d3ca00f03328.css" integrity="sha256-rDCVS36iBmDKHLRzQA7O3p5gHxdnREZTYYDTygDwMyg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="canonical" href="https://example.com/sub/blogs/numerics-and-quantization/">
+<link crossorigin="anonymous" href="/sub/assets/css/stylesheet.ac30954b7ea20660ca1cb473400ecede9e601f17674446536180d3ca00f03328.css" integrity="sha256-rDCVS36iBmDKHLRzQA7O3p5gHxdnREZTYYDTygDwMyg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://example.com/sub/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.com/sub/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.com/sub/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://example.com/sub/apple-touch-icon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/blogs/numerics-and-quantization/">
+<link rel="alternate" hreflang="en" href="https://example.com/sub/blogs/numerics-and-quantization/">
 <noscript>
     <style>
         #theme-toggle,
@@ -26,7 +26,7 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="http://localhost:1313/blogs/numerics-and-quantization/">
+</noscript><meta property="og:url" content="https://example.com/sub/blogs/numerics-and-quantization/">
   <meta property="og:site_name" content="Building AI Infrastructure">
   <meta property="og:title" content="Numerics and Quantization">
   <meta property="og:description" content="This blog post covers the numerics and quantization in deep learning.">
@@ -38,9 +38,9 @@
     <meta property="article:tag" content="Numerics">
     <meta property="article:tag" content="Quantization">
     <meta property="article:tag" content="Deep Learning">
-    <meta property="og:image" content="http://localhost:1313/blogs/numerics-and-quantization/numerics-and-quantization.png">
+    <meta property="og:image" content="https://example.com/sub/blogs/numerics-and-quantization/numerics-and-quantization.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://localhost:1313/blogs/numerics-and-quantization/numerics-and-quantization.png">
+<meta name="twitter:image" content="https://example.com/sub/blogs/numerics-and-quantization/numerics-and-quantization.png">
 <meta name="twitter:title" content="Numerics and Quantization">
 <meta name="twitter:description" content="This blog post covers the numerics and quantization in deep learning.">
 
@@ -54,13 +54,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Blogs",
-      "item": "http://localhost:1313/blogs/"
+      "item": "https://example.com/sub/blogs/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Numerics and Quantization",
-      "item": "http://localhost:1313/blogs/numerics-and-quantization/"
+      "item": "https://example.com/sub/blogs/numerics-and-quantization/"
     }
   ]
 }
@@ -75,10 +75,10 @@
   "keywords": [
     "numerics", "quantization", "deep learning"
   ],
-  "articleBody": "Number Format: Integers Integers can be represented in different ways:\nUnsigned integer (uint): range from 0 to $2^n - 1$ for $n$ bits.\nSigned integer (int): where the most significant bit is the sign bit (0 for positive and 1 for negative). Range from $-(2^{n-1}-1)$ to $2^{n-1} - 1$. Symmetric range around 0, but it has two zero representations: +0 and -0.\nTwo’s complement representation: A method for representing signed integers where:\nThe most significant bit serves as the sign bit (0 for positive, 1 for negative) Positive numbers are represented in standard binary Negative numbers are obtained by inverting all bits (one’s complement) and adding 1 Example with 4-bit: $5_{10} = 0101_2$ $-5_{10}$: invert $0101_2 \\rightarrow 1010_2$, add 1 $\\rightarrow 1011_2$ Range for n-bit: $[-2^{n-1}, 2^{n-1} - 1]$ the code 1000…0 represents -2^(n-1) only one zero representation: 0000…0 represents 0 Key advantage: arithmetic operations work uniformly for both positive and negative numbers without special handling Floating Point IEEE Floating Point Encoding Bit fields (ExMy):\nSign: 1 bit (0: positive, 1: negative) Exponent: E bits Exponent for a power of 2 Biased integer: bias = $2^{E-1} - 1$ Mantissa: M bits Fractional bits correspond to: $2^{-1}, 2^{-2}, …$ There is an implied 1 bit before the binary point (unless we’re dealing with subnormals) FP16 example:\nE5M10: 1 sign, 5 exponent, 10 mantissa bits Exponent bias: $2^{5-1} - 1 = 15$ $0.10001.1010000000_2 = 6.5_{10}$ $2^{17-15} * 1.101_2 = 2^2 * (1 + 2^{-1} + 2^{-3}){10} = 4 * 1.625{10} = 6.5_{10}$ FP Sampling While integer representation provides equal spacing sampling, floating point representation provides exponential spacing sampling, with same amount of samples in each power of 2 interval, i.e. same sample between [2, 4] and [4, 8].\nExponent bits define which powers of 2 are sampled:\nFP16 (E5M10): exponent samples $2^{-15}$ to $2^{15}$ Really $2^{-25}$ to $2^{15}$ because of subnormals, more on that later Largely determines the dynamic range Mantissa bits define samples between successive powers of 2:\nE5M10: $2^{10} = 1024$ samples for each power of 2 Defines the precision Key observation:\nFP samples the real number line with equal number of samples between each pair of adjacent powers of 2 Example: E5M10 has 1024 samples between 0.25 and 0.5, between 128 and 256 More on FP Encoding Details There are a number of special values:\nReserved bit patterns, usually in the exponent field (all 0s or all 1s) Zeros (positive and negative):\nExponent and mantissa bits all set to 0 Subnormals:\nExponent bits set to 0s, mantissa bits non-0 More on that in the next slide Infinities (2 encodings):\nPositive and negative Exponent bits set to 1s, mantissa bits set to 0s NaNs ($2^{M+1}$ encodings in IEEE):\nExponent bits set to 1s, mantissa bits contain at least one 1 Generated by things like sqrt(-1), sum of positive and negative infinity, etc. FP4: FP4 samples: 0, 0.5, 1, 2, 3, 4, 6\nFP Subnormals Special interpretation of exponents bits:\nJust min debiased exponent value (for example, -14 for FP16) No implied 1 bit before the binary point:\n$0.00000.1010000000_2 = 2^{-14} * 0.101_2 = 2^{-15} * (1 + 2^{-2})_{10} = …$ Purpose:\nMakes use of the mantissa encodings when exponent is all 0s Extends the dynamic range down (but with decreasing precision) Extra M powers of 2 can be covered More leading mantissa bits set to 0 → lower powers of 2 This also implies fewer samples for those powers of 2 (fewer remaining mantisa bits) $0.000000.1xxxx…: 2^{-15}$ power of 2, 9 bits of precision $0.000000.001xx…: 2^{-17}$ power of 2, 7 bits of precision comparison of various FP formats:\nQuestions?\nwhy IEEE FP is such format? how does it relates to FP arithmetic circuit design? new number format, BF16, FP8, FP8, MX4, etc? and implementation in tensor core? FP Quirks Routing is the culprit!\nNon-associativity In FP the order of additions matters:\n$(A + B) + C$ is not always the same as $A + (B + C)$ Rounding to a finite number of samples is the cause (more on this later) Things that can change the order of operations:\nDifferent HW: different dot-product instruction sizes Same HW: different compiler optimizations, use of atomics, work-queue based implementations FP “Swamping” occurs when addition of two different magnitudes results in a sum that’s just the larger magnitude\nExample with E5M2:\n$32 + 3.5 = 32$ $1.00_2 \\times 2^5 + 1.11_2 \\times 2^1 = 1.00_2 \\times 2^5 + 0.000111_2 \\times 2^5 = 1.0001112 \\times 2^5 = 1.00_2 \\times 2^5$ last step: round the result mantissa to 2 bits (in this case loses precision) to get $1.00_2 \\times 2^5$ Example with E5M2:\nDecimal: $32 + 3.5 + 4$ Binary E5M2: $1.00_2 \\times 2^5 + 1.11_2 \\times 2^1 + 1.00_2 \\times 2^2$ Case 1: $(32 + 3.5) + 4 = 32$\n$32 + 3.5 = 1.00_2 \\times 2^5 + 0.000111_2 \\times 2^5 = 1.000111_2 \\times 2^5 = 1.00_2 \\times 2^5 = 32$ $32 + 4 = 1.00_2 \\times 2^5 + 1.00_2 \\times 2^2 = 1.00_2 \\times 2^5 + 0.001_2 \\times 2^5 = 1.001 \\times 2^5 = 1.00 \\times 2^5 = 32$ Case 2: $32 + (3.5 + 4) = 40$\n$3.5 + 4 = 1.11_2 \\times 2^1 + 1.00_2 \\times 2^2 = 0.111_2 \\times 2^2 + 1.00_2 \\times 2^2 = 1.111_2 \\times 2^2 = 1.00_2 \\times 2^3 = 8$ $32 + 8 = 1.00_2 \\times 2^5 + 1.00_2 \\times 2^3 = 1.00_2 \\times 2^5 + 0.01_2 \\times 2^5 = 1.01_2 \\times 2^5 = 40$ FMA? Performs $a * b + c$ in a single instruction\nDefined by IEEE 754, implemented by most modern chips (GPUs, CPUs) Product $a * b$ required to be kept in full precision (i.e. no rounding prior to addition) In most cases FMA is more accurate than FMUL, FADD pair\nBut can lead to results that are surprising at first\nClassical example by Kahan: $x * x - y * y$ may not be 0 even if $x = y$ Occurs when $x * x$ product requires more bits than available in format (we round) FMA implementation: temp = y * y // Rounding will happen FMA(x, x, -temp) // No rounding of $x * x$ FMUL, FADD implementation: rounding for both $x * x$ and $y * y$ Compiler optimizations affect how much FMA is used\nCompilers usually provide flags to control this Quantization: Motivation for using smaller number format?\nreduce memory footprint reduce memory bandwidth pressure enables packing more math units into same silicon area Linear Operations Can Cheaply Deal with Scales Let:\n$x = (x_i | 1 \\leq i \\leq k)$ be a vector of reals. $x^q$ be the integer-quantized version of $x$. $x’ = (x_i^q * dscale_x | 1 \\leq i \\leq k)$ be the approximation of $x$ after dequantization. Define $y$ and $y’$ similarly. Then,\n$$ z’ = \\sum_i x’_i * y’_i = dscale_x * dscale_y \\sum_i x_i^q * y_i^q $$\nMost of the math is cheap, only the dequantization at the end is expensive.\nwhat is the effect of quantization on the performance of the model?\nreduce the range, scaling factor clips the value to the range [min, max] reduce the precision, rounding the value to the nearest integer Scaling Factor Granularity:\nper-block quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ per-tensor quantization: $x^q = (x_i^q | 1 \\leq i \\leq k)$ per-channel quantization: $x^q = (x_{i,j}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m)$ per-layer quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ Quantization Design Space:\nHow to choose quantization scheme? (TBD)\nHow to compensatre for for quantization error?\nApplications in inference, training and RL Training FP16 training, with scaling factor why scaling factor? otherwise gradient does not fall into the range of FP16\nBF16 training\nFP8 training??\nOCP MX block format:\nmetadata + data blocks, with hardware support Recover accuracy: AWQ: Activation Weights Quantization QAT: Quantization aware training\nFP4 training?\nMXFP4: 32-element block, E8M0 NVFP4: 16-element block, E4M3 Reference [1] Numerics and AI: https://www.youtube.com/watch?v=ua2NhlenIKo\n",
-  "wordCount" : "1347",
+  "articleBody": "Number Format: Integers Integers can be represented in different ways:\nUnsigned integer (uint): range from 0 to $2^n - 1$ for $n$ bits.\nSigned integer (int): where the most significant bit is the sign bit (0 for positive and 1 for negative). Range from $-(2^{n-1}-1)$ to $2^{n-1} - 1$. Symmetric range around 0, but it has two zero representations: +0 and -0.\nTwo’s complement representation: A method for representing signed integers where:\nThe most significant bit serves as the sign bit (0 for positive, 1 for negative) Positive numbers are represented in standard binary Negative numbers are obtained by inverting all bits (one’s complement) and adding 1 Example with 4-bit: $5_{10} = 0101_2$ $-5_{10}$: invert $0101_2 \\rightarrow 1010_2$, add 1 $\\rightarrow 1011_2$ Range for n-bit: $[-2^{n-1}, 2^{n-1} - 1]$ the code 1000…0 represents -2^(n-1) only one zero representation: 0000…0 represents 0 Key advantage: arithmetic operations work uniformly for both positive and negative numbers without special handling Floating Point IEEE Floating Point Encoding Bit fields (ExMy):\nSign: 1 bit (0: positive, 1: negative) Exponent: E bits Exponent for a power of 2 Exponent is biased, so the actual exponent is the stored value minus the bias. Bias = $2^{E-1} - 1$ Example: 5 bits can store values from 0 to 31 (2^5 - 1 = 31) Bias = 2^(5-1) - 1 = 15 Actual exponent = Stored value - Bias Special cases: exponent field of all 0s (0) and all 1s (31) are reserved for zeros/subnormals and infinity/NaN respectively Largest normal exponent: stored value 30 → actual exponent = 30 - 15 = 15 (represents 2^15) Range of normal exponents: 2^(-14) to 2^15. Bias equals the maximum exponent value for normal numbers (15 in this case), which allows for a symmetric range of exponents around zero in the biased representation. Mantissa: M bits Fractional bits correspond to: $2^{-1}, 2^{-2}, …$ There is an implied 1 bit before the binary point (unless we’re dealing with subnormals) FP16 example:\nE5M10: 1 sign, 5 exponent, 10 mantissa bits Exponent bias: $2^{5-1} - 1 = 15$ $0.10001.1010000000_2 = 6.5_{10}$ $2^{17-15} * \\mathbf{1}.101_2 = 2^2 * (1 \\text{ (implied } 1 \\text{)} + 2^{-1} + 2^{-3}){10} = 4 * 1.625{10} = 6.5_{10}$ FP Sampling While integer representation provides equal spacing sampling, floating point representation provides exponential spacing sampling\nExponent bits define which powers of 2 are sampled:\nFP16 (E5M10): exponent samples $2^{-15}$ to $2^{15}$ Really $2^{-25}$ to $2^{15}$ because of subnormals, more on that later Largely determines the dynamic range Mantissa bits define samples between successive powers of 2:\nE5M10: $2^{10} = 1024$ samples for each power of 2 Defines the precision Key observation:\nFP samples the real number line with equal number of samples between each pair of adjacent powers of 2 Example: E5M10 has 1024 samples between 0.25 and 0.5, between 128 and 256 More on FP Encoding Details There are a number of special values:\nReserved bit patterns, usually in the exponent field (all 0s or all 1s) Zeros (positive and negative):\nExponent and mantissa bits all set to 0 Subnormals:\nExponent bits set to 0s, mantissa bits non-0 More on that in the next slide Infinities (2 encodings):\nPositive and negative Exponent bits set to 1s, mantissa bits set to 0s NaNs ($2^{M+1}$ encodings in IEEE):\nExponent bits set to 1s, mantissa bits contain at least one 1 Generated by things like sqrt(-1), sum of positive and negative infinity, etc. New FP Formats FP8, BF16, FP4, etc. are invented and used in deep learning, but their standards have not been formalized in IEEE.\nFP8 (E4M3): 8-bit floating point format 1 sign bit, 4 exponent bits, 3 mantissa bits (E4M3) Bias: $2^{4-1} - 1 = 7$ Normal exponent range: stored values 1 to 14 → actual exponents -6 to 7 Range (normals): $2^{-6}$ to $2^{7} = 0.015625$ to $128$ Maximum representable value: 448 (with special encoding) Mantissa precision: 3 bits Note: There’s also E5M2 variant with different trade-offs BF16 (Brain Float 16): 16-bit floating point format 1 sign bit, 8 exponent bits, 7 mantissa bits (E8M7) Bias: $2^{8-1} - 1 = 127$ (same as FP32!) Normal exponent range: stored values 1 to 254 → actual exponents -126 to 127 Range (normals): $2^{-126}$ to $2^{127} \\approx 1.18 \\times 10^{-38}$ to $3.4 \\times 10^{38}$ Mantissa precision: 7 bits (vs 10 bits in FP16, vs 23 bits in FP32) Key advantage: Same dynamic range as FP32, easy to truncate FP32 → BF16 Trade-off: Less precision than FP16, but wider range FP4: 4-bit floating point format (not standardized, multiple variants exist) 1 sign bit, 2 exponent bits, 1 mantissa bit (E2M1) Example configuration: bias = 1 Very limited precision and range, only samples 0, 0.5, 1, 2, 3, 4, 6. FP Subnormals Special interpretation of exponents bits:\nJust min debiased exponent value (for example, -14 for FP16) No implied 1 bit before the binary point:\n$0.00000.1010000000_2 = 2^{-14} * 0.101_2 = 2^{-15} * (1 + 2^{-2})_{10} = …$ Purpose:\nMakes use of the mantissa encodings when exponent is all 0s Extends the dynamic range down (but with decreasing precision) Extra M powers of 2 can be covered More leading mantissa bits set to 0 → lower powers of 2 This also implies fewer samples for those powers of 2 (fewer remaining mantisa bits) $0.000000.1xxxx…: 2^{-15}$ power of 2, 9 bits of precision $0.000000.001xx…: 2^{-17}$ power of 2, 7 bits of precision comparison of various FP formats:\nQuestions?\nwhy IEEE FP is such format? how does it relates to FP arithmetic circuit design? new number format, BF16, FP8, FP8, MX4, etc? and implementation in tensor core? FP Quirks Routing is the culprit!\nNon-associativity In FP the order of additions matters:\n$(A + B) + C$ is not always the same as $A + (B + C)$ Rounding to a finite number of samples is the cause (more on this later) Things that can change the order of operations:\nDifferent HW: different dot-product instruction sizes Same HW: different compiler optimizations, use of atomics, work-queue based implementations FP “Swamping” occurs when addition of two different magnitudes results in a sum that’s just the larger magnitude\nExample with E5M2:\n$32 + 3.5 = 32$ $1.00_2 \\times 2^5 + 1.11_2 \\times 2^1 = 1.00_2 \\times 2^5 + 0.000111_2 \\times 2^5 = 1.0001112 \\times 2^5 = 1.00_2 \\times 2^5$ last step: round the result mantissa to 2 bits (in this case loses precision) to get $1.00_2 \\times 2^5$ Example with E5M2:\nDecimal: $32 + 3.5 + 4$ Binary E5M2: $1.00_2 \\times 2^5 + 1.11_2 \\times 2^1 + 1.00_2 \\times 2^2$ Case 1: $(32 + 3.5) + 4 = 32$\n$32 + 3.5 = 1.00_2 \\times 2^5 + 0.000111_2 \\times 2^5 = 1.000111_2 \\times 2^5 = 1.00_2 \\times 2^5 = 32$ $32 + 4 = 1.00_2 \\times 2^5 + 1.00_2 \\times 2^2 = 1.00_2 \\times 2^5 + 0.001_2 \\times 2^5 = 1.001 \\times 2^5 = 1.00 \\times 2^5 = 32$ Case 2: $32 + (3.5 + 4) = 40$\n$3.5 + 4 = 1.11_2 \\times 2^1 + 1.00_2 \\times 2^2 = 0.111_2 \\times 2^2 + 1.00_2 \\times 2^2 = 1.111_2 \\times 2^2 = 1.00_2 \\times 2^3 = 8$ $32 + 8 = 1.00_2 \\times 2^5 + 1.00_2 \\times 2^3 = 1.00_2 \\times 2^5 + 0.01_2 \\times 2^5 = 1.01_2 \\times 2^5 = 40$ FMA? Performs $a * b + c$ in a single instruction\nDefined by IEEE 754, implemented by most modern chips (GPUs, CPUs) Product $a * b$ required to be kept in full precision (i.e. no rounding prior to addition) In most cases FMA is more accurate than FMUL, FADD pair\nBut can lead to results that are surprising at first\nClassical example by Kahan: $x * x - y * y$ may not be 0 even if $x = y$ Occurs when $x * x$ product requires more bits than available in format (we round) FMA implementation: temp = y * y // Rounding will happen FMA(x, x, -temp) // No rounding of $x * x$ FMUL, FADD implementation: rounding for both $x * x$ and $y * y$ Compiler optimizations affect how much FMA is used\nCompilers usually provide flags to control this Quantization: Motivation for using smaller number format?\nreduce memory footprint reduce memory bandwidth pressure enables packing more math units into same silicon area Linear Operations Can Cheaply Deal with Scales Let:\n$x = (x_i | 1 \\leq i \\leq k)$ be a vector of reals. $x^q$ be the integer-quantized version of $x$. $x’ = (x_i^q * dscale_x | 1 \\leq i \\leq k)$ be the approximation of $x$ after dequantization. Define $y$ and $y’$ similarly. Then,\n$$ z’ = \\sum_i x’_i * y’_i = dscale_x * dscale_y \\sum_i x_i^q * y_i^q $$\nMost of the math is cheap, only the dequantization at the end is expensive.\nwhat is the effect of quantization on the performance of the model?\nreduce the range, scaling factor clips the value to the range [min, max] reduce the precision, rounding the value to the nearest integer Scaling Factor Granularity:\nper-block quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ per-tensor quantization: $x^q = (x_i^q | 1 \\leq i \\leq k)$ per-channel quantization: $x^q = (x_{i,j}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m)$ per-layer quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ Quantization Design Space:\nHow to choose quantization scheme? (TBD)\nHow to compensatre for for quantization error?\nApplications in inference, training and RL Training FP16 training, with scaling factor why scaling factor? otherwise gradient does not fall into the range of FP16\nBF16 training\nFP8 training??\nOCP MX block format:\nmetadata + data blocks, with hardware support Recover accuracy: AWQ: Activation Weights Quantization QAT: Quantization aware training\nFP4 training?\nMXFP4: 32-element block, E8M0 NVFP4: 16-element block, E4M3 Reference [1] Numerics and AI: https://www.youtube.com/watch?v=ua2NhlenIKo\n",
+  "wordCount" : "1648",
   "inLanguage": "en",
-  "image":"http://localhost:1313/blogs/numerics-and-quantization/numerics-and-quantization.png","datePublished": "2025-11-24T00:00:00Z",
+  "image":"https://example.com/sub/blogs/numerics-and-quantization/numerics-and-quantization.png","datePublished": "2025-11-24T00:00:00Z",
   "dateModified": "2025-11-24T00:00:00Z",
   "author":{
     "@type": "Person",
@@ -86,14 +86,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://localhost:1313/blogs/numerics-and-quantization/"
+    "@id": "https://example.com/sub/blogs/numerics-and-quantization/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Building AI Infrastructure",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:1313/favicon.ico"
+      "url": "https://example.com/sub/favicon.ico"
     }
   }
 }
@@ -134,8 +134,8 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Ryan H.">
-                <img src="http://localhost:1313/favicon.ico" alt="" aria-label="logo"
+            <a href="https://example.com/sub/" accesskey="h" title="Ryan H.">
+                <img src="https://example.com/sub/favicon.ico" alt="" aria-label="logo"
                     height="18"
                     width="18">Ryan H.</a>
             <div class="logo-switches">
@@ -143,22 +143,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/blogs/" title="Blog">
+                <a href="https://example.com/sub/blogs/" title="Blog">
                     <span>Blog</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/courses/" title="Courses">
+                <a href="https://example.com/sub/courses/" title="Courses">
                     <span>Courses</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/data/" title="Data">
+                <a href="https://example.com/sub/data/" title="Data">
                     <span>Data</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/books/" title="Books">
+                <a href="https://example.com/sub/books/" title="Books">
                     <span>Books</span>
                 </a>
             </li>
@@ -218,7 +218,17 @@
 <li><strong>Exponent:</strong> E bits
 <ul>
 <li>Exponent for a power of 2</li>
-<li>Biased integer: bias = $2^{E-1} - 1$</li>
+<li>Exponent is biased, so the actual exponent is the stored value minus the bias. Bias = $2^{E-1} - 1$</li>
+<li>Example:
+<ul>
+<li>5 bits can store values from 0 to 31 (2^5 - 1 = 31)</li>
+<li>Bias = 2^(5-1) - 1 = 15</li>
+<li>Actual exponent = Stored value - Bias</li>
+<li>Special cases: exponent field of all 0s (0) and all 1s (31) are reserved for zeros/subnormals and infinity/NaN respectively</li>
+<li>Largest normal exponent: stored value 30 → actual exponent = 30 - 15 = <strong>15</strong> (represents 2^15)</li>
+<li>Range of normal exponents: 2^(-14) to 2^15. Bias equals the maximum exponent value for normal numbers (15 in this case), which allows for a symmetric range of exponents around zero in the biased representation.</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><strong>Mantissa:</strong> M bits
@@ -237,12 +247,12 @@
 </li>
 <li>$0.10001.1010000000_2 = 6.5_{10}$
 <ul>
-<li>$2^{17-15} * 1.101_2 = 2^2 * (1 + 2^{-1} + 2^{-3})<em>{10} = 4 * 1.625</em>{10} = 6.5_{10}$</li>
+<li>$2^{17-15} * \mathbf{1}.101_2 = 2^2 * (1 \text{ (implied } 1 \text{)} + 2^{-1} + 2^{-3})<em>{10} = 4 * 1.625</em>{10} = 6.5_{10}$</li>
 </ul>
 </li>
 </ul>
 <h4 id="fp-sampling">FP Sampling</h4>
-<p>While integer representation provides equal spacing sampling, floating point representation provides exponential spacing sampling, with same amount of samples in each power of 2 interval, i.e. same sample between [2, 4] and [4, 8].</p>
+<p>While integer representation provides equal spacing sampling, floating point representation provides exponential spacing sampling</p>
 <p><img alt="Floating Point Sampling" loading="lazy" src="/fp-sampling.png"></p>
 <p><strong>Exponent bits define which powers of 2 are sampled:</strong></p>
 <ul>
@@ -287,8 +297,37 @@
 <li>Exponent bits set to 1s, mantissa bits contain at least one 1</li>
 <li>Generated by things like sqrt(-1), sum of positive and negative infinity, etc.</li>
 </ul>
-<h3 id="fp4">FP4:</h3>
-<p>FP4 samples: 0, 0.5, 1, 2, 3, 4, 6</p>
+<h4 id="new-fp-formats">New FP Formats</h4>
+<p>FP8, BF16, FP4, etc. are invented and used in deep learning, but their standards have not been formalized in IEEE.</p>
+<h5 id="fp8-e4m3">FP8 (E4M3):</h5>
+<ul>
+<li>8-bit floating point format</li>
+<li>1 sign bit, 4 exponent bits, 3 mantissa bits (E4M3)</li>
+<li>Bias: $2^{4-1} - 1 = 7$</li>
+<li>Normal exponent range: stored values 1 to 14 → actual exponents -6 to 7</li>
+<li>Range (normals): $2^{-6}$ to $2^{7} = 0.015625$ to $128$</li>
+<li>Maximum representable value: 448 (with special encoding)</li>
+<li>Mantissa precision: 3 bits</li>
+<li>Note: There&rsquo;s also E5M2 variant with different trade-offs</li>
+</ul>
+<h5 id="bf16-brain-float-16">BF16 (Brain Float 16):</h5>
+<ul>
+<li>16-bit floating point format</li>
+<li>1 sign bit, 8 exponent bits, 7 mantissa bits (E8M7)</li>
+<li>Bias: $2^{8-1} - 1 = 127$ (same as FP32!)</li>
+<li>Normal exponent range: stored values 1 to 254 → actual exponents -126 to 127</li>
+<li>Range (normals): $2^{-126}$ to $2^{127} \approx 1.18 \times 10^{-38}$ to $3.4 \times 10^{38}$</li>
+<li>Mantissa precision: 7 bits (vs 10 bits in FP16, vs 23 bits in FP32)</li>
+<li>Key advantage: Same dynamic range as FP32, easy to truncate FP32 → BF16</li>
+<li>Trade-off: Less precision than FP16, but wider range</li>
+</ul>
+<h5 id="fp4">FP4:</h5>
+<ul>
+<li>4-bit floating point format (not standardized, multiple variants exist)</li>
+<li>1 sign bit, 2 exponent bits, 1 mantissa bit (E2M1)</li>
+<li>Example configuration: bias = 1</li>
+<li>Very limited precision and range, only samples 0, 0.5, 1, 2, 3, 4, 6.</li>
+</ul>
 <h3 id="fp-subnormals">FP Subnormals</h3>
 <p><strong>Special interpretation of exponents bits:</strong></p>
 <ul>
@@ -463,9 +502,9 @@ QAT: Quantization aware training</p>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:1313/tags/numerics/">Numerics</a></li>
-      <li><a href="http://localhost:1313/tags/quantization/">Quantization</a></li>
-      <li><a href="http://localhost:1313/tags/deep-learning/">Deep Learning</a></li>
+      <li><a href="https://example.com/sub/tags/numerics/">Numerics</a></li>
+      <li><a href="https://example.com/sub/tags/quantization/">Quantization</a></li>
+      <li><a href="https://example.com/sub/tags/deep-learning/">Deep Learning</a></li>
     </ul>
   </footer>
 </article>

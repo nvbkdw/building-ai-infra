@@ -14,9 +14,7 @@
 {{- end -}}
 {{- if strings.HasPrefix $src "/static/" -}}
   {{- $trimmed := strings.TrimPrefix "/static" $src -}}
-  {{- if not (strings.HasPrefix $trimmed "/") -}}
-    {{- $trimmed = printf "/%s" $trimmed -}}
-  {{- end -}}
+  {{- $trimmed = strings.TrimPrefix "/" $trimmed -}}
   {{- $src = relURL $trimmed -}}
 {{- end -}}
 {{- $attributes := merge .Attributes (dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy") -}}

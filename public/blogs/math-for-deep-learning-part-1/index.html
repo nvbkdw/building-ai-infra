@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Math for Deep Learning - Part 1 | Building AI Infrastructure</title>
 <meta name="keywords" content="deep learning, math">
 <meta name="description" content="This blog post covers the math behind deep learning - part 1.">
 <meta name="author" content="Ryan H.">
-<link rel="canonical" href="http://localhost:1313/blogs/math-for-deep-learning-part-1/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.ac30954b7ea20660ca1cb473400ecede9e601f17674446536180d3ca00f03328.css" integrity="sha256-rDCVS36iBmDKHLRzQA7O3p5gHxdnREZTYYDTygDwMyg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
+<link rel="canonical" href="https://example.com/sub/blogs/math-for-deep-learning-part-1/">
+<link crossorigin="anonymous" href="/sub/assets/css/stylesheet.ac30954b7ea20660ca1cb473400ecede9e601f17674446536180d3ca00f03328.css" integrity="sha256-rDCVS36iBmDKHLRzQA7O3p5gHxdnREZTYYDTygDwMyg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://example.com/sub/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.com/sub/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.com/sub/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://example.com/sub/apple-touch-icon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/blogs/math-for-deep-learning-part-1/">
+<link rel="alternate" hreflang="en" href="https://example.com/sub/blogs/math-for-deep-learning-part-1/">
 <noscript>
     <style>
         #theme-toggle,
@@ -26,7 +26,7 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="http://localhost:1313/blogs/math-for-deep-learning-part-1/">
+</noscript><meta property="og:url" content="https://example.com/sub/blogs/math-for-deep-learning-part-1/">
   <meta property="og:site_name" content="Building AI Infrastructure">
   <meta property="og:title" content="Math for Deep Learning - Part 1">
   <meta property="og:description" content="This blog post covers the math behind deep learning - part 1.">
@@ -37,9 +37,9 @@
     <meta property="article:modified_time" content="2025-11-19T00:00:00+00:00">
     <meta property="article:tag" content="Deep Learning">
     <meta property="article:tag" content="Math">
-    <meta property="og:image" content="http://localhost:1313/blogs/math-for-deep-learning-part-1/math-for-deep-learning.png">
+    <meta property="og:image" content="https://example.com/sub/blogs/math-for-deep-learning-part-1/math-for-deep-learning.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://localhost:1313/blogs/math-for-deep-learning-part-1/math-for-deep-learning.png">
+<meta name="twitter:image" content="https://example.com/sub/blogs/math-for-deep-learning-part-1/math-for-deep-learning.png">
 <meta name="twitter:title" content="Math for Deep Learning - Part 1">
 <meta name="twitter:description" content="This blog post covers the math behind deep learning - part 1.">
 
@@ -53,13 +53,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Blogs",
-      "item": "http://localhost:1313/blogs/"
+      "item": "https://example.com/sub/blogs/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Math for Deep Learning - Part 1",
-      "item": "http://localhost:1313/blogs/math-for-deep-learning-part-1/"
+      "item": "https://example.com/sub/blogs/math-for-deep-learning-part-1/"
     }
   ]
 }
@@ -77,7 +77,7 @@
   "articleBody": "This blog post provides a refresher on the essential math for deep learning. We will cover the following topics:\nPart 1: Linear Algebra Part 2: Calculus Part 3: Probability Table of Contents Sets, Scalars, Vectors, Matrices, Tensors Sets Scalars Vectors Matrices Tensors Transpose Addition and Multiplication Addition Multiplication Multiplication Matrix Multiplication Properties Identity and Inverse Matrix Linear Dependence and Span Norms Special Vector and Matrix Eigenvalues and Singular Value Decomposition Sets, Scalars, Vectors, Matrices, Tensors Sets A set $\\mathbb{S}$ is a collection of different values.\nA set can empty, i.e. $\\mathbb{S} = \\emptyset$. A set can contain discrete elements, i.e. $\\mathbb{S} = {red, green, blue}$. A set can contain continuous elements, i.e. $\\mathbb{S} = {x \\in \\mathbb{R} }$. A set defines a “virtual space” in which many mathmatical computation can be performed.\nSet properties:\nCardinality: $|\\mathbb{S}|$ is the number of elements in a set Union: $\\mathbb{S}_1 \\cup \\mathbb{S}_2$ is the set of all elements that are in either of the two sets Intersection: $\\mathbb{S}_1 \\cap \\mathbb{S}_2$ is the set of all elements that are in both of the two sets Cartesian Product: $\\mathbb{S}_1 \\times \\mathbb{S}_2$ is the set of all ordered pairs of elements from the two sets Scalars A scalar is a single number. It’s call scalar because it often used to scale other values, e.g., vectors, matrices, tensors.\nVectors A vector is a array of numbers with specific order.\nIf $x \\in \\mathbb{R}$, then $\\mathbf{x} = [x_1, x_2, \\ldots, x_n] $ is a vector of $n$ real numbers. $\\mathbf{x}$ is in set $\\mathbb{R}^n$ which is the cartesian product of $\\mathbb{R} \\times \\mathbb{R} \\times \\ldots \\times \\mathbb{R}$. We can think of vector $\\mathbf{x}$ as a point in an $n$-dimensional space. By default, a vector $a_{i}$ is column vector. $a_{i}^T$ with tranpose sign means it represents a row vector. Matrices A matrix is a 2D array of numbers. If a real-valued matrics has M rows and N columns, we write $A \\in \\mathbb{R}^{M \\times N}$.\n$a_{ij}$ is the element in the $i$-th row and $j$-th column of $A$. $\\mathbf{a}{j} = A{:j}$ is the $j$-th column of $A$. $\\mathbf{a}{i}^T = A{i:}$ is the $i$-th row of $A$. Matrix can be thought of as a collection of column vectors, i.e. $\\mathbf{A} = [\\mathbf{a}_1, \\mathbf{a}_2, \\ldots, \\mathbf{a}_N]$. Alternatively, Matrix can be represented as a vector, a.k.a. vectorization. $M \\times N = T, A \\in \\mathbb{R}^{M \\times N} = \\mathbb{R}^T$ $\\Leftrightarrow$ Matrix $A$ is a point in an $T$-dimensional space. Tensors A tensor is an array with more than 2 axes, i.e. $A \\in \\mathbb{R}^{M \\times N \\times K}$.\nSimilar to matrix, tensor can be represented as a vector, a.k.a. vectorization. $M \\times N \\times K = T, A \\in \\mathbb{R}^{M \\times N \\times K} = \\mathbb{R}^T$ $\\Leftrightarrow$ Tensor $A$ is a point in an $T$-dimensional space. Transpose The transpose of a matrix $A$ is a matrix $A^T$ such that $A^T_{ij} = A_{ji}$. Mirroring it at its main diagonal.\na standard column vector $\\mathbf{x}$ can be transposed to a row vector $\\mathbf{x}^T$. for scaler, $x = x^T$ Addition and Multiplication Addition Vector or matrix addition is defined as the element-wise addition. Commutative: $A + B = B + A$. Associative: $(A + B) + C = A + (B + C)$. We can also add (or multiply) a scaler to a vector or matrix. This corresponds to performing the operation on each element of the vector or matrix. Distributive: $a \\times (B + C) = (a \\times B) + (a \\times C)$. Multiplication Matrix multiplication is defined as the dot product of the rows of the first matrix and the columns of the second matrix. Matrix multiplication is not commutative, i.e. $A \\times B \\neq B \\times A$. Matrix multiplication is associative, i.e. $(A \\times B) \\times C = A \\times (B \\times C)$. In deep learning, we allow addition of a matrix and a vector:\n$$ A + \\mathbf{b} = [a_{11} + b_1, a_{12} + b_2, \\ldots, a_{1N} + b_N] $$\nThis is called “broadcasting” by implictly adding a column vector $\\mathbf{b}$ to each row of matrix $A$.\nBroadcasting rules applies to any tensor $A$ and $B$ with different number of dimensions:\nCompare shapes of tensor A and B, starting from the last shape dimension $dim$ (right to left) If $dim_A = dim_B$, move to the next $dim$ If one of the dimensions is 1, then broadcast the tensor to the same shape as the other tensor If $dim_A \\neq dim_B$, and $dim_A$ is 1, then broadcast $A$ to the same shape as $B$ If $dim_A \\neq dim_B$, and $dim_B$ is 1, then broadcast $B$ to the same shape as $A$ If $dim_A \\neq dim_B$, and $dim_A$ and $dim_B$ are not 1, then error Mutiplication Two matrix can be multiplied if the number of columns of the first matrix equals the number of rows of the second matrix.\nFor example, if $A \\in \\mathbb{R}^{M \\times N}$ and $B \\in \\mathbb{R}^{N \\times P}$, then $C = A B \\in \\mathbb{R}^{M \\times P}$.\nThe matrix product if defined as:\n$$ C_{ij} = \\sum_{k=1}^N A_{ik} B_{kj} $$\nInner product of two vectors, a.k.a. vector dot product:\n$$ \\mathbf{x}^T \\mathbf{y} = \\sum_{i=1}^N x_i y_i $$\nOuter product of two vectors:\n$$ \\mathbf{x} \\mathbf{y}^T = \\begin{bmatrix} x_1 y_1 \u0026 x_1 y_2 \\ x_2 y_1 \u0026 x_2 y_2 \\end{bmatrix} $$\nMatrix Multiplication Properties Associative: $(A B) C = A (B C)$. Distributive: $A (B + C) = A B + A C$. Transpose: $(A B)^T = B^T A^T$. Hence, the vector dot procut is commutative, i.e. $\\mathbf{x}^T \\mathbf{y} = \\mathbf{y}^T \\mathbf{x}$. NOT Commutative: $A B \\neq B A$. Identity and Inverse Matrix Matrix-vector product $A \\mathbf{x}$ can be thought of as a linear transformation. If the transformation does not change the vector, it is called the identity matrix $I$.\n$$ I \\mathbf{x} = \\mathbf{x} $$\nThe identity matrix is a square matrix with ones on the main diagonal and zeros elsewhere.\n$$ I = \\begin{bmatrix} 1 \u0026 0 \u0026 0 \\ 0 \u0026 1 \u0026 0 \\ 0 \u0026 0 \u0026 1 \\end{bmatrix} $$\nThe matrix inverser $A^{-1}$ is a matrix that when multiplied by $A$ gives the identity matrix.\n$$ A A^{-1} = I $$\nThe matrix inverse is not always exist. If it exists, it is unique.\n$$ A^{-1} = \\frac{1}{\\det(A)} \\text{adj}(A) $$\nThe matrix inverse is not always exist. More on this later.\nLinear Dependence and Span Matrix-vector product $A \\mathbf{x} = b$ is a compact representation of system of linear equations:\n$$ a_1^Tx=b_1; \\quad a_2^Tx=b_2; \\quad \\ldots; \\quad a_n^Tx=b_n $$\nIt is possible for $A \\mathbf{x} = b$ to have 0, 1, or infinite solutions.\nWe define span of a set of vectors as the set of all points obtained by linear combination of the vectors.\nIf we break $A$ into column vectors, $A = [\\mathbf{a}_1, \\mathbf{a}_2, \\ldots, \\mathbf{a}n]$, then $A \\mathbf{x} = \\sum{i=1} x_i \\mathbf{a}_i$ is a span of the column vectors, a.k.a. the column space or range of $A$.\nIf $b$ is in the column space of $A$, then $A \\mathbf{x} = b$ has a solution.\nIf the columns are linearly independent, then the column space is a line.\nIf $b$ is not on this line, there is no solution. If $b$ is on this line, there are infinite solutions. The rank of a matrix is the number of linearly independent columns. For $A \\in \\mathbb{R}^{N \\times N}$, to have its span emcompass full space of $\\mathbb{R}^N$, it must have $N$ linearly independent columns, a.k.a. full rank. If any two columns are linearly dependent, the matrix is called singular.\nEvery square matrix with full rank is invertible.\nNorms We define norm of a vector as a measure of its size. A norm function $ f: \\mathbb{R}^N \\to \\mathbb{R}$ satisfies the following properties:\nNon-negativity: $f(\\mathbf{x}) \\geq 0$ Zero: $f(\\mathbf{x}) = 0$ if and only if $\\mathbf{x} = 0$ Homogeneity: $f(\\alpha \\mathbf{x}) = |\\alpha| f(\\mathbf{x})$ Triangle inequality: $f(\\mathbf{x} + \\mathbf{y}) \\leq f(\\mathbf{x}) + f(\\mathbf{y})$ The $\\ell_p$ norm of a vector $\\mathbf{x}$ is defined as:\n$$ |\\mathbf{x}|p = \\left( \\sum{i=1}^N |x_i|^p \\right)^{\\frac{1}{p}} $$\nThe most common norms are:\n$\\ell_1$ norm: $|\\mathbf{x}|1 = \\sum{i=1}^N |x_i|$\n$\\ell_2$ norm: $|\\mathbf{x}|2 = \\sqrt{\\sum{i=1}^N x_i^2}$\n$\\ell_\\infty$ norm: $|\\mathbf{x}|\\infty = \\max{i=1}^N |x_i|$\nThe dot product of two vectors $\\mathbf{x}$ and $\\mathbf{y}$ can be written in term of norms:\n$$ \\mathbf{x}^T \\mathbf{y} = \\sum_{i=1}^N x_i y_i = |\\mathbf{x}|_2 |\\mathbf{y}|_2 \\cos(\\theta) $$\nwhere $\\theta$ is the angle between the two vectors.\nThe “size” of a matrix can be measured by the Frobenius norm:\n$$ |\\mathbf{x}|F = \\sqrt{\\sum{i=1}^N x_i^2} $$\nThe Frobenius norm is a special case of the $\\ell_2$ norm for matrices.\nSpecial Vector and Matrix Diagonal Matrix - non-zero elements are only on the main diagonal: $$ D = diag(\\mathbf{d}) = \\begin{bmatrix} d_1 \u0026 0 \u0026 0 \\ 0 \u0026 d_2 \u0026 0 \\ 0 \u0026 0 \u0026 d_3 \\end{bmatrix} $$\nMultiplying with diagnal matrics $diag(\\mathbf{d})\\mathbf{x} = \\mathbf{d} \\odot \\mathbf{x}$ Inverting diagnal matrics $diag(\\mathbf{d})^{-1} = diag((1/d_1, 1/d_2, 1/d_3, \\ldots, 1/d_N)^T)$ Symmetric Matrix - matrix that is equal to its transpose: $$ A = A^T $$\nUnit vector - vector with norm 1: $$ |\\mathbf{x}|_2 = 1 $$\nA vector $\\mathbf{x}$ is orthogonal to another vector $\\mathbf{y}$ if their dot product is 0: $$ \\mathbf{x}^T \\mathbf{y} = 0 $$\nA set of unit vectors that are orthogonal to each other are called orthonormal.\nA orthogonal matrix is a square matrix whose rows/columns are orthonormal. $$ A^T A = A A^T = I \\Rightarrow A^T = A^{-1} $$\nEigenvalues and Singular Value Decomposition Many math problems can be solve by breaking them into parts. An eigendecomposition is a way to break a matrix into its eigenvalues and eigenvectors.\nAn eigenvector of square matrix $A$ is a non-zero vector $\\mathbf{v}$ such that matrix-eigenvector product only alters its scale, known as eigenvalue.\n$$ A \\mathbf{v} = \\lambda \\mathbf{v} $$\nEigenvalue Decomposition (EVD): $$ A = V \\Lambda V^{-1} $$\nwhere $Q$ is the matrix of eigenvectors and $\\Lambda$ is the diagonal matrix of eigenvalues.\nA real symmetric matrix $A$ can be decomposed into:\n$$A = Q \\Lambda Q^T$$\nWhere $Q$ is an orthogonal matrix of eigenvectors and $\\Lambda$ is a diagonal matrix of eigenvalues. This can be view as three step transformation:\n$Q^T$ rotation on to the eigenvectors space $\\Lambda$ scaling along the eigenvectors $Q$ rotation back to the original space This can be view as $A$ distorts space along the eigenvectors, and scales the magnitude by the eigenvalues.\nThe rank of a matrix = the number of non-zero eigenvalues.\nSingular Value Decomposition (SVD): Eigenvalue decomposition is only defined for square matrices. SVD is a generalization of EVD to non-square matrices.\n$$ A = U \\Sigma V^T $$\nwhere $U \\in \\mathbb{R}^{M \\times M}$ and $V \\in \\mathbb{R}^{N \\times N}$ are orthogonal matrices and $\\Sigma \\in \\mathbb{R}^{M \\times N}$ is a diagonal matrix.\nCovariance Matrix and Principal Components:\nA covariance matrix is a square matrix that captures the pairwise covariances between multiple variables in a dataset. For a data matrix with $n$ features, the covariance matrix is an $n \\times n$ matrix where:\nThe element at position $(i, j)$ represents the covariance between feature $i$ and feature $j$ Diagonal elements represent the variance of each feature The matrix is symmetric (i.e., $\\text{Cov}(i, j) = \\text{Cov}(j, i)$) Mathematically, for a data matrix $\\mathbf{X}$ with centered columns (mean subtracted), the covariance matrix is:\n$$ \\text{Cov} = \\frac{1}{n-1} \\mathbf{X}^T \\mathbf{X} $$\nConnection to PCA:\nThe eigenvectors of the covariance matrix point in the directions of maximum variance in the data (these are called principal components) The eigenvalues indicate the magnitude of variance in those directions This is the foundation of PCA, which uses eigenvalue decomposition of the covariance matrix to find the most important directions in the data Since covariance matrices are real symmetric matrices, they can be decomposed using eigenvalue decomposition: $\\text{Cov} = Q \\Lambda Q^T$, where $Q$ contains the eigenvectors and $\\Lambda$ contains the eigenvalues.\n",
   "wordCount" : "1977",
   "inLanguage": "en",
-  "image":"http://localhost:1313/blogs/math-for-deep-learning-part-1/math-for-deep-learning.png","datePublished": "2025-11-19T00:00:00Z",
+  "image":"https://example.com/sub/blogs/math-for-deep-learning-part-1/math-for-deep-learning.png","datePublished": "2025-11-19T00:00:00Z",
   "dateModified": "2025-11-19T00:00:00Z",
   "author":{
     "@type": "Person",
@@ -85,14 +85,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://localhost:1313/blogs/math-for-deep-learning-part-1/"
+    "@id": "https://example.com/sub/blogs/math-for-deep-learning-part-1/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Building AI Infrastructure",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:1313/favicon.ico"
+      "url": "https://example.com/sub/favicon.ico"
     }
   }
 }
@@ -133,8 +133,8 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Ryan H.">
-                <img src="http://localhost:1313/favicon.ico" alt="" aria-label="logo"
+            <a href="https://example.com/sub/" accesskey="h" title="Ryan H.">
+                <img src="https://example.com/sub/favicon.ico" alt="" aria-label="logo"
                     height="18"
                     width="18">Ryan H.</a>
             <div class="logo-switches">
@@ -142,22 +142,22 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/blogs/" title="Blog">
+                <a href="https://example.com/sub/blogs/" title="Blog">
                     <span>Blog</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/courses/" title="Courses">
+                <a href="https://example.com/sub/courses/" title="Courses">
                     <span>Courses</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/data/" title="Data">
+                <a href="https://example.com/sub/data/" title="Data">
                     <span>Data</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/books/" title="Books">
+                <a href="https://example.com/sub/books/" title="Books">
                     <span>Books</span>
                 </a>
             </li>
@@ -463,8 +463,8 @@ $$</p>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:1313/tags/deep-learning/">Deep Learning</a></li>
-      <li><a href="http://localhost:1313/tags/math/">Math</a></li>
+      <li><a href="https://example.com/sub/tags/deep-learning/">Deep Learning</a></li>
+      <li><a href="https://example.com/sub/tags/math/">Math</a></li>
     </ul>
   </footer>
 </article>
