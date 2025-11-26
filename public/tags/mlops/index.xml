@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Mlops on Building AI Infrastructure</title>
-    <link>https://example.com/sub/tags/mlops/</link>
+    <link>http://localhost:1313/building-ai-infra/tags/mlops/</link>
     <description>Recent content in Mlops on Building AI Infrastructure</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en</language>
     <lastBuildDate>Wed, 19 Nov 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://example.com/sub/tags/mlops/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/building-ai-infra/tags/mlops/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MLOps Platform for Research Lab</title>
-      <link>https://example.com/sub/blogs/mlops-platform-for-research-lab/</link>
+      <link>http://localhost:1313/building-ai-infra/blogs/mlops-platform-for-research-lab/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/blogs/mlops-platform-for-research-lab/</guid>
+      <guid>http://localhost:1313/building-ai-infra/blogs/mlops-platform-for-research-lab/</guid>
       <description>This blog post covers the MLOps platform for research lab.</description>
     </item>
   </channel>

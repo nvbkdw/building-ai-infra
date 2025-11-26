@@ -16,26 +16,7 @@ This blog post provides a refresher on the essential math for deep learning. We 
 - Part 2: Calculus
 - Part 3: Probability
 
-## Table of Contents
-- [Sets, Scalars, Vectors, Matrices, Tensors](#sets-scalars-vectors-matrices-tensors)
-  - [Sets](#sets)
-  - [Scalars](#scalars)
-  - [Vectors](#vectors)
-  - [Matrices](#matrices)
-  - [Tensors](#tensors)
-  - [Transpose](#transpose)
-- [Addition and Multiplication](#addition-and-multiplication)
-  - [Addition](#addition)
-  - [Multiplication](#multiplication)
-- [Multiplication](#multiplication)
-  - [Matrix Multiplication Properties](#matrix-multiplication-properties)
-- [Identity and Inverse Matrix](#identity-and-inverse-matrix)
-- [Linear Dependence and Span](#linear-dependence-and-span)
-- [Norms](#norms)
-- [Special Vector and Matrix](#special-vector-and-matrix)
-- [Eigenvalues and Singular Value Decomposition](#eigenvalues-and-singular-value-decomposition)
-
-### Sets, Scalars, Vectors, Matrices, Tensors
+## Sets, Scalars, Vectors, Matrices, Tensors
 
 #### Sets
 A set $\mathbb{S}$ is a collection of different values. 
@@ -78,7 +59,7 @@ The transpose of a matrix $A$ is a matrix $A^T$ such that $A^T_{ij} = A_{ji}$. M
 - a standard column vector $\mathbf{x}$ can be transposed to a row vector $\mathbf{x}^T$. 
 - for scaler, $x = x^T$
 
-### Addition and Multiplication
+## Addition and Multiplication
 #### Addition
 - Vector or matrix addition is defined as the element-wise addition.
     - **Commutative**: $A + B = B + A$.
@@ -107,7 +88,7 @@ Broadcasting rules applies to any tensor $A$ and $B$ with different number of di
     - If $dim_A \neq dim_B$, and $dim_B$ is 1, then broadcast $B$ to the same shape as $A$
 - If $dim_A \neq dim_B$, and $dim_A$ and $dim_B$ are not 1, then error
 
-### Mutiplication
+## Mutiplication
 Two matrix can be multiplied if the number of columns of the first matrix equals the number of rows of the second matrix.
 
 For example, if $A \in \mathbb{R}^{M \times N}$ and $B \in \mathbb{R}^{N \times P}$, then $C = A B \in \mathbb{R}^{M \times P}$. 
@@ -164,7 +145,7 @@ $$
 
 The matrix inverse is not always exist. More on this later.
 
-### Linear Dependence and Span
+## Linear Dependence and Span
 
 Matrix-vector product $A \mathbf{x} = b$ is a compact representation of system of linear equations:
 
@@ -189,7 +170,7 @@ The **rank** of a matrix is the number of linearly independent columns. For $A \
 
 Every square matrix with full rank is invertible.
 
-### Norms
+## Norms
 
 We define **norm** of a vector as a measure of its size. 
 A norm function $ f: \mathbb{R}^N \to \mathbb{R}$ satisfies the following properties:
@@ -230,7 +211,7 @@ $$
 
 The Frobenius norm is a special case of the $\ell_2$ norm for matrices.
 
-### Special Vector and Matrix
+## Special Vector and Matrix
 
 **Diagonal Matrix** - non-zero elements are only on the main diagonal:
 $$
@@ -263,7 +244,7 @@ A^T A = A A^T = I \Rightarrow A^T = A^{-1}
 $$
 
 
-### Eigenvalues and Singular Value Decomposition
+## Eigenvalues and Singular Value Decomposition
 
 Many math problems can be solve by breaking them into parts. An **eigendecomposition** is a way to break a matrix into its eigenvalues and eigenvectors.
 

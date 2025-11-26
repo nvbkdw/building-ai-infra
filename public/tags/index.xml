@@ -2,332 +2,332 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Tags on Building AI Infrastructure</title>
-    <link>https://example.com/sub/tags/</link>
+    <link>http://localhost:1313/building-ai-infra/tags/</link>
     <description>Recent content in Tags on Building AI Infrastructure</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en</language>
     <lastBuildDate>Mon, 24 Nov 2025 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://example.com/sub/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/building-ai-infra/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Deep Learning</title>
-      <link>https://example.com/sub/tags/deep-learning/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/deep-learning/</link>
       <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/deep-learning/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/deep-learning/</guid>
       <description></description>
     </item>
     <item>
       <title>Numerics</title>
-      <link>https://example.com/sub/tags/numerics/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/numerics/</link>
       <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/numerics/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/numerics/</guid>
       <description></description>
     </item>
     <item>
       <title>Quantization</title>
-      <link>https://example.com/sub/tags/quantization/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/quantization/</link>
       <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/quantization/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/quantization/</guid>
       <description></description>
     </item>
     <item>
       <title>Anology</title>
-      <link>https://example.com/sub/tags/anology/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/anology/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/anology/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/anology/</guid>
       <description></description>
     </item>
     <item>
       <title>Data Loading</title>
-      <link>https://example.com/sub/tags/data-loading/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/data-loading/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/data-loading/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/data-loading/</guid>
       <description></description>
     </item>
     <item>
       <title>Diffusion Models</title>
-      <link>https://example.com/sub/tags/diffusion-models/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/diffusion-models/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/diffusion-models/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/diffusion-models/</guid>
       <description></description>
     </item>
     <item>
       <title>Distributed System</title>
-      <link>https://example.com/sub/tags/distributed-system/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/distributed-system/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/distributed-system/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/distributed-system/</guid>
       <description></description>
     </item>
     <item>
       <title>Distributed Training</title>
-      <link>https://example.com/sub/tags/distributed-training/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/distributed-training/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/distributed-training/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/distributed-training/</guid>
       <description></description>
     </item>
     <item>
       <title>Gpu</title>
-      <link>https://example.com/sub/tags/gpu/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/gpu/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/gpu/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/gpu/</guid>
       <description></description>
     </item>
     <item>
       <title>Inference</title>
-      <link>https://example.com/sub/tags/inference/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/inference/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/inference/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/inference/</guid>
       <description></description>
     </item>
     <item>
       <title>Kernel</title>
-      <link>https://example.com/sub/tags/kernel/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/kernel/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/kernel/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/kernel/</guid>
       <description></description>
     </item>
     <item>
       <title>Llm</title>
-      <link>https://example.com/sub/tags/llm/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/llm/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/llm/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/llm/</guid>
       <description></description>
     </item>
     <item>
       <title>Machine Learning</title>
-      <link>https://example.com/sub/tags/machine-learning/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/machine-learning/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/machine-learning/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/machine-learning/</guid>
       <description></description>
     </item>
     <item>
       <title>Math</title>
-      <link>https://example.com/sub/tags/math/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/math/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/math/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/math/</guid>
       <description></description>
     </item>
     <item>
       <title>Mlops</title>
-      <link>https://example.com/sub/tags/mlops/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/mlops/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/mlops/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/mlops/</guid>
       <description></description>
     </item>
     <item>
       <title>Platform</title>
-      <link>https://example.com/sub/tags/platform/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/platform/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/platform/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/platform/</guid>
       <description></description>
     </item>
     <item>
       <title>Programming</title>
-      <link>https://example.com/sub/tags/programming/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/programming/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/programming/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/programming/</guid>
       <description></description>
     </item>
     <item>
       <title>System Biology</title>
-      <link>https://example.com/sub/tags/system-biology/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/system-biology/</link>
       <pubDate>Wed, 19 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/system-biology/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/system-biology/</guid>
       <description></description>
     </item>
     <item>
       <title>Academia</title>
-      <link>https://example.com/sub/tags/academia/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/academia/</link>
       <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/academia/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/academia/</guid>
       <description></description>
     </item>
     <item>
       <title>Experimental Psychology</title>
-      <link>https://example.com/sub/tags/experimental-psychology/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/experimental-psychology/</link>
       <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/experimental-psychology/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/experimental-psychology/</guid>
       <description></description>
     </item>
     <item>
       <title>Inner Hedgehog</title>
-      <link>https://example.com/sub/tags/inner-hedgehog/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/inner-hedgehog/</link>
       <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/inner-hedgehog/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/inner-hedgehog/</guid>
       <description></description>
     </item>
     <item>
       <title>Invasive Thoughts</title>
-      <link>https://example.com/sub/tags/invasive-thoughts/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/invasive-thoughts/</link>
       <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/invasive-thoughts/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/invasive-thoughts/</guid>
       <description></description>
     </item>
     <item>
       <title>Social Psychology</title>
-      <link>https://example.com/sub/tags/social-psychology/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/social-psychology/</link>
       <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/social-psychology/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/social-psychology/</guid>
       <description></description>
     </item>
     <item>
       <title>Dataset</title>
-      <link>https://example.com/sub/tags/dataset/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/dataset/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/dataset/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/dataset/</guid>
       <description></description>
     </item>
     <item>
       <title>French</title>
-      <link>https://example.com/sub/tags/french/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/french/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/french/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/french/</guid>
       <description></description>
     </item>
     <item>
       <title>Irregular Verbs</title>
-      <link>https://example.com/sub/tags/irregular-verbs/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/irregular-verbs/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/irregular-verbs/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/irregular-verbs/</guid>
       <description></description>
     </item>
     <item>
       <title>Italian</title>
-      <link>https://example.com/sub/tags/italian/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/italian/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/italian/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/italian/</guid>
       <description></description>
     </item>
     <item>
       <title>Philology</title>
-      <link>https://example.com/sub/tags/philology/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/philology/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/philology/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/philology/</guid>
       <description></description>
     </item>
     <item>
       <title>Portuguese</title>
-      <link>https://example.com/sub/tags/portuguese/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/portuguese/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/portuguese/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/portuguese/</guid>
       <description></description>
     </item>
     <item>
       <title>Python</title>
-      <link>https://example.com/sub/tags/python/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/python/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/python/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/python/</guid>
       <description></description>
     </item>
     <item>
       <title>Romance Languages</title>
-      <link>https://example.com/sub/tags/romance-languages/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/romance-languages/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/romance-languages/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/romance-languages/</guid>
       <description></description>
     </item>
     <item>
       <title>Simulations</title>
-      <link>https://example.com/sub/tags/simulations/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/simulations/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/simulations/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/simulations/</guid>
       <description></description>
     </item>
     <item>
       <title>Spanish</title>
-      <link>https://example.com/sub/tags/spanish/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/spanish/</link>
       <pubDate>Thu, 07 Mar 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/spanish/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/spanish/</guid>
       <description></description>
     </item>
     <item>
       <title>History of Oil</title>
-      <link>https://example.com/sub/tags/history-of-oil/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/history-of-oil/</link>
       <pubDate>Tue, 15 Jan 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/history-of-oil/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/history-of-oil/</guid>
       <description></description>
     </item>
     <item>
       <title>Mediterranean World</title>
-      <link>https://example.com/sub/tags/mediterranean-world/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/mediterranean-world/</link>
       <pubDate>Tue, 15 Jan 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/mediterranean-world/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/mediterranean-world/</guid>
       <description></description>
     </item>
     <item>
       <title>Oleic Science</title>
-      <link>https://example.com/sub/tags/oleic-science/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/oleic-science/</link>
       <pubDate>Tue, 15 Jan 2013 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/oleic-science/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/oleic-science/</guid>
       <description></description>
     </item>
     <item>
       <title>Canine Pulmonary Efficiency</title>
-      <link>https://example.com/sub/tags/canine-pulmonary-efficiency/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/canine-pulmonary-efficiency/</link>
       <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/canine-pulmonary-efficiency/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/canine-pulmonary-efficiency/</guid>
       <description></description>
     </item>
     <item>
       <title>Canine Science</title>
-      <link>https://example.com/sub/tags/canine-science/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/canine-science/</link>
       <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/canine-science/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/canine-science/</guid>
       <description></description>
     </item>
     <item>
       <title>Experimental Zoology</title>
-      <link>https://example.com/sub/tags/experimental-zoology/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/experimental-zoology/</link>
       <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/experimental-zoology/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/experimental-zoology/</guid>
       <description></description>
     </item>
     <item>
       <title>Sausage Dogs</title>
-      <link>https://example.com/sub/tags/sausage-dogs/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/sausage-dogs/</link>
       <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/sausage-dogs/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/sausage-dogs/</guid>
       <description></description>
     </item>
     <item>
       <title>Zoology</title>
-      <link>https://example.com/sub/tags/zoology/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/zoology/</link>
       <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/zoology/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/zoology/</guid>
       <description></description>
     </item>
     <item>
       <title>Portugese</title>
-      <link>https://example.com/sub/tags/portugese/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/portugese/</link>
       <pubDate>Wed, 01 Jan 1997 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/portugese/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/portugese/</guid>
       <description></description>
     </item>
     <item>
       <title>Celtic Languages</title>
-      <link>https://example.com/sub/tags/celtic-languages/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/celtic-languages/</link>
       <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/celtic-languages/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/celtic-languages/</guid>
       <description></description>
     </item>
     <item>
       <title>Irish</title>
-      <link>https://example.com/sub/tags/irish/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/irish/</link>
       <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/irish/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/irish/</guid>
       <description></description>
     </item>
     <item>
       <title>Language Modernization</title>
-      <link>https://example.com/sub/tags/language-modernization/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/language-modernization/</link>
       <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/language-modernization/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/language-modernization/</guid>
       <description></description>
     </item>
     <item>
       <title>Profanity</title>
-      <link>https://example.com/sub/tags/profanity/</link>
+      <link>http://localhost:1313/building-ai-infra/tags/profanity/</link>
       <pubDate>Sat, 16 Jun 1990 00:00:00 +0000</pubDate>
-      <guid>https://example.com/sub/tags/profanity/</guid>
+      <guid>http://localhost:1313/building-ai-infra/tags/profanity/</guid>
       <description></description>
     </item>
   </channel>
