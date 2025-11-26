@@ -308,7 +308,7 @@ A covariance matrix is a square matrix that captures the pairwise covariances be
 
 - The element at position $(i, j)$ represents the covariance between feature $i$ and feature $j$
 - Diagonal elements represent the variance of each feature
-- The matrix is symmetric (i.e., $\text{Cov}(X_i, X_j) = \text{Cov}(X_j, X_i)$)
+- The matrix is symmetric (i.e., $\text{Cov}(i, j) = \text{Cov}(j, i)$)
 
 Mathematically, for a data matrix $\mathbf{X}$ with centered columns (mean subtracted), the covariance matrix is:
 
