@@ -31,7 +31,7 @@ Integers can be represented in different ways:
 
 ## Floating Point
 
-** IEEE Floating Point Encoding (ExMy):**
+### IEEE Floating Point Encoding (ExMy)
 - **Sign:** 1 bit (0: positive, 1: negative)
 - **Exponent:** E bits
   - Exponent for a power of 2
@@ -111,7 +111,7 @@ While integer representation provides equal spacing sampling, floating point rep
 
 #### New FP Formats
 
-FP16, BF16, FP8, FP4, etc. are invented and used in deep learning, but their standards have not been formalized in IEEE.
+BF16, FP8, FP4, etc. are invented and used in deep learning, but their standards have not been formalized in IEEE.
 
 ##### FP8 (E4M3):
 - 8-bit floating point format
@@ -132,6 +132,8 @@ FP16, BF16, FP8, FP4, etc. are invented and used in deep learning, but their sta
 - Mantissa precision: 7 bits (vs 10 bits in FP16, vs 23 bits in FP32)
 - Key advantage: Same dynamic range as FP32, easy to truncate FP32 → BF16
 - Trade-off: Less precision than FP16, but wider range
+
+![BF16 Format Summary](/static/bf16-format.png)
 
 ##### FP4:
 - 4-bit floating point format (not standardized, multiple variants exist)
@@ -208,4 +210,6 @@ Routing is the culprit!
 
 ## Reference
 
-[1] Numerics and AI: https://www.youtube.com/watch?v=ua2NhlenIKo
+[1] Paulius Mickevicius, Numerics and AI: https://www.youtube.com/watch?v=ua2NhlenIKo
+
+[2] Song Han, EfficientML.ai, Lecture 5: Quantization: https://www.dropbox.com/scl/fi/qc2s9opsa2mnqfithvwz1/Lec05-Quantization-I.pdf
