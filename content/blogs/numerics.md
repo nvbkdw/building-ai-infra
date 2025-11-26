@@ -113,15 +113,7 @@ While integer representation provides equal spacing sampling, floating point rep
 
 BF16, FP8, FP4, etc. are invented and used in deep learning, but their standards have not been formalized in IEEE.
 
-##### FP8 (E4M3):
-- 8-bit floating point format
-- 1 sign bit, 4 exponent bits, 3 mantissa bits (E4M3)
-- Bias: $2^{4-1} - 1 = 7$
-- Normal exponent range: stored values 1 to 14 → actual exponents -6 to 7
-- Range (normals): $2^{-6}$ to $2^{7} = 0.015625$ to $128$
-- Maximum representable value: 448 (with special encoding)
-- Mantissa precision: 3 bits
-- Note: There's also E5M2 variant with different trade-offs
+
 
 ##### BF16 (Brain Float 16):
 - 16-bit floating point format
@@ -135,11 +127,25 @@ BF16, FP8, FP4, etc. are invented and used in deep learning, but their standards
 
 ![BF16 Format Summary](/static/bf16-format.png)
 
+##### FP8 (E4M3):
+- 8-bit floating point format
+- 1 sign bit, 4 exponent bits, 3 mantissa bits (E4M3)
+- Bias: $2^{4-1} - 1 = 7$
+- Normal exponent range: stored values 1 to 14 → actual exponents -6 to 7
+- Range (normals): $2^{-6}$ to $2^{7} = 0.015625$ to $128$
+- Maximum representable value: 448 (with special encoding)
+- Mantissa precision: 3 bits
+- Note: There's also E5M2 variant with different trade-offs
+
+![FP8 Format Summary](/static/fp8-format.png)
+
 ##### FP4:
 - 4-bit floating point format (not standardized, multiple variants exist)
 - 1 sign bit, 2 exponent bits, 1 mantissa bit (E2M1)
 - Example configuration: bias = 1
 - Very limited precision and range, only samples 0, 0.5, 1, 2, 3, 4, 6. 
+
+![FP4 Format Summary](/static/fp4-format.png)
 
 
 
@@ -206,6 +212,13 @@ Routing is the culprit!
 
 **Compiler optimizations affect how much FMA is used**
 - Compilers usually provide flags to control this
+
+
+
+Questions?
+
+How do you write a kernel to use small number format? FP8, FP4?
+
 
 
 ## Reference
