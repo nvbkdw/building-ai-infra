@@ -1,7 +1,7 @@
 ---
 title: "Numerics and Quantization"
 date: 2025-11-24
-tags: ["numerics","quantization"]
+tags: ["numerics","quantization", "deep learning"]
 author: "Ryan H."
 description: "This blog post covers the numerics and quantization in deep learning."
 summary: "This blog post covers the numerics and quantization in deep learning."
@@ -11,20 +11,30 @@ cover:
     relative: true
 ---
 
-## Introduction
+
+## Number Format:
+
+### Integers
+Integers can be represented in different ways:
+- **Unsigned integer (`uint`):** range from 0 to $2^n - 1$ for $n$ bits.
+- **Signed integer (`int`):** where the most significant bit is the sign bit (0 for positive and 1 for negative). Range from $-(2^{n-1}-1)$ to $2^{n-1} - 1$. Symmetric range around 0, but it has two zero representations: +0 and -0. 
+
+- **Two's complement representation:** A method for representing signed integers where:
+  - The most significant bit serves as the sign bit (0 for positive, 1 for negative)
+  - Positive numbers are represented in standard binary
+  - Negative numbers are obtained by inverting all bits (one's complement) and adding 1
+  - Example with 4-bit: 
+    - $5_{10} = 0101_2$
+    - $-5_{10}$: invert $0101_2 \rightarrow 1010_2$, add 1 $\rightarrow 1011_2$
+  - Range for n-bit: $[-2^{n-1}, 2^{n-1} - 1]$
+    - the code 1000...0 represents -2^(n-1)
+    - only one zero representation: 0000...0 represents 0
+  - Key advantage: arithmetic operations work uniformly for both positive and negative numbers without special handling
+
+### Floating Point
 
 
-number format representations:
-uint, int, 2s complement, float
-
-integer: equal spacing sampling
-
-float: exponential spacing sampling, same amount of numbers in each power of 2 intervals
-illustrate with a plot - TBD:
-
-
-
-### IEEE Floating Point (FP) Encoding
+#### IEEE Floating Point Encoding
 
 **Bit fields (ExMy):**
 - **Sign:** 1 bit (0: positive, 1: negative)
@@ -33,7 +43,7 @@ illustrate with a plot - TBD:
   - Biased integer: bias = $2^{E-1} - 1$
 - **Mantissa:** M bits
   - Fractional bits correspond to: $2^{-1}, 2^{-2}, ...$
-  - There is an implied 1 bit before the binary point, unless we're dealing with subnormals
+  - There is an implied 1 bit before the binary point (unless we're dealing with subnormals)
 
 **FP16 example:**
 - E5M10: 1 sign, 5 exponent, 10 mantissa bits
@@ -41,7 +51,11 @@ illustrate with a plot - TBD:
 - $0.10001.1010000000_2 = 6.5_{10}$
   - $2^{17-15} * 1.101_2 = 2^2 * (1 + 2^{-1} + 2^{-3})_{10} = 4 * 1.625_{10} = 6.5_{10}$
 
-### FP Sampling
+#### FP Sampling
+
+While integer representation provides equal spacing sampling, floating point representation provides exponential spacing sampling, with same amount of samples in each power of 2 interval, i.e. same sample between [2, 4] and [4, 8].
+
+![Floating Point Sampling](/static/fp-sampling.png)
 
 **Exponent bits define which powers of 2 are sampled:**
 - FP16 (E5M10): exponent samples $2^{-15}$ to $2^{15}$
