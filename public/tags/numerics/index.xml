@@ -9,11 +9,11 @@
     <lastBuildDate>Mon, 24 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/building-ai-infra/tags/numerics/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Numerics and Quantization</title>
-      <link>http://localhost:1313/building-ai-infra/blogs/numerics-and-quantization/</link>
+      <title>Numerics</title>
+      <link>http://localhost:1313/building-ai-infra/blogs/numerics/</link>
       <pubDate>Mon, 24 Nov 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/building-ai-infra/blogs/numerics-and-quantization/</guid>
-      <description>This blog post covers the numerics and quantization in deep learning.</description>
+      <guid>http://localhost:1313/building-ai-infra/blogs/numerics/</guid>
+      <description>This blog post covers the numerics in deep learning.</description>
     </item>
   </channel>
 </rss>
