@@ -17,7 +17,7 @@
   {{- if not (strings.HasPrefix $trimmed "/") -}}
     {{- $trimmed = printf "/%s" $trimmed -}}
   {{- end -}}
-  {{- $src = $trimmed -}}
+  {{- $src = relURL $trimmed -}}
 {{- end -}}
 {{- $attributes := merge .Attributes (dict "alt" .Text "src" $src "title" (.Title | transform.HTMLEscape) "loading" "lazy") -}}
 <img
