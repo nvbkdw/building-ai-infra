@@ -147,16 +147,18 @@ $$
 Since weight and bias follows the same distribution, we can force $s_b = s_ws_x$, and $z_b = 0$, then we have:
 
 $$
-q_y = \frac{s_w s_x}{s_y} (W^q X^q - z_x W^q + \mathbf{b}^q) + z_y \\
+q_y = \frac{s_w s_x}{s_y} (W^q X^q + B^q) + z_y \\
 $$
 
-where $z_x W^q + \mathbf{b}^q$ does not change at runtime, also pre-computed.
-
-
+where $B^q = -z_x W^q + \mathbf{b}^q$ is pre-computed and does not change at runtime.
 
 #### Convolution with Linear Quantization
 
 Convolution is linear operation, so it can be quantized using the same technique as matrix multiplication.
+
+$$
+q_y = \frac{s_w s_x}{s_y} (Conv(W^q X^q) + B^q) + z_y \\ 
+$$
 
 ![Convolution with Linear Quantization](/static/conv-quantization.png)
 
