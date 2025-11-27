@@ -15,12 +15,5 @@
       <guid>http://localhost:1313/building-ai-infra/data/data1/</guid>
       <description>This dataset contains all irregular verbs in known Romance languages.</description>
     </item>
-    <item>
-      <title>Lectures at the Villa of Reduced Circumstances</title>
-      <link>http://localhost:1313/building-ai-infra/courses/course1/</link>
-      <pubDate>Mon, 10 Mar 2003 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/building-ai-infra/courses/course1/</guid>
-      <description>This graduate course presents classical results in Romance philology.</description>
-    </item>
   </channel>
 </rss>

@@ -18,12 +18,6 @@ menu:
         - name: Blog
           url: blogs/
           weight: 2
-        - name: Courses
-          url: courses/
-          weight: 3
-        - name: Data
-          url: data/
-          weight: 4
 
 params:
     description: "This website hosts Ryan H.'s blog posts, books, course materials, data, curriculum vitae, and contact information."
@@ -41,7 +35,7 @@ params:
     ShowBreadCrumbs: false
     ShowCodeCopyButtons: true
     ShowAllPagesInArchive: false
-    MainSections: ["books","courses","papers","data"]
+    MainSections: ["books","papers"]
     ShowToc: false
     disableScrollToTop: true
     TocOpen: true
@@ -59,12 +53,8 @@ params:
           buttons:
             - name: Blog 
               url: blogs/
-            - name: Data
-              url: data/
             - name: Books
               url: books/
-            - name: Courses
-              url: courses/
             - name: Tags
               url: tags/
             - name: Archive

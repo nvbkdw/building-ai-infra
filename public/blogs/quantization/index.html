@@ -74,8 +74,8 @@
   "keywords": [
     "quantization", "deep learning"
   ],
-  "articleBody": "Motivation for using smaller number format?\nreduce memory footprint reduce memory bandwidth pressure enables packing more math units into same silicon area consume less energy Linear Operations Can Cheaply Deal with Scales Let:\n$x = (x_i | 1 \\leq i \\leq k)$ be a vector of reals. $x^q$ be the integer-quantized version of $x$. $x’ = (x_i^q * dscale_x | 1 \\leq i \\leq k)$ be the approximation of $x$ after dequantization. Define $y$ and $y’$ similarly. Then,\n$$ z’ = \\sum_i x’_i * y’_i = dscale_x * dscale_y \\sum_i x_i^q * y_i^q $$\nMost of the math is cheap, only the dequantization at the end is expensive.\nwhat is the effect of quantization on the performance of the model?\nreduce the range, scaling factor clips the value to the range [min, max] reduce the precision, rounding the value to the nearest integer Scaling Factor Granularity:\nper-block quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ per-tensor quantization: $x^q = (x_i^q | 1 \\leq i \\leq k)$ per-channel quantization: $x^q = (x_{i,j}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m)$ per-layer quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ Quantization Design Space:\nHow to choose quantization scheme? (TBD)\nHow to compensatre for for quantization error?\nApplications in inference, training and RL Training FP16 training, with scaling factor why scaling factor? otherwise gradient does not fall into the range of FP16\nBF16 training\nFP8 training??\nOCP MX block format:\nmetadata + data blocks, with hardware support Recover accuracy: AWQ: Activation Weights Quantization QAT: Quantization aware training\nFP4 training?\nMXFP4: 32-element block, E8M0 NVFP4: 16-element block, E4M3 Reference [1] Numerics and AI: https://www.youtube.com/watch?v=ua2NhlenIKo\n",
-  "wordCount" : "297",
+  "articleBody": "Motivation for using smaller number format?\nreduce memory footprint reduce memory bandwidth pressure enables packing more math units into same silicon area consume less energy Linear Operations Can Cheaply Deal with Scales Let:\n$x = (x_i | 1 \\leq i \\leq k)$ be a vector of reals. $x^q$ be the integer-quantized version of $x$. $x’ = (x_i^q * dscale_x | 1 \\leq i \\leq k)$ be the approximation of $x$ after dequantization. Define $y$ and $y’$ similarly. Then,\n$$ z’ = \\sum_i x’_i * y’_i = dscale_x * dscale_y \\sum_i x_i^q * y_i^q $$\nMost of the math is cheap, only the dequantization at the end is expensive.\nwhat is the effect of quantization on the performance of the model?\nreduce the range, scaling factor clips the value to the range [min, max] reduce the precision, rounding the value to the nearest integer Scaling Factor Granularity:\nper-block quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ per-tensor quantization: $x^q = (x_i^q | 1 \\leq i \\leq k)$ per-channel quantization: $x^q = (x_{i,j}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m)$ per-layer quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ Quantization Design Space:\nHow to choose quantization scheme? (TBD)\nHow to compensatre for for quantization error?\nQuantization Techniques K-Mean Quantization Quantization by clustering: Use k-means to find the best set of centroids for the given tensor. As a result, a tensor is compressed into low-bits index and a cookbook.\nWeights are decoded by “cookbook” table lookup. Reduce memory footprint and memory bandwidth pressure, all computation is still in full FP.\nTo recover model accuracy, weights in K-mean quantization are optimized by gradient descent to update the centroids.\nLinear Quantization Affine mapping between integer and real numbers:\n$$ A \\approx (A^q - z ) * s $$\n$A \\in \\mathbf{R}^{m \\times n}$ $A^q \\in \\mathbf{Z}^{m \\times n}$ where $Z$ is N-bit integer $z \\in \\mathbf{Z}$ is the zero-point $s \\in \\mathbf{R}$ is the scaling factor How to calcuate $z$ and $s$?\n$r_{min}$ and $r_{max}$ are the minimum and maximum values of the real numbers in the matrix $A$. $q_{min}$ and $q_{max}$ are the minimum and maximum values of the N-bit integer numbers.\n$$ r_{max} = s(q_{max} - z) \\ r_{min} = s(q_{min} - z) $$\nthen we have:\n$$ s = \\frac{r_{max} - r_{min}}{q_{max} - q_{min}}\nz = q_{max} - \\frac{r_{max}}{s} \\\n$$\n$s$ is the ratio between dynamic range of the real numbers to the N-bit integer numbers.\nGiven $s$, we can calculate $z$ as follows:\n$$ z = q_{max} - \\frac{r_{max}}{s} $$\nMatrix Multiplication with Linear Quantization $$ \\begin{aligned} Y \u0026= WX \\ \u0026\\Rightarrow s_y(Y^q - z_y) = s_w(W^q - z_w) * s_x(X^q - z_x) \\ \u0026\\Rightarrow q_y = \\frac{s_w s_x}{s_y} (W^q - z_w)(X^q - z_x) + z_y \\ \u0026\\Rightarrow q_y = \\frac{s_w s_x}{s_y} (W^q X^q - z_w X^q - z_x W^q + z_w z_x) + z_y \\end{aligned} $$\nEmpirically, weights distribution is symmetric around 0, so $z_w$ is set to 0. Then we simplify the equation as follows:\n$$ q_y = \\frac{s_w s_x}{s_y} (W^q X^q - z_x W^q) + z_y \\ $$\nAt inference time, $W^q$ and $z_x$ are constant (pre-determined), thus $z_x W^q$ can be pre-computed. The bulk of runtime computation is the integer matrix multiplication of $W^qX^q$.\nSimilarly, for matrix product with bias, we have: $$ \\begin{aligned} Y \u0026= WX + b \\ \u0026\\Rightarrow s_y(Y^q - z_y) = s_w(W^q - z_w) * s_x(X^q - z_x) + s_b(\\mathbf{b}^q - z_b) \\ \u0026\\Rightarrow q_y = \\frac{s_w s_x}{s_y} (W^q X^q - z_x W^q) + \\frac{s_b}{s_y} (\\mathbf{b}^q - z_b) + z_y \\ \\end{aligned} $$\nSince weight and bias follows the same distribution, we can force $s_b = s_ws_x$, and $z_b = 0$, then we have:\n$$ q_y = \\frac{s_w s_x}{s_y} (W^q X^q + B^q) + z_y \\ $$\nwhere $B^q = -z_x W^q + \\mathbf{b}^q$ is pre-computed and does not change at runtime.\nConvolution with Linear Quantization Convolution is linear operation, so it can be quantized using the same technique as matrix multiplication.\n$$ q_y = \\frac{s_w s_x}{s_y} (Conv(W^q X^q) + B^q) + z_y \\ $$\nSelf-Attention with Linear Quantization ?? Use both weights is stored in integer format, and computation is performed in integer domain.\nPost-Training Quantization Granularity Per-tensor Per-channel Group quantization Per-vector quantization Shared Micro-exponent (MX) data type Dynamic Range for Activation Quantization If training model from scratch, we can collect statistics of the activations dynamic range using exponential moving average. $$ r_{max} = \\alpha * r_{max} + (1 - \\alpha) * r_{max} \\ r_{min} = \\alpha * r_{min} + (1 - \\alpha) * r_{min} $$\nwhere $\\alpha$ is the decay factor. The observed ranges are smoothed over training steps $t$.\nIf we don’t have access to training data, we can use “calibration” samples on trained model.\nFind activation dynamic range by minimizing “loss of information”, which is measured by KL divergence.\nThe intuition is that, quantization need to clip the dynamic range (instead of blindly pick min and max), so that the quantized values has good enough precision to represent the majority of original values. Avoid spreading quantized INT samples over low population ranges.\nApplications in inference, training and RL Training FP16 training, with scaling factor why scaling factor? otherwise gradient does not fall into the range of FP16\nBF16 training\nFP8 training??\nOCP MX block format:\nmetadata + data blocks, with hardware support Recover accuracy: AWQ: Activation Weights Quantization QAT: Quantization aware training\nFP4 training?\nMXFP4: 32-element block, E8M0 NVFP4: 16-element block, E4M3 Questions?\nWhen to use which quantization technique? How to make trade-offs between quantization accuracy and performance? on different models? Any application of MX format in real model or hardware? Reference [1] EfficientML.ai, Lecture 5: Quantization, Song Han: https://www.dropbox.com/scl/fi/qc2s9opsa2mnqfithvwz1/Lec05-Quantization-I.pdf\n[2] Deep Compression, Song Han, et al.: https://arxiv.org/abs/1510.00149\n",
+  "wordCount" : "978",
   "inLanguage": "en",
   "image":"http://localhost:1313/building-ai-infra/blogs/quantization/quantization.png","datePublished": "2025-11-24T00:00:00Z",
   "dateModified": "2025-11-24T00:00:00Z",
@@ -147,16 +147,6 @@
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/building-ai-infra/courses/" title="Courses">
-                    <span>Courses</span>
-                </a>
-            </li>
-            <li>
-                <a href="http://localhost:1313/building-ai-infra/data/" title="Data">
-                    <span>Data</span>
-                </a>
-            </li>
-            <li>
                 <a href="http://localhost:1313/building-ai-infra/books/" title="Books">
                     <span>Books</span>
                 </a>
@@ -187,6 +177,9 @@
         <div class="inner"><nav id="TableOfContents">
   <ul>
     <li></li>
+    <li><a href="#quantization-techniques">Quantization Techniques</a></li>
+    <li><a href="#post-training-quantization">Post-Training Quantization</a></li>
+    <li><a href="#dynamic-range-for-activation-quantization">Dynamic Range for Activation Quantization</a></li>
     <li><a href="#applications-in-inference-training-and-rl">Applications in inference, training and RL</a></li>
     <li><a href="#reference">Reference</a></li>
   </ul>
@@ -236,6 +229,103 @@ $$</p>
 <p>How to compensatre for for quantization error?</p>
 </li>
 </ul>
+<h2 id="quantization-techniques">Quantization Techniques</h2>
+<h3 id="k-mean-quantization">K-Mean Quantization</h3>
+<p>Quantization by clustering: Use k-means to find the best set of centroids for the given tensor.
+As a result, a tensor is compressed into low-bits index and a cookbook.</p>
+<p><img alt="K-Mean Quantization" loading="lazy" src="/building-ai-infra/k-mean-quantization.png"></p>
+<p>Weights are decoded by &ldquo;cookbook&rdquo; table lookup. Reduce memory footprint and memory bandwidth pressure, all computation is still in full FP.</p>
+<p><img alt="K-Mean Quantization Decode" loading="lazy" src="/building-ai-infra/k-mean-quantization-decode.png"></p>
+<p>To recover model accuracy, weights in K-mean quantization are optimized by gradient descent to update the centroids.</p>
+<p><img alt="K-Mean Quantization Gradient Descent" loading="lazy" src="/building-ai-infra/k-mean-quantization-backprop.png"></p>
+<h3 id="linear-quantization">Linear Quantization</h3>
+<p>Affine mapping between integer and real numbers:</p>
+<p>$$
+A \approx (A^q - z ) * s
+$$</p>
+<ul>
+<li>$A \in \mathbf{R}^{m \times n}$</li>
+<li>$A^q \in \mathbf{Z}^{m \times n}$ where $Z$ is N-bit integer</li>
+<li>$z \in \mathbf{Z}$ is the zero-point</li>
+<li>$s \in \mathbf{R}$ is the scaling factor</li>
+</ul>
+<p><em><strong>How to calcuate $z$ and $s$?</strong></em></p>
+<p>$r_{min}$ and $r_{max}$ are the minimum and maximum values of the real numbers in the matrix $A$.
+$q_{min}$ and $q_{max}$ are the minimum and maximum values of the N-bit integer numbers.</p>
+<p>$$
+r_{max} = s(q_{max} - z) \
+r_{min} = s(q_{min} - z)
+$$</p>
+<p>then we have:</p>
+<p>$$
+s = \frac{r_{max} - r_{min}}{q_{max} - q_{min}}</p>
+<p>z = q_{max} - \frac{r_{max}}{s}
+\</p>
+<p>$$</p>
+<p>$s$ is the ratio between dynamic range of the real numbers to the N-bit integer numbers.</p>
+<p>Given $s$, we can calculate $z$ as follows:</p>
+<p>$$
+z = q_{max} - \frac{r_{max}}{s}
+$$</p>
+<h4 id="matrix-multiplication-with-linear-quantization">Matrix Multiplication with Linear Quantization</h4>
+<p>$$
+\begin{aligned}
+Y &amp;= WX \
+&amp;\Rightarrow s_y(Y^q - z_y) = s_w(W^q - z_w) * s_x(X^q - z_x) \
+&amp;\Rightarrow q_y = \frac{s_w s_x}{s_y} (W^q - z_w)(X^q - z_x) + z_y \
+&amp;\Rightarrow q_y = \frac{s_w s_x}{s_y} (W^q X^q - z_w X^q - z_x W^q  + z_w z_x) + z_y
+\end{aligned}
+$$</p>
+<p>Empirically, weights distribution is symmetric around 0, so $z_w$ is set to 0. Then we simplify the equation as follows:</p>
+<p>$$
+q_y = \frac{s_w s_x}{s_y} (W^q X^q - z_x W^q) + z_y \
+$$</p>
+<p>At inference time, $W^q$ and $z_x$ are constant (pre-determined), thus $z_x W^q$ can be pre-computed. The bulk of runtime computation is the integer matrix multiplication of $W^qX^q$.</p>
+<p>Similarly, for matrix product with bias, we have:
+$$
+\begin{aligned}
+Y &amp;= WX + b \
+&amp;\Rightarrow s_y(Y^q - z_y) = s_w(W^q - z_w) * s_x(X^q - z_x) + s_b(\mathbf{b}^q - z_b) \
+&amp;\Rightarrow q_y = \frac{s_w s_x}{s_y} (W^q X^q - z_x W^q) + \frac{s_b}{s_y} (\mathbf{b}^q - z_b) + z_y \
+\end{aligned}
+$$</p>
+<p>Since weight and bias follows the same distribution, we can force $s_b = s_ws_x$, and $z_b = 0$, then we have:</p>
+<p>$$
+q_y = \frac{s_w s_x}{s_y} (W^q X^q + B^q) + z_y \
+$$</p>
+<p>where $B^q = -z_x W^q + \mathbf{b}^q$ is pre-computed and does not change at runtime.</p>
+<h4 id="convolution-with-linear-quantization">Convolution with Linear Quantization</h4>
+<p>Convolution is linear operation, so it can be quantized using the same technique as matrix multiplication.</p>
+<p>$$
+q_y = \frac{s_w s_x}{s_y} (Conv(W^q X^q) + B^q) + z_y \
+$$</p>
+<p><img alt="Convolution with Linear Quantization" loading="lazy" src="/building-ai-infra/conv-quantization.png"></p>
+<h4 id="self-attention-with-linear-quantization-">Self-Attention with Linear Quantization ??</h4>
+<p>Use both weights is stored in integer format, and computation is performed in integer domain.</p>
+<h2 id="post-training-quantization">Post-Training Quantization</h2>
+<h3 id="granularity">Granularity</h3>
+<ul>
+<li>Per-tensor</li>
+<li>Per-channel</li>
+<li>Group quantization
+<ul>
+<li>Per-vector quantization</li>
+<li>Shared Micro-exponent (MX) data type</li>
+</ul>
+</li>
+</ul>
+<p><img alt="Granularity" loading="lazy" src="/building-ai-infra/quantization-granularity.png"></p>
+<h2 id="dynamic-range-for-activation-quantization">Dynamic Range for Activation Quantization</h2>
+<p>If training model from scratch, we can collect statistics of the activations dynamic range using exponential moving average.
+$$
+r_{max} = \alpha * r_{max} + (1 - \alpha) * r_{max} \
+r_{min} = \alpha * r_{min} + (1 - \alpha) * r_{min}
+$$</p>
+<p>where $\alpha$ is the decay factor. The observed ranges are smoothed over training steps $t$.</p>
+<p>If we don&rsquo;t have access to training data, we can use &ldquo;calibration&rdquo; samples on trained model.</p>
+<p>Find activation dynamic range by minimizing &ldquo;loss of information&rdquo;, which is measured by KL divergence.</p>
+<p>The intuition is that, quantization need to clip the dynamic range (instead of blindly pick min and max), so that the quantized values has good enough precision to represent the majority of original values. Avoid spreading quantized INT samples over low population ranges.</p>
+<p><img alt="Quantization Clipping" loading="lazy" src="/building-ai-infra/quantization-clipping.png"></p>
 <h2 id="applications-in-inference-training-and-rl">Applications in inference, training and RL</h2>
 <h3 id="training">Training</h3>
 <p>FP16 training, with scaling factor
@@ -262,8 +352,15 @@ QAT: Quantization aware training</p>
 </ul>
 </li>
 </ul>
+<p>Questions?</p>
+<ul>
+<li>When to use which quantization technique?</li>
+<li>How to make trade-offs between quantization accuracy and performance? on different models?</li>
+<li>Any application of MX format in real model or hardware?</li>
+</ul>
 <h2 id="reference">Reference</h2>
-<p>[1] Numerics and AI: <a href="https://www.youtube.com/watch?v=ua2NhlenIKo" target="_blank">https://www.youtube.com/watch?v=ua2NhlenIKo</a></p>
+<p>[1] EfficientML.ai, Lecture 5: Quantization, Song Han: <a href="https://www.dropbox.com/scl/fi/qc2s9opsa2mnqfithvwz1/Lec05-Quantization-I.pdf" target="_blank">https://www.dropbox.com/scl/fi/qc2s9opsa2mnqfithvwz1/Lec05-Quantization-I.pdf</a></p>
+<p>[2] Deep Compression, Song Han, et al.: <a href="https://arxiv.org/abs/1510.00149" target="_blank">https://arxiv.org/abs/1510.00149</a></p>
 
   </div>
 

@@ -235,6 +235,7 @@ FP4 training?
 Questions?
 - When to use which quantization technique?
 - How to make trade-offs between quantization accuracy and performance? on different models?
+- Any application of MX format in real model or hardware?
 
 
 ## Reference

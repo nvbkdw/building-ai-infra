@@ -197,12 +197,6 @@
     <loc>http://localhost:1313/building-ai-infra/tags/zoology/</loc>
     <lastmod>2004-12-28T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/building-ai-infra/courses/</loc>
-    <lastmod>2003-03-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/building-ai-infra/courses/course1/</loc>
-    <lastmod>2003-03-10T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/building-ai-infra/books/</loc>
     <lastmod>1997-01-01T00:00:00+00:00</lastmod>
   </url><url>
@@ -211,21 +205,6 @@
   </url><url>
     <loc>http://localhost:1313/building-ai-infra/books/book1/</loc>
     <lastmod>1997-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/building-ai-infra/tags/celtic-languages/</loc>
-    <lastmod>1990-06-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/building-ai-infra/tags/irish/</loc>
-    <lastmod>1990-06-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/building-ai-infra/tags/language-modernization/</loc>
-    <lastmod>1990-06-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/building-ai-infra/tags/profanity/</loc>
-    <lastmod>1990-06-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/building-ai-infra/courses/course2/</loc>
-    <lastmod>1990-06-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/building-ai-infra/archive/</loc>
   </url>
