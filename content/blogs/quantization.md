@@ -168,6 +168,41 @@ $$
 
 Use both weights is stored in integer format, and computation is performed in integer domain.
 
+## Post-Training Quantization
+
+### Granularity
+- Per-tensor
+- Per-channel
+- Group quantization
+  - Per-vector quantization
+  - Shared Micro-exponent (MX) data type
+
+
+![Granularity](/static/quantization-granularity.png)
+
+
+## Dynamic Range for Activation Quantization
+If training model from scratch, we can collect statistics of the activations dynamic range using exponential moving average.
+$$
+r_{max} = \alpha * r_{max} + (1 - \alpha) * r_{max} \\
+r_{min} = \alpha * r_{min} + (1 - \alpha) * r_{min}
+$$
+
+where $\alpha$ is the decay factor. The observed ranges are smoothed over training steps $t$.
+
+If we don't have access to training data, we can use "calibration" samples on trained model.
+
+Find activation dynamic range by minimizing "loss of information", which is measured by KL divergence. 
+
+The intuition is that, quantization need to clip the dynamic range (instead of blindly pick min and max), so that the quantized values has good enough precision to represent the majority of original values. Avoid spreading quantized INT samples over low population ranges.
+
+![Quantization Clipping](/static/quantization-clipping.png)
+
+
+
+
+
+
 
 
 ## Applications in inference, training and RL
