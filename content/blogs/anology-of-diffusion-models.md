@@ -13,4 +13,11 @@ cover:
 
 ## Introduction
 
+## Discriminative vs Generative Models
+
+| | **Discriminative model** | **Generative model** |
+|---|---|---|
+| **Goal** | Directly estimate \( P(y \| x) \) | Estimate \( P(x \| y) \) |
+| **What's learned** | Decision boundary | Probability distributions of the data |
+
 
