@@ -152,12 +152,29 @@ $$
 
 where $B^q = -z_x W^q + \mathbf{b}^q$ is pre-computed and does not change at runtime.
 
+
+Linear layer with activation function, i.e. ReLU, can be quantized using the same technique as matrix multiplication.
+
+$$
+\begin{aligned}
+q_y &= \frac{s_w s_x}{s_y} (Linear(X^q, W^q) + B^q) + z_y \\
+&\Rightarrow q_y = \frac{s_w s_x}{s_y} (ReLU(W^q X^q) + B^q) + z_y \\
+\end{aligned}
+$$
+
+ReLU is essentially a clipping operation: $ReLU(x) = max(0, x)$. With proper quantization parameters (output activation $s_y$ and zero-point $z_y$), this clipping happens "for free" during the de-quantization process. We can simplify the equation as follows:
+
+$$
+q_y = \frac{s_w s_x}{s_y} (W^q X^q + B^q) + z_y \\
+$$
+
+
 #### Convolution with Linear Quantization
 
 Convolution is linear operation, so it can be quantized using the same technique as matrix multiplication.
 
 $$
-q_y = \frac{s_w s_x}{s_y} (Conv(W^q X^q) + B^q) + z_y \\ 
+q_y = \frac{s_w s_x}{s_y} (Conv(X^q, W^q) + B^q) + z_y \\ 
 $$
 
 ![Convolution with Linear Quantization](/static/conv-quantization.png)
@@ -181,7 +198,7 @@ Use both weights is stored in integer format, and computation is performed in in
 ![Granularity](/static/quantization-granularity.png)
 
 
-## Dynamic Range for Activation Quantization
+### Dynamic Range for Activation Quantization
 If training model from scratch, we can collect statistics of the activations dynamic range using exponential moving average.
 $$
 r_{max} = \alpha * r_{max} + (1 - \alpha) * r_{max} \\
@@ -192,43 +209,41 @@ where $\alpha$ is the decay factor. The observed ranges are smoothed over traini
 
 If we don't have access to training data, we can use "calibration" samples on trained model.
 
-Find activation dynamic range by minimizing "loss of information", which is measured by KL divergence. 
+Find activation dynamic range by minimizing "loss of information", which is measured by KL divergence of original and quantized activation distributions. 
+
+Another optimization is minimizing mean square error (MSE) of original and quantized activation values.
 
 The intuition is that, quantization need to clip the dynamic range (instead of blindly pick min and max), so that the quantized values has good enough precision to represent the majority of original values. Avoid spreading quantized INT samples over low population ranges.
+
 
 ![Quantization Clipping](/static/quantization-clipping.png)
 
 
+### Rounding
+Rounding to nearest integer is a simple and effective rounding method, but not always the optimal rounding method.
 
 
 
+## Quantization Aware Training
+
+Add a Simulated Quantization Layer to the model, and train the model as usual.
+
+Backpropagation pass through quantized values and is propagated to the original values.
 
 
 
 ## Applications in inference, training and RL
 
 ### Training
-FP16 training, with scaling factor
-why scaling factor? otherwise gradient does not fall into the range of FP16
-
-BF16 training
-
-FP8 training??
-
-
 OCP MX block format:
 - metadata + data blocks, with hardware support
 
 Recover accuracy:
-AWQ: Activation Weights Quantization
+AWQ: Activation Weights Quantization (??)
 QAT: Quantization aware training
 
 
-FP4 training?
-- MXFP4:
-    - 32-element block, E8M0
-- NVFP4:
-    - 16-element block, E4M3
+
 
 
 
