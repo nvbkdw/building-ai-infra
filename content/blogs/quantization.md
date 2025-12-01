@@ -222,14 +222,26 @@ The intuition is that, quantization need to clip the dynamic range (instead of b
 ### Rounding
 Rounding to nearest integer is a simple and effective rounding method, but not always the optimal rounding method.
 
-
-
 ## Quantization Aware Training
 
 Add a Simulated Quantization Layer to the model, and train the model as usual.
 
 Backpropagation pass through quantized values and is propagated to the original values.
 
+## Advanced Quantization Schemes
+https://github.com/nunchaku-tech/deepcompressor
+
++ [Post-training quantization for large language models](/examples/llm/):
+  + Weight-only Quantization
+    + [AWQ (W4A16)](/examples/llm/configs/awq.yaml)
+    + [GPTQ (W4A16)](/examples/llm/configs/gptq.yaml)
+  + Weight-Activation Quantization
+    + [SmoothQuant (W8A8)](/examples/llm/configs/smoothquant-static.yaml)
+  + Weight-Activation and KV-Cache Quantization
+    + [QoQ (W4A8KV4)](/examples/llm/)
++ [Post-training quantization for diffusion models](/examples/diffusion/):
+  + Weight-Activation Quantization
+    + [SVDQuant (W4A4)](/examples/diffusion/)
 
 
 ## Applications in inference, training and RL

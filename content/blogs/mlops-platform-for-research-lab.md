@@ -30,7 +30,6 @@ requries:
 * same interface to access data
 * same access to GPU hardware
 
-
 ## Rule #3 - Tracking with configuration-driven workload
 Configuration driven makes code reproducible and trackable.
 Implement tracking system, like MLFLow to track everything
@@ -42,6 +41,8 @@ ML experiments is very fragile, it is easy to break, and requires many hand tune
 Build key abstractions, not ad-hoc scripts
 Key abstractions:
 Data, training, inference, evaluation, model, job (low-level)
+
+high-level abstractions can also serve as a bridge between research enviroment and production environment. Imagine if research team use dependencies, tools, programming pattern that is siloed from production environment, every model release will be a nightmare. 
 
 Provides CLI or UI interface 
 

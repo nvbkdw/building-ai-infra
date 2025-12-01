@@ -21,3 +21,17 @@ cover:
 | **What's learned** | Decision boundary | Probability distributions of the data |
 
 
+
+TODO:
+- math for diffusion model training
+- training and inference algorithms
+- model architecture variant
+    - text condition
+    - controlnet
+    - cfg, classifier-free guidance
+    - latent diffusion model
+    - image editing
+
+
+## References
+[1] EfficientML.ai, Lecture 18: Diffusion Model, Song Han: https://www.youtube.com/watch?v=LK57PyOJWYk
