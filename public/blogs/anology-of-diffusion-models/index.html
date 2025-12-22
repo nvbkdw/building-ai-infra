@@ -74,8 +74,8 @@
   "keywords": [
     "diffusion models", "anology"
   ],
-  "articleBody": "Introduction ",
-  "wordCount" : "1",
+  "articleBody": "Introduction Discriminative vs Generative Models Discriminative model Generative model Goal Directly estimate ( P(y | x) ) Estimate ( P(x | y) ) What’s learned Decision boundary Probability distributions of the data TODO:\nmath for diffusion model training training and inference algorithms model architecture variant text condition controlnet cfg, classifier-free guidance latent diffusion model image editing References [1] EfficientML.ai, Lecture 18: Diffusion Model, Song Han: https://www.youtube.com/watch?v=LK57PyOJWYk\n",
+  "wordCount" : "66",
   "inLanguage": "en",
   "image":"http://localhost:1313/building-ai-infra/blogs/anology-of-diffusion-models/anology-of-diffusion-models.png","datePublished": "2025-11-19T00:00:00Z",
   "dateModified": "2025-11-19T00:00:00Z",
@@ -146,11 +146,6 @@
                     <span>Blog</span>
                 </a>
             </li>
-            <li>
-                <a href="http://localhost:1313/building-ai-infra/books/" title="Books">
-                    <span>Books</span>
-                </a>
-            </li>
         </ul>
     </nav>
 </header>
@@ -177,6 +172,8 @@
         <div class="inner"><nav id="TableOfContents">
   <ul>
     <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#discriminative-vs-generative-models">Discriminative vs Generative Models</a></li>
+    <li><a href="#references">References</a></li>
   </ul>
 </nav>
         </div>
@@ -184,6 +181,44 @@
 </div>
 
   <div class="post-content"><h2 id="introduction">Introduction</h2>
+<h2 id="discriminative-vs-generative-models">Discriminative vs Generative Models</h2>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th><strong>Discriminative model</strong></th>
+          <th><strong>Generative model</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Goal</strong></td>
+          <td>Directly estimate ( P(y | x) )</td>
+          <td>Estimate ( P(x | y) )</td>
+      </tr>
+      <tr>
+          <td><strong>What&rsquo;s learned</strong></td>
+          <td>Decision boundary</td>
+          <td>Probability distributions of the data</td>
+      </tr>
+  </tbody>
+</table>
+<p>TODO:</p>
+<ul>
+<li>math for diffusion model training</li>
+<li>training and inference algorithms</li>
+<li>model architecture variant
+<ul>
+<li>text condition</li>
+<li>controlnet</li>
+<li>cfg, classifier-free guidance</li>
+<li>latent diffusion model</li>
+<li>image editing</li>
+</ul>
+</li>
+</ul>
+<h2 id="references">References</h2>
+<p>[1] EfficientML.ai, Lecture 18: Diffusion Model, Song Han: <a href="https://www.youtube.com/watch?v=LK57PyOJWYk" target="_blank">https://www.youtube.com/watch?v=LK57PyOJWYk</a></p>
 
   </div>
 

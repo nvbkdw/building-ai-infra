@@ -7,14 +7,8 @@ enableRobotsTXT: true
 pagination:
   pagerSize: 20
 
-taxonomies:
-    tag: tags
-
 menu:
     main:
-        - name: Books
-          url: books/
-          weight: 5 
         - name: Blog
           url: blogs/
           weight: 2
@@ -35,7 +29,7 @@ params:
     ShowBreadCrumbs: false
     ShowCodeCopyButtons: true
     ShowAllPagesInArchive: false
-    MainSections: ["books","papers"]
+    MainSections: ["blogs"]
     ShowToc: false
     disableScrollToTop: true
     TocOpen: true
@@ -46,34 +40,16 @@ params:
     profileMode:
           enabled: true
           title: Ryan H.
-          subtitle: "I am a Software Engineer at Google. I build infrastructure for AI applications."
+          subtitle: "I am a Software Engineer. I build infrastructure for AI applications."
           imageUrl: "picture.jpeg"
           imageWidth: 160
           imageHeight: 160
           buttons:
             - name: Blog 
               url: blogs/
-            - name: Books
-              url: books/
-            - name: Tags
-              url: tags/
-            - name: Archive
-              url: archive/
+            - name: CV
+              url: cv.pdf
             
-    socialIcons:
-        - name: CV
-          url: cv.pdf
-        - name: Email
-          url: mailto:ry.danger.huang@gmail.com
-        - name: Location
-          url: location/
-        - name: GitHub
-          url: https://github.com/nvbkdw
-        - name: YouTube
-          url: https://www.youtube.com/@nvbkdw
-        - name: Twitter
-          url: https://x.com/nvbkdw
-
     assets:
         disableScrollBarStyle: true
     cover:

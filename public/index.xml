@@ -6,8 +6,29 @@
     <description>Recent content on Building AI Infrastructure</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 24 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/building-ai-infra/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Accelerates Diffusion Models</title>
+      <link>http://localhost:1313/building-ai-infra/blogs/accelerates-diffusion-models/</link>
+      <pubDate>Sat, 29 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infra/blogs/accelerates-diffusion-models/</guid>
+      <description>This blog post covers the acceleration of diffusion models.</description>
+    </item>
+    <item>
+      <title>Personalized Image Generation</title>
+      <link>http://localhost:1313/building-ai-infra/blogs/personalized-image-generation/</link>
+      <pubDate>Sat, 29 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infra/blogs/personalized-image-generation/</guid>
+      <description>This blog post covers the personalized image generation.</description>
+    </item>
+    <item>
+      <title>Training with Low-Bits Number</title>
+      <link>http://localhost:1313/building-ai-infra/blogs/training-with-low-bits-number/</link>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infra/blogs/training-with-low-bits-number/</guid>
+      <description>This blog post covers the training with low-bits number in deep learning.</description>
+    </item>
     <item>
       <title>Numerics</title>
       <link>http://localhost:1313/building-ai-infra/blogs/numerics/</link>
@@ -112,34 +133,6 @@
       <pubDate>Wed, 08 May 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/building-ai-infra/officehours/</guid>
       <description>Schedule and location for Professor Dr von Igelfeld&amp;#39;s office hours.</description>
-    </item>
-    <item>
-      <title>Your Inner Hedgehog</title>
-      <link>http://localhost:1313/building-ai-infra/papers/paper3/</link>
-      <pubDate>Tue, 06 Apr 2021 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/building-ai-infra/papers/paper3/</guid>
-      <description>This paper describes the inner hedgehog, a psychological condition widespread in academia. Published in the Journal of Socio-Experimental Psychology, 2021.</description>
-    </item>
-    <item>
-      <title>Unusual Uses For Olive Oil</title>
-      <link>http://localhost:1313/building-ai-infra/papers/paper1/</link>
-      <pubDate>Tue, 15 Jan 2013 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/building-ai-infra/papers/paper1/</guid>
-      <description>This paper reviews unusual uses for olive oil throughout the Mediterranean world. Published in the Journal of Oleic Science, 2013.</description>
-    </item>
-    <item>
-      <title>The Finer Points of Sausage Dogs</title>
-      <link>http://localhost:1313/building-ai-infra/papers/paper2/</link>
-      <pubDate>Tue, 28 Dec 2004 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/building-ai-infra/papers/paper2/</guid>
-      <description>This paper studies the pulmonary efficiency of sausage dogs. Published in the Journal of Canine Science, 2004.</description>
-    </item>
-    <item>
-      <title>Portugese Irregular Verbs</title>
-      <link>http://localhost:1313/building-ai-infra/books/book1/</link>
-      <pubDate>Wed, 01 Jan 1997 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/building-ai-infra/books/book1/</guid>
-      <description>This book discusses Portugese irregular verbs in great details.</description>
     </item>
   </channel>
 </rss>

@@ -6,8 +6,15 @@
     <description>Recent content in Deep Learning on Building AI Infrastructure</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 24 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/building-ai-infra/tags/deep-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Training with Low-Bits Number</title>
+      <link>http://localhost:1313/building-ai-infra/blogs/training-with-low-bits-number/</link>
+      <pubDate>Thu, 27 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infra/blogs/training-with-low-bits-number/</guid>
+      <description>This blog post covers the training with low-bits number in deep learning.</description>
+    </item>
     <item>
       <title>Numerics</title>
       <link>http://localhost:1313/building-ai-infra/blogs/numerics/</link>

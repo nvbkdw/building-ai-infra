@@ -6,8 +6,15 @@
     <description>Recent content in Diffusion Models on Building AI Infrastructure</description>
     <generator>Hugo -- 0.152.2</generator>
     <language>en</language>
-    <lastBuildDate>Wed, 19 Nov 2025 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Nov 2025 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/building-ai-infra/tags/diffusion-models/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Accelerates Diffusion Models</title>
+      <link>http://localhost:1313/building-ai-infra/blogs/accelerates-diffusion-models/</link>
+      <pubDate>Sat, 29 Nov 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/building-ai-infra/blogs/accelerates-diffusion-models/</guid>
+      <description>This blog post covers the acceleration of diffusion models.</description>
+    </item>
     <item>
       <title>Anology of Diffusion Models</title>
       <link>http://localhost:1313/building-ai-infra/blogs/anology-of-diffusion-models/</link>

@@ -213,7 +213,8 @@ Find activation dynamic range by minimizing "loss of information", which is meas
 
 Another optimization is minimizing mean square error (MSE) of original and quantized activation values.
 
-The intuition is that, quantization need to clip the dynamic range (instead of blindly pick min and max), so that the quantized values has good enough precision to represent the majority of original values. Avoid spreading quantized INT samples over low population ranges.
+**What is good quantization?**
+Error comes from rounding the original values to the nearest precision. The intuition is that, quantization need to clip the dynamic range (instead of blindly pick min and max), so that the quantized values has good enough precision to represent the majority of original values. Avoid spreading quantized INT samples over low population ranges. 
 
 
 ![Quantization Clipping](/static/quantization-clipping.png)
@@ -222,13 +223,88 @@ The intuition is that, quantization need to clip the dynamic range (instead of b
 ### Rounding
 Rounding to nearest integer is a simple and effective rounding method, but not always the optimal rounding method.
 
-## Quantization Aware Training
+#### GPTQ
+https://arxiv.org/abs/2210.17323
+
+GPTQ (Generalized Post-Training Quantization) is an advanced quantization technique that uses Hessian-based optimization to minimize quantization error.
+Key Idea:
+- Instead of simply rounding weights to the nearest quantized value (RTN - Round-To-Nearest), GPTQ uses:
+- Second-order information (Hessian matrix from calibration data)
+- Sequential quantization with error compensation
+- Adaptive rounding that considers inter-dependencies between weights
+
+
+However, comparing to AWQ, the reconstruction process of GPTQ may lead to an
+over-fitting issue to the calibration set and may not preserve
+the generalist abilities of LLMs for other modalities and
+domains. It also requires a reordering trick to work for some
+models.
+
+
+
+## Quantization Aware Training (QAT)
 
 Add a Simulated Quantization Layer to the model, and train the model as usual.
 
 Backpropagation pass through quantized values and is propagated to the original values.
 
-## Advanced Quantization Schemes
+TorchAO: https://openreview.net/attachment?id=HpqH0JakHf&name=pdf
+
+
+### Activation-aware Weight Quantization
+https://arxiv.org/pdf/2306.00978
+
+Quantization techniques for LLM. further push weight quantization from 8-bit to 4-bit.
+
+LLM is highly memory-bound (weights and KV cache), especially during decoding phase with small batch size.
+
+we need low-bit weight-only quantization (W4A8) for this setting.
+
+It's observed that keeping 1% of weights (Salient Weights) in full precision (W16) can recover a lot of perplexity loss. 
+
+but how to determine which 1% of weights are salient? Salient Weights should be determined by activation distribution not weight. because outliers in activation is sensitive to weight precision after multiplication. (for large activation outliers, small delta in weight precision can cause large delta in output.)
+
+However, is it necessary to introduce mixed-precision?
+
+Turn out by simply scaling up the salient weights channel will work. because by scaling 2x, 4x, etc, makes value more distinguishable after quantization. (i.e. 0.5 and 1 will both be 1 after quantization, after 2x scaling, 0.5 will be 0 and 1 will be 2 which is more distinguishable after quantization.)
+
+
+
+#### Query-Key-Value Attention Mechanism
+
+- Project the embedding \( E \) into query, key, and value \( (Q, K, V) \)
+
+- The Query-Key-Value design is analogous to a retrieval system. Let's take YouTube search as an example:
+  - **Query**: text prompt in the search bar
+  - **Key**: the titles/descriptions of videos
+  - **Value**: the corresponding videos
+
+**Attention Formula:**
+$$
+\begin{aligned}
+\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+\end{aligned}
+$$
+
+where $d_k$ is the dimension of the key vectors.
+
+
+
+Questions?
+- When to use which quantization technique?
+- How to make trade-offs between quantization accuracy and performance? on different models?
+- Any application of MX format in real model or hardware?
+- what metrics to evaluate quantization accuracy? perplexity for LLM, diffusion model??
+
+
+## Reference
+
+[1] EfficientML.ai, Lecture 5: Quantization, Song Han: https://www.dropbox.com/scl/fi/qc2s9opsa2mnqfithvwz1/Lec05-Quantization-I.pdf
+
+[2] Deep Compression, Song Han, et al.: https://arxiv.org/abs/1510.00149
+
+
+### Advanced Quantization Schemes
 https://github.com/nunchaku-tech/deepcompressor
 
 + [Post-training quantization for large language models](/examples/llm/):
@@ -242,31 +318,3 @@ https://github.com/nunchaku-tech/deepcompressor
 + [Post-training quantization for diffusion models](/examples/diffusion/):
   + Weight-Activation Quantization
     + [SVDQuant (W4A4)](/examples/diffusion/)
-
-
-## Applications in inference, training and RL
-
-### Training
-OCP MX block format:
-- metadata + data blocks, with hardware support
-
-Recover accuracy:
-AWQ: Activation Weights Quantization (??)
-QAT: Quantization aware training
-
-
-
-
-
-
-Questions?
-- When to use which quantization technique?
-- How to make trade-offs between quantization accuracy and performance? on different models?
-- Any application of MX format in real model or hardware?
-
-
-## Reference
-
-[1] EfficientML.ai, Lecture 5: Quantization, Song Han: https://www.dropbox.com/scl/fi/qc2s9opsa2mnqfithvwz1/Lec05-Quantization-I.pdf
-
-[2] Deep Compression, Song Han, et al.: https://arxiv.org/abs/1510.00149
