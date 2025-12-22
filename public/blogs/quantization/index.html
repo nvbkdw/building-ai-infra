@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/building-ai-infra/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=building-ai-infra/livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Quantization | Building AI Infrastructure</title>
 <meta name="keywords" content="quantization, deep learning">
 <meta name="description" content="This blog post covers the quantization in deep learning.">
 <meta name="author" content="Ryan H.">
-<link rel="canonical" href="http://localhost:1313/building-ai-infra/blogs/quantization/">
+<link rel="canonical" href="https://nvbkdw.github.io/building-ai-infra/blogs/quantization/">
 <link crossorigin="anonymous" href="/building-ai-infra/assets/css/stylesheet.ac30954b7ea20660ca1cb473400ecede9e601f17674446536180d3ca00f03328.css" integrity="sha256-rDCVS36iBmDKHLRzQA7O3p5gHxdnREZTYYDTygDwMyg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/building-ai-infra/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/building-ai-infra/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/building-ai-infra/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/building-ai-infra/apple-touch-icon.png">
+<link rel="icon" href="https://nvbkdw.github.io/building-ai-infra/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://nvbkdw.github.io/building-ai-infra/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://nvbkdw.github.io/building-ai-infra/favicon-32x32.png">
+<link rel="apple-touch-icon" href="https://nvbkdw.github.io/building-ai-infra/apple-touch-icon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/building-ai-infra/blogs/quantization/">
+<link rel="alternate" hreflang="en" href="https://nvbkdw.github.io/building-ai-infra/blogs/quantization/">
 <noscript>
     <style>
         #theme-toggle,
@@ -26,7 +26,7 @@
         }
 
     </style>
-</noscript><meta property="og:url" content="http://localhost:1313/building-ai-infra/blogs/quantization/">
+</noscript><meta property="og:url" content="https://nvbkdw.github.io/building-ai-infra/blogs/quantization/">
   <meta property="og:site_name" content="Building AI Infrastructure">
   <meta property="og:title" content="Quantization">
   <meta property="og:description" content="This blog post covers the quantization in deep learning.">
@@ -35,11 +35,9 @@
     <meta property="article:section" content="blogs">
     <meta property="article:published_time" content="2025-11-24T00:00:00+00:00">
     <meta property="article:modified_time" content="2025-11-24T00:00:00+00:00">
-    <meta property="article:tag" content="Quantization">
-    <meta property="article:tag" content="Deep Learning">
-    <meta property="og:image" content="http://localhost:1313/building-ai-infra/blogs/quantization/quantization.png">
+    <meta property="og:image" content="https://nvbkdw.github.io/building-ai-infra/blogs/quantization/quantization.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://localhost:1313/building-ai-infra/blogs/quantization/quantization.png">
+<meta name="twitter:image" content="https://nvbkdw.github.io/building-ai-infra/blogs/quantization/quantization.png">
 <meta name="twitter:title" content="Quantization">
 <meta name="twitter:description" content="This blog post covers the quantization in deep learning.">
 
@@ -53,13 +51,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Blogs",
-      "item": "http://localhost:1313/building-ai-infra/blogs/"
+      "item": "https://nvbkdw.github.io/building-ai-infra/blogs/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Quantization",
-      "item": "http://localhost:1313/building-ai-infra/blogs/quantization/"
+      "item": "https://nvbkdw.github.io/building-ai-infra/blogs/quantization/"
     }
   ]
 }
@@ -77,7 +75,7 @@
   "articleBody": "Motivation for using smaller number format?\nreduce memory footprint reduce memory bandwidth pressure enables packing more math units into same silicon area consume less energy Linear Operations Can Cheaply Deal with Scales Let:\n$x = (x_i | 1 \\leq i \\leq k)$ be a vector of reals. $x^q$ be the integer-quantized version of $x$. $x’ = (x_i^q * dscale_x | 1 \\leq i \\leq k)$ be the approximation of $x$ after dequantization. Define $y$ and $y’$ similarly. Then,\n$$ z’ = \\sum_i x’_i * y’_i = dscale_x * dscale_y \\sum_i x_i^q * y_i^q $$\nMost of the math is cheap, only the dequantization at the end is expensive.\nwhat is the effect of quantization on the performance of the model?\nreduce the range, scaling factor clips the value to the range [min, max] reduce the precision, rounding the value to the nearest integer Scaling Factor Granularity:\nper-block quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ per-tensor quantization: $x^q = (x_i^q | 1 \\leq i \\leq k)$ per-channel quantization: $x^q = (x_{i,j}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m)$ per-layer quantization: $x^q = (x_{i,j,k}^q | 1 \\leq i \\leq k, 1 \\leq j \\leq m, 1 \\leq k \\leq n)$ Quantization Design Space:\nHow to choose quantization scheme? (TBD)\nHow to compensatre for for quantization error?\nQuantization Techniques K-Mean Quantization Quantization by clustering: Use k-means to find the best set of centroids for the given tensor. As a result, a tensor is compressed into low-bits index and a cookbook.\nWeights are decoded by “cookbook” table lookup. Reduce memory footprint and memory bandwidth pressure, all computation is still in full FP.\nTo recover model accuracy, weights in K-mean quantization are optimized by gradient descent to update the centroids.\nLinear Quantization Affine mapping between integer and real numbers:\n$$ A \\approx (A^q - z ) * s $$\n$A \\in \\mathbf{R}^{m \\times n}$ $A^q \\in \\mathbf{Z}^{m \\times n}$ where $Z$ is N-bit integer $z \\in \\mathbf{Z}$ is the zero-point $s \\in \\mathbf{R}$ is the scaling factor How to calcuate $z$ and $s$?\n$r_{min}$ and $r_{max}$ are the minimum and maximum values of the real numbers in the matrix $A$. $q_{min}$ and $q_{max}$ are the minimum and maximum values of the N-bit integer numbers.\n$$ r_{max} = s(q_{max} - z) \\ r_{min} = s(q_{min} - z) $$\nthen we have:\n$$ s = \\frac{r_{max} - r_{min}}{q_{max} - q_{min}}\nz = q_{max} - \\frac{r_{max}}{s} \\\n$$\n$s$ is the ratio between dynamic range of the real numbers to the N-bit integer numbers.\nGiven $s$, we can calculate $z$ as follows:\n$$ z = q_{max} - \\frac{r_{max}}{s} $$\nMatrix Multiplication with Linear Quantization $$ \\begin{aligned} Y \u0026= WX \\ \u0026\\Rightarrow s_y(Y^q - z_y) = s_w(W^q - z_w) * s_x(X^q - z_x) \\ \u0026\\Rightarrow q_y = \\frac{s_w s_x}{s_y} (W^q - z_w)(X^q - z_x) + z_y \\ \u0026\\Rightarrow q_y = \\frac{s_w s_x}{s_y} (W^q X^q - z_w X^q - z_x W^q + z_w z_x) + z_y \\end{aligned} $$\nEmpirically, weights distribution is symmetric around 0, so $z_w$ is set to 0. Then we simplify the equation as follows:\n$$ q_y = \\frac{s_w s_x}{s_y} (W^q X^q - z_x W^q) + z_y \\ $$\nAt inference time, $W^q$ and $z_x$ are constant (pre-determined), thus $z_x W^q$ can be pre-computed. The bulk of runtime computation is the integer matrix multiplication of $W^qX^q$.\nSimilarly, for matrix product with bias, we have: $$ \\begin{aligned} Y \u0026= WX + b \\ \u0026\\Rightarrow s_y(Y^q - z_y) = s_w(W^q - z_w) * s_x(X^q - z_x) + s_b(\\mathbf{b}^q - z_b) \\ \u0026\\Rightarrow q_y = \\frac{s_w s_x}{s_y} (W^q X^q - z_x W^q) + \\frac{s_b}{s_y} (\\mathbf{b}^q - z_b) + z_y \\ \\end{aligned} $$\nSince weight and bias follows the same distribution, we can force $s_b = s_ws_x$, and $z_b = 0$, then we have:\n$$ q_y = \\frac{s_w s_x}{s_y} (W^q X^q + B^q) + z_y \\ $$\nwhere $B^q = -z_x W^q + \\mathbf{b}^q$ is pre-computed and does not change at runtime.\nLinear layer with activation function, i.e. ReLU, can be quantized using the same technique as matrix multiplication.\n$$ \\begin{aligned} q_y \u0026= \\frac{s_w s_x}{s_y} (Linear(X^q, W^q) + B^q) + z_y \\ \u0026\\Rightarrow q_y = \\frac{s_w s_x}{s_y} (ReLU(W^q X^q) + B^q) + z_y \\ \\end{aligned} $$\nReLU is essentially a clipping operation: $ReLU(x) = max(0, x)$. With proper quantization parameters (output activation $s_y$ and zero-point $z_y$), this clipping happens “for free” during the de-quantization process. We can simplify the equation as follows:\n$$ q_y = \\frac{s_w s_x}{s_y} (W^q X^q + B^q) + z_y \\ $$\nConvolution with Linear Quantization Convolution is linear operation, so it can be quantized using the same technique as matrix multiplication.\n$$ q_y = \\frac{s_w s_x}{s_y} (Conv(X^q, W^q) + B^q) + z_y \\ $$\nSelf-Attention with Linear Quantization ?? Use both weights is stored in integer format, and computation is performed in integer domain.\nPost-Training Quantization Granularity Per-tensor Per-channel Group quantization Per-vector quantization Shared Micro-exponent (MX) data type Dynamic Range for Activation Quantization If training model from scratch, we can collect statistics of the activations dynamic range using exponential moving average. $$ r_{max} = \\alpha * r_{max} + (1 - \\alpha) * r_{max} \\ r_{min} = \\alpha * r_{min} + (1 - \\alpha) * r_{min} $$\nwhere $\\alpha$ is the decay factor. The observed ranges are smoothed over training steps $t$.\nIf we don’t have access to training data, we can use “calibration” samples on trained model.\nFind activation dynamic range by minimizing “loss of information”, which is measured by KL divergence of original and quantized activation distributions.\nAnother optimization is minimizing mean square error (MSE) of original and quantized activation values.\nWhat is good quantization? Error comes from rounding the original values to the nearest precision. The intuition is that, quantization need to clip the dynamic range (instead of blindly pick min and max), so that the quantized values has good enough precision to represent the majority of original values. Avoid spreading quantized INT samples over low population ranges.\nRounding Rounding to nearest integer is a simple and effective rounding method, but not always the optimal rounding method.\nGPTQ https://arxiv.org/abs/2210.17323\nGPTQ (Generalized Post-Training Quantization) is an advanced quantization technique that uses Hessian-based optimization to minimize quantization error. Key Idea:\nInstead of simply rounding weights to the nearest quantized value (RTN - Round-To-Nearest), GPTQ uses: Second-order information (Hessian matrix from calibration data) Sequential quantization with error compensation Adaptive rounding that considers inter-dependencies between weights However, comparing to AWQ, the reconstruction process of GPTQ may lead to an over-fitting issue to the calibration set and may not preserve the generalist abilities of LLMs for other modalities and domains. It also requires a reordering trick to work for some models.\nQuantization Aware Training (QAT) Add a Simulated Quantization Layer to the model, and train the model as usual.\nBackpropagation pass through quantized values and is propagated to the original values.\nTorchAO: https://openreview.net/attachment?id=HpqH0JakHf\u0026name=pdf\nActivation-aware Weight Quantization https://arxiv.org/pdf/2306.00978\nQuantization techniques for LLM. further push weight quantization from 8-bit to 4-bit.\nLLM is highly memory-bound (weights and KV cache), especially during decoding phase with small batch size.\nwe need low-bit weight-only quantization (W4A8) for this setting.\nIt’s observed that keeping 1% of weights (Salient Weights) in full precision (W16) can recover a lot of perplexity loss.\nbut how to determine which 1% of weights are salient? Salient Weights should be determined by activation distribution not weight. because outliers in activation is sensitive to weight precision after multiplication. (for large activation outliers, small delta in weight precision can cause large delta in output.)\nHowever, is it necessary to introduce mixed-precision?\nTurn out by simply scaling up the salient weights channel will work. because by scaling 2x, 4x, etc, makes value more distinguishable after quantization. (i.e. 0.5 and 1 will both be 1 after quantization, after 2x scaling, 0.5 will be 0 and 1 will be 2 which is more distinguishable after quantization.)\nQuery-Key-Value Attention Mechanism Project the embedding ( E ) into query, key, and value ( (Q, K, V) )\nThe Query-Key-Value design is analogous to a retrieval system. Let’s take YouTube search as an example:\nQuery: text prompt in the search bar Key: the titles/descriptions of videos Value: the corresponding videos Attention Formula: $$ \\begin{aligned} \\text{Attention}(Q, K, V) = \\text{softmax}\\left(\\frac{QK^T}{\\sqrt{d_k}}\\right)V \\end{aligned} $$\nwhere $d_k$ is the dimension of the key vectors.\nQuestions?\nWhen to use which quantization technique? How to make trade-offs between quantization accuracy and performance? on different models? Any application of MX format in real model or hardware? what metrics to evaluate quantization accuracy? perplexity for LLM, diffusion model?? Reference [1] EfficientML.ai, Lecture 5: Quantization, Song Han: https://www.dropbox.com/scl/fi/qc2s9opsa2mnqfithvwz1/Lec05-Quantization-I.pdf\n[2] Deep Compression, Song Han, et al.: https://arxiv.org/abs/1510.00149\nAdvanced Quantization Schemes https://github.com/nunchaku-tech/deepcompressor\nPost-training quantization for large language models: Weight-only Quantization AWQ (W4A16) GPTQ (W4A16) Weight-Activation Quantization SmoothQuant (W8A8) Weight-Activation and KV-Cache Quantization QoQ (W4A8KV4) Post-training quantization for diffusion models: Weight-Activation Quantization SVDQuant (W4A4) ",
   "wordCount" : "1479",
   "inLanguage": "en",
-  "image":"http://localhost:1313/building-ai-infra/blogs/quantization/quantization.png","datePublished": "2025-11-24T00:00:00Z",
+  "image":"https://nvbkdw.github.io/building-ai-infra/blogs/quantization/quantization.png","datePublished": "2025-11-24T00:00:00Z",
   "dateModified": "2025-11-24T00:00:00Z",
   "author":{
     "@type": "Person",
@@ -85,14 +83,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://localhost:1313/building-ai-infra/blogs/quantization/"
+    "@id": "https://nvbkdw.github.io/building-ai-infra/blogs/quantization/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "Building AI Infrastructure",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://localhost:1313/building-ai-infra/favicon.ico"
+      "url": "https://nvbkdw.github.io/building-ai-infra/favicon.ico"
     }
   }
 }
@@ -133,8 +131,8 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/building-ai-infra/" accesskey="h" title="Ryan H.">
-                <img src="http://localhost:1313/building-ai-infra/favicon.ico" alt="" aria-label="logo"
+            <a href="https://nvbkdw.github.io/building-ai-infra/" accesskey="h" title="Ryan H.">
+                <img src="https://nvbkdw.github.io/building-ai-infra/favicon.ico" alt="" aria-label="logo"
                     height="18"
                     width="18">Ryan H.</a>
             <div class="logo-switches">
@@ -142,7 +140,7 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/building-ai-infra/blogs/" title="Blog">
+                <a href="https://nvbkdw.github.io/building-ai-infra/blogs/" title="Blog">
                     <span>Blog</span>
                 </a>
             </li>
@@ -432,8 +430,6 @@ $$</p>
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:1313/building-ai-infra/tags/quantization/">Quantization</a></li>
-      <li><a href="http://localhost:1313/building-ai-infra/tags/deep-learning/">Deep Learning</a></li>
     </ul>
   </footer>
 </article>

@@ -7,6 +7,8 @@ enableRobotsTXT: true
 pagination:
   pagerSize: 20
 
+taxonomies: {}
+
 menu:
     main:
         - name: Blog
