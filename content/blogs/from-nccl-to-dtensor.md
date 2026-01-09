@@ -17,6 +17,8 @@ Training modern AI models is an exercise in orchestration. As models scale beyon
 
 This post dissects the PyTorch distributed stack, moving from the bare-metal C++ bindings of NCCL up to the compiler-like dispatch logic of `DTensor`.
 
+![Dtensor](/static/dtensor.jpeg)
+
 ## 1. Initialization: How PyTorch Creates a Process Group
 
 The creation of a distributed training setup typically starts with `dist.init_process_group()`. This function orchestrates a two-phase handshake: first, processes must discover each other (Rendezvous), then PyTorch instantiates the actual communication backend.
