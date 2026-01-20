@@ -294,3 +294,5 @@ Looking forward, the integration of **Helix Parallelism** and its **HOP-B** algo
 
 ## References
 https://gemini.google.com/app/b31681db58e769db
+
+Helix Parallelism: https://arxiv.org/pdf/2507.07120
