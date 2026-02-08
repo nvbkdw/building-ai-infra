@@ -206,5 +206,36 @@ fi_info:
             network_type: Ethernet
 ```
 
+
+In RDMA, unlike traditional sockets, the receiver must have a RECV operation posted before the sender sends data. If no RECV is waiting when data arrives, the data is lost. This is critical for bidirectional communication.
+
+```
+Client                              Server
+  |                                   |
+  |  ----[CONNECT + address]---->     |  (RECV 1 waiting)
+  |                                   |  (RECV 2 waiting)
+  |  (RECV waiting for response)      |
+  |  ----[DATA: "Hello"]-------->     |  (reverses, sends back)
+  |                                   |
+  |  <---[DATA: "olleH"]---------     |
+  |                                   |
+```
+
+
+
+
+Check NIC link speed
+
+``` bash
+ethtool eth0 | grep Speed
+
+```
+
+
+
+
+
+
+
 ## References
 Harnessing 3200 Gbps Network, Lequn Chen, 2024: https://le.qun.ch/en/blog/2024/12/25/libfabric-efa-0-intro/
