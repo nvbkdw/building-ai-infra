@@ -1,0 +1,44 @@
+{{- define "main" }}
+
+<header class="page-header">
+  <h1>{{ .Title }}</h1>
+</header>
+
+{{- if .Content }}
+<div class="post-content">
+  {{ .Content }}
+</div>
+{{- end }}
+
+<div class="project-cards">
+  {{- range .RegularPages.ByWeight }}
+  <article class="project-card">
+    {{- with .Params.cover }}
+    {{- if .image }}
+    <div class="project-card-image">
+      <img src="{{ .image | absURL }}" alt="{{ .alt | default "project image" }}" loading="lazy" />
+    </div>
+    {{- end }}
+    {{- end }}
+    <div class="project-card-content">
+      <h2>{{ .Title }}</h2>
+      <p class="project-card-summary">{{ .Params.description }}</p>
+      {{- with .Params.tags }}
+      <div class="project-card-tags">
+        {{- range . }}
+        <span class="project-tag">{{ . }}</span>
+        {{- end }}
+      </div>
+      {{- end }}
+      <div class="project-card-links">
+        {{- with .Params.externalUrl }}
+        <a href="{{ . }}" target="_blank" rel="noopener">GitHub</a>
+        {{- end }}
+        <a href="{{ .Permalink }}">Read more</a>
+      </div>
+    </div>
+  </article>
+  {{- end }}
+</div>
+
+{{- end }}
