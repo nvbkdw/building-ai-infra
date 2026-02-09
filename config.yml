@@ -42,7 +42,12 @@ params:
     profileMode:
           enabled: true
           title: Ryan H.
-          subtitle: "I am a Software Engineer. I build infrastructure for AI applications."
+          subtitle: |
+            I am a Software Engineer specializing in AI infrastructure with 10+ years of industry experience spanning large-scale distributed systems at big tech (AWS, Uber), full-stack MLOps platforms, and hands-on startup experience building ML infrastructure from the ground up.
+
+            At AWS, I led the development of a real-time speech recognition service from scratch, building multi-tenant cloud services, real-time bidirectional streaming, and full MLOps pipelines. At Uber, I engineered Kubernetes-based control planes and workflow systems for the internal ML platform.
+
+            Currently, as Tech Lead at an AI startup, I build and optimize the entire LLM infrastructure stack. On the training side, this includes distributed training with model parallelism, faster dataloading (RDMA), and custom kernel fusion. On the inference side, I work on quantization, tensor parallelism, KV cache optimization, and continuous batch scheduling.
           imageUrl: "picture.jpeg"
           imageWidth: 160
           imageHeight: 160

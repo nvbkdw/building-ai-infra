@@ -27,6 +27,15 @@
     border: 1px solid var(--tertiary);
 }
 
+.profile-subtitle {
+    text-align: left;
+    max-width: 680px;
+}
+
+.profile-subtitle p {
+    margin: 0.6em 0;
+}
+
 .buttons {
     flex-wrap: wrap;
 }
