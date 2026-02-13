@@ -42,7 +42,7 @@ params:
     profileMode:
           enabled: true
           title: Ryan H.
-          subtitle: "Software Engineer specializing in AI infrastructure — distributed training, inference optimization, and MLOps platforms."
+          subtitle: "I have broad experience across applications, infrastructure, and ML. I've built systems at scale (1→100) within large tech companies and also led 0→1 product development in nimble startups."
           imageUrl: "picture.jpeg"
           imageWidth: 160
           imageHeight: 160
