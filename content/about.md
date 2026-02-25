@@ -15,7 +15,7 @@ In addition, I optimize the entire ML infrastructure stack. On the training side
 
 At **AWS**, I led the development of Amazon Transcribe — a real-time speech recognition service — from scratch, building multi-tenant cloud services, real-time bidirectional streaming (HTTP/2, gRPC), and full MLOps training and evaluation pipelines. I led a team to develop applications for specialized domains including medical and call center analytics.
 
-At **Uber**, I engineered a Kubernetes-based control plane for the internal ML platform, designed workflow systems to streamline model lifecycles (training, evaluation, monitoring), and built orchestration frameworks to improve reliability of training pipelines on Spark and Ray.
+At **Uber** (Michelangelo team), I engineered a Kubernetes-based control plane for the internal ML platform, designed workflow systems to streamline model lifecycles (training, evaluation, monitoring), and built orchestration frameworks to improve reliability of training pipelines on Spark and Ray.
 
 ## Background
 
