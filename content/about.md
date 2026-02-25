@@ -23,6 +23,6 @@ I started my career in CPU physical design at **Broadcom**, working on ARM v16 c
 
 I hold a Master's in Electrical & Computer Engineering from the University of Florida and a Bachelor's in Micro-electronics from UESTC.
 
-[📄 My Resume (PDF)](/building-ai-infra/cv.pdf)
+[📄 My Resume (PDF)](/cv.pdf)
 
 
