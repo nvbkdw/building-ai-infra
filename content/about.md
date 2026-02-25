@@ -22,3 +22,7 @@ At **Uber** (Michelangelo team), I engineered a Kubernetes-based control plane f
 I started my career in CPU physical design at **Broadcom**, working on ARM v16 cores — timing closure, place & route, and CAD tooling. This hardware-level understanding of compute architecture informs my systems work today.
 
 I hold a Master's in Electrical & Computer Engineering from the University of Florida and a Bachelor's in Micro-electronics from UESTC.
+
+[📄 My Resume (PDF)](/building-ai-infra/cv.pdf)
+
+
