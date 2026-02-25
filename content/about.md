@@ -7,7 +7,9 @@ I am a Software Engineer specializing in AI infrastructure with 10+ years of ind
 
 ## Current Role
 
-As Tech Lead at an AI startup, I build and optimize the entire LLM infrastructure stack. On the training side, this includes distributed training with model parallelism, faster dataloading (RDMA), and custom Triton kernel fusion. On the inference side, I work on quantization, tensor parallelism, KV cache optimization, and continuous batch scheduling. I also build scalable RAG applications and develop tools for LLM performance profiling and capacity planning.
+As Tech Lead at an AI research startup, I built an unified ML platform from scratch. This platform is the foundation of the company's AI research. Every day ML research is done on this platform, ranging from notebook, distributed training, large batch inference, real-time inference, and agentic workflows, etc.
+
+In addition, I optimize the entire ML infrastructure stack. On the training side, this includes distributed training with model parallelism, faster dataloading (RDMA), and custom kernel fusion. On the inference side, I work on quantization, context parallelism, KV cache optimization, and continuous batch scheduling. I also build AI agent to automate daily engineering and operation tasks.
 
 ## Previous Experience
 

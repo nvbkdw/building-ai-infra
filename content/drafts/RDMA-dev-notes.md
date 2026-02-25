@@ -323,5 +323,48 @@ $$Multiply by Lane Width:Your output shows Width x16.$$1.969 \text{ GB/s} \times
 $$Important Context: Unidirectional vs. Bidirectional 31.5 GB/s is Unidirectional: This is the speed at which you can send data to the device OR receive data from the device.63.0 GB/s is Bidirectional: Since PCIe is full-duplex, you can technically send 31.5 GB/s and receive 31.5 GB/s simultaneously.However, when benchmarking storage or GPU loading, we usually care about the unidirectional speed (e.g., "How fast can I load this texture into VRAM?"), which is why 31.5 GB/s is the "speed limit" number you should keep in mind.
 
 
+
+
+# Disk volume mapping
+
+list all block devices:
+
+``` bash
+lsblk
+```
+
+list all logical filesystems mount:
+
+``` bash
+mount
+df -h
+```
+
+
+
+
+
+
+What is LVM (Logical Volume Manager)?
+LVM is a device mapper framework that provides logical volume management for Linux. It adds a layer of abstraction between your physical storage devices and your filesystems.
+The hierarchy is:
+
+```
+Physical Disks (nvme0n1, nvme1n1, nvme2n1)
+    ↓
+Physical Volumes (PV) - raw disks initialized for LVM
+    ↓
+Volume Groups (VG) - pools of storage from multiple PVs
+    ↓
+Logical Volumes (LV) - virtual partitions you can mount
+    ↓
+Filesystems (ext4, xfs, etc.) mounted to directories
+```
+
+``` bash
+sudo apt-get update && sudo apt-get install lvm2
+```
+
+
 ## References
 Harnessing 3200 Gbps Network, Lequn Chen, 2024: https://le.qun.ch/en/blog/2024/12/25/libfabric-efa-0-intro/

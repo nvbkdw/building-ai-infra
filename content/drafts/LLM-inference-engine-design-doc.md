@@ -68,9 +68,31 @@ SGLang 的整体架构很清晰，从请求执行流程来看，大致能分为�
 
 ![SGLang request flow](/static/sglang-request-flow.webp)
 
+# LLM Inference Engine and Kernels
 
+## General Server Architecture
+API, tokenizer, scheduler, executor, request queue,.
 
-# Kernel
-Attention: FA-3, FlashInfer
+## Continuous Batching
+
+## Paged Attention
+
+## KV Cache Management
+
+## Kernels
+Attention: FA-3, FlashInfer, RadixAttention
 
 Kernel Fusion: just-in-time (JIT) compiled kernel for better runtime performance.
+
+# Model Parallelism
+
+Tensor Parallelism
+Context Parallelism
+Pipeline Parallelism ???
+
+
+# P/D disaggregated serving
+TBD
+
+# MoE
+DeepEP
