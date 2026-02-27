@@ -5,10 +5,6 @@ tags: ["quantization", "deep learning"]
 author: "Ryan H."
 description: "This blog post covers the quantization in deep learning."
 summary: "This blog post covers the quantization in deep learning."
-cover:
-    image: "quantization.png"
-    alt: "Quantization"
-    relative: true
 ---
 
 

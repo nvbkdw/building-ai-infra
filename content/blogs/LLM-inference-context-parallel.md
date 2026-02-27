@@ -5,10 +5,6 @@ tags: ["llm","inference","context parallel"]
 author: "Ryan H."
 description: "This blog post covers the LLM inference context parallel."
 summary: "This blog post covers the LLM inference context parallel."
-cover:
-    image: "llm-inference-context-parallel.png"
-    alt: "LLM Inference Context Parallel"
-    relative: true
 ---
 
 ## Introduction

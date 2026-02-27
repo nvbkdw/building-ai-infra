@@ -5,10 +5,6 @@ tags: ["deep learning","math"]
 author: "Ryan H."
 description: "This blog post covers the from NCCL to DTensor: The Anatomy of PyTorch Distributed."
 summary: "This blog post covers the from NCCL to DTensor: The Anatomy of PyTorch Distributed."
-cover:
-    image: "from-nccl-to-dtensor.png"
-    alt: "From NCCL to DTensor: The Anatomy of PyTorch Distributed"
-    relative: true
 ---
 
 # From NCCL to DTensor: A Deep Dive into PyTorch Distributed Internals

@@ -5,10 +5,6 @@ tags: ["numerics", "deep learning"]
 author: "Ryan H."
 description: "This blog post covers the numerics in deep learning."
 summary: "This blog post covers the numerics in deep learning."
-cover:
-    image: "numerics.png"
-    alt: "Numerics"
-    relative: true
 ---
 
 

@@ -5,10 +5,6 @@ tags: ["deep learning","math"]
 author: "Ryan H."
 description: "This blog post covers the math behind deep learning - part 1."
 summary: "This blog post covers the math behind deep learning - part 1."
-cover:
-    image: "math-for-deep-learning.png"
-    alt: "Math for Deep Learning - Part 1"
-    relative: true
 ---
 
 This blog post provides a refresher on the essential math for deep learning. We will cover the following topics:
