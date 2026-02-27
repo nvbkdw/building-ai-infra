@@ -3,7 +3,7 @@ title: "About"
 hidemeta: true
 ---
 
-I am a Software Engineer specializing in AI infrastructure with 10+ years of industry experience spanning large-scale distributed systems at big tech (AWS, Uber), full-stack MLOps platforms, and hands-on startup experience building ML infrastructure from the ground up.
+I am a Software Engineer specializing in AI infrastructure with 10+ years of industry experience spanning large-scale distributed systems at AWS, full-stack MLOps platforms at Uber, and hands-on startup experience building ML infrastructure from the ground up.
 
 ## Current Role
 
