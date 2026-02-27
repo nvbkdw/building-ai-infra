@@ -3,10 +3,6 @@ title: "KV-RDMA"
 description: "A high-performance distributed key-value cache built in Rust that uses RDMA for zero-copy data transfers between client and server. Features a gRPC control plane, RDMA data plane with push model, threshold-based routing, and built-in benchmarking."
 summary: "Distributed key-value cache with RDMA zero-copy data transfer"
 tags: ["rust", "rdma", "distributed-systems"]
-cover:
-    image: "kv-rdma.png"
-    alt: "KV-RDMA Architecture"
-    relative: true
 externalUrl: "https://github.com/nvbkdw/kv-rdma-poc"
 weight: 1
 hidemeta: true

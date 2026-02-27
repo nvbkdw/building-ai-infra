@@ -3,10 +3,6 @@ title: "My Team"
 description: "A Kanban board where every card is an AI-powered development environment. Drag a task to 'In Progress' and a dedicated Claude Code session spins up — with its own Git branch, file watcher, and streaming AI chat — turning your task tracker into a hands-on coding workbench."
 summary: "Kanban board with AI-powered development environments per card"
 tags: ["typescript", "ai-agents", "developer-tools"]
-cover:
-    image: "my-team.png"
-    alt: "My Team Kanban Board"
-    relative: true
 externalUrl: "https://github.com/nvbkdw/my-team"
 weight: 2
 hidemeta: true
