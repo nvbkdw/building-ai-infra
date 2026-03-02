@@ -228,3 +228,5 @@ Each compute rack is rail-aligned. Traffic per rail of each compute tray is alwa
 [2] NVIDIA reference architecture: https://docs.nvidia.com/enterprise-reference-architectures/hgx-ai-factory/latest/networking-physical-topologies.html
 
 [3] NVIDIA DGX GB300 Reference Architecture: https://docs.nvidia.com/pdf/dgx-spod-gb300-ra.pdf
+
+[4] Computing Fabric and Networking: https://www.fibermall.com/blog/dual-plane-and-multi-plane-networking.htm
