@@ -155,8 +155,8 @@ In traditional data centers, each computer server only has one CPU. In AI data c
 
 We can use [NVIDIA reference architecture](https://docs.nvidia.com/enterprise-reference-architectures/hgx-ai-factory/latest/networking-physical-topologies.html) as an example to understand the AI data center network architectures. The reference architecture uses the following techniques:
 * Fat tree topology in spine-leaf manner
-* Rail-optimized network topology
 * Dual plane topology
+* Rail-optimized network topology
 
 Let unpack each of these network architectures.
 
@@ -177,32 +177,13 @@ where $R$ is the radix of switch. There are totally $R$ leaf switches because th
 
 If you want to connect more GPUs than this formula allows, you are forced to add a third layer (Super-Spine or Core layer) to connect multiple two-layer "pods" together.  However, a three-layer network is exponentially more expensive, consumes much more power, and introduces extra "hops" that add latency to AI training.
 
-
-## Rail Network
-
-Rail-only Architecture: Proposed by MIT researchers in 2023, the Rail-only network architecture is a heavily optimized, LLM-centric data center design that challenges the necessity of traditional full-bisection networks. It fundamentally retains the High-Bandwidth (HB) domain (the ultra-fast internal connections between GPUs on the same server, like NVLink) and the top-of-rack Rail switches, but entirely eliminates the upper layer of Spine switches. [[Wang et al., 2023]](https://arxiv.org/abs/2307.12169v5)
-
-The researchers discovered that LLM training generates highly localized and sparse network traffic; GPUs primarily need massive bandwidth to communicate with adjacent GPUs in their local HB domain, and with their same-rank counterparts across the cluster (via the rails). They rarely require the expensive, any-to-any cluster-wide connectivity that Spine switches provide.
-
-By removing the spine layer, the Rail-only architecture effectively uses the internal server interconnects (NVLink) as an "inverted spine." If data must cross rails, it simply bounces through the local NVLink to the correct GPU, which then sends it out over its dedicated rail. This architectural shift significantly reduces the hardware footprint—cutting network costs by 38% to 77% and reducing network power consumption by 37% to 75%—while maintaining identical training throughput for standard LLMs. Even for complex Mixture-of-Experts (MoE) models that require aggressive all-to-all communication, this spine-free design only incurs a minor 8.2% to 11.2% performance overhead, proving that hyperscalers can save millions of dollars and megawatts of power without meaningfully sacrificing AI training speeds.
-
-TODO:
-
-Rail Optimized Fat-tree (ROFT)
-Example: [NVIDIA DGX GB300](https://docs.nvidia.com/pdf/dgx-spod-gb300-ra.pdf)
-* 8 racks per SU, in 4 rails, each rail has two leaf switches, thus 4*2=8 leaf switches per SU.
-* 72 spine switches with 144 radix, aggregating 16 SUs (128 ports to leaf switches, other ports for management and expansion).
-* TODO: calculate the bisection bandwidth and oversubscription ratio.
-
-
-
 ## Dual-Plane Networking
 
 As discussed in the [Fat-Tree CLOS (Spine-Leaf)](#fat-tree-clos-spine-leaf) section, the maximum number of endpoints (GPUs) a two-layer network can support is $R^2/2$. To scale to more GPUs, we need to add a third layer (Super-Spine or Core layer). 
 
 Alibaba proposed a dual-plane network architecture in 2024 [[Alibaba HPN, 2024]](https://www.youtube.com/watch?v=Q_5PwmApLkg) which bypasses this limitation using **"port splitting"**. 
 
-We have been using the term "port" to refer to a physical port on a switch or NIC. But port is not a single unit, a port consists of many links. If a port is a 4-way high way, a link is a lane of the highway. "port splitting" is to split a port into two group of links. 
+So far, we have used "port" to mean a single physical port on a switch or NIC. In reality, a port is not a single unit — it is a bundle of links. Think of a port as a four-lane highway: each individual lane is a link. **Port splitting** divides one port's lanes into two independent groups, effectively turning one logical port into two.
 * Modern high-end switches often have 64 physical ports ($R=64$) running at 400G. the maximum size of a two-layer network is $\frac{64^2}{2} = 2,048$ GPUs. 
 * Dual-Plane 200G Split: By splitting a single 400G port into two group of independent 200G links, the switch's effective radix magically doubles from 64 to 128 ($R=128$). Now, look at how doubling the radix changes the math for a two-layer network:$$Max\_Endpoints = \frac{128^2}{2} = 8,192 \text{ GPUs per plane}$$
 
@@ -219,23 +200,31 @@ By architecting the network as two independent parallel planes, they can aggrega
 
 Another benefit of Dual-Plane Networking is fault tolerance, avoiding single point of failure. Each compute networking plane forms a separate fabric, where the resiliency and the load balancing between the two planes is handled by the application software on the host. Any failure to provide GPU to GPU connectivity via one plane will seclude traffic to the alternative plane, but if both planes are active, the traffic will be balanced between planes in a manner that utilizes the bandwidth of both links.
 
+## Rail Network
+
+Rail-only Architecture: Proposed by MIT researchers in 2023, the Rail-only network architecture is a heavily optimized, LLM-centric data center design that challenges the necessity of traditional full-bisection networks. It fundamentally retains the High-Bandwidth (HB) domain (the ultra-fast internal connections between GPUs on the same server, like NVLink) and the top-of-rack Rail switches, but entirely eliminates the upper layer of Spine switches. [[Wang et al., 2023]](https://arxiv.org/abs/2307.12169v5)
+
+The researchers discovered that LLM training generates highly localized and sparse network traffic; GPUs primarily need massive bandwidth to communicate with adjacent GPUs in their local HB domain, and with their same-rank counterparts across the cluster (via the rails). They rarely require the expensive, any-to-any cluster-wide connectivity that Spine switches provide.
+
+By removing the spine layer, the Rail-only architecture effectively uses the internal server interconnects (NVLink) as an "inverted spine." If data must cross rails, it simply bounces through the local NVLink to the correct GPU, which then sends it out over its dedicated rail. This architectural shift significantly reduces the hardware footprint—cutting network costs by 38% to 77% and reducing network power consumption by 37% to 75%—while maintaining identical training throughput for standard LLMs. Even for complex Mixture-of-Experts (MoE) models that require aggressive all-to-all communication, this spine-free design only incurs a minor 8.2% to 11.2% performance overhead, proving that hyperscalers can save millions of dollars and megawatts of power without meaningfully sacrificing AI training speeds.
+
+![Rail-only Architecture](/static/Rail-only-Architecture.webp)
 
 
-# Storage Fabric
+### Rail Optimized Fat-tree (ROFT)
+[NVIDIA DGX GB300](https://docs.nvidia.com/pdf/dgx-spod-gb300-ra.pdf) reference architecture uses Rail Optimized Fat-tree (ROFT) topology. In each Super Unit (SU) use rail-only leaf switches to connect compute trays. Spine switches are used to connect 16 SUs.
 
-So far, we have discussed the compute fabric. Now, let's discuss the storage fabric.
-Storage fabric is a network fabric that provides high bandwidth to shared storage.
-it follow the same principles as the compute fabric. But, it is independent of the compute fabric to maximize performance of both storage and application performance.
+* Each compute tray has 4 GPUs, and split into 4 rails.
+* Each Super Unit (SU) has 8 racks, connecting to 8 leaf switches on 4 rails, each rail has two leaf switches.
+* 72 spine switches with 144 radix, aggregating 16 SUs (128 ports to leaf switches, other ports for management and expansion).
 
-The storage fabric provides high bandwidth to shared storage. It also has the
-following characteristics:
-* It is independent of the compute fabric to maximize performance of both
-storage and application performance.
-* Provides single-server line-rate of 400Gbps to each DGX GB300 compute
-tray.
-* Storage is provided over RDMA over Converged Ethernet to provide
-maximum performance and minimize CPU overhead.
-* User-accessible management servers provide access to shared storage.
+Each compute rack is rail-aligned. Traffic per rail of each compute tray is always one hop away from other compute trays in the same Scalable Unit (SU). Traffic between different SU, or between different rails, traverses the spine layer.
+
+![GB300 ROFT Architecture](/static/gb300-compute-fabric.png)
 
 # References
 [1] CS168, Datacenter Topology: https://textbook.cs168.io/datacenter/topology.html
+
+[2] NVIDIA reference architecture: https://docs.nvidia.com/enterprise-reference-architectures/hgx-ai-factory/latest/networking-physical-topologies.html
+
+[3] NVIDIA DGX GB300 Reference Architecture: https://docs.nvidia.com/pdf/dgx-spod-gb300-ra.pdf
