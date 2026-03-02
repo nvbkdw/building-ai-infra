@@ -6,7 +6,6 @@ author: "Ryan H."
 description: "This blog post covers the AI compute scaling out."
 summary: "This blog post covers the AI compute scaling out."
 cover:
-    image: "ai-compute-scaling-out.png"
     alt: "AI Compute Scaling Out"
     relative: true
 ---
