@@ -3,8 +3,8 @@ title: "AI Compute - Scaling Out"
 date: 2026-02-27
 tags: ["networking", "data center"]
 author: "Ryan H."
-description: "This blog post covers the AI compute scaling out."
-summary: "This blog post covers the AI compute scaling out."
+description: "This blog post covers the AI compute scaling out network architectures."
+summary: "This blog post covers the AI compute scaling out network architectures."
 ---
 
 # Introduction
