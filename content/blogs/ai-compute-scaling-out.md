@@ -171,7 +171,7 @@ Typically, a two-layer **Spine-Leaf CLOS** architecture is used. When the two-la
 
 In a two-layer (Leaf-Spine) Clos network, half of a Leaf switch's ports connect downwards to the GPUs, and the other half connect upwards to the Spine switches to ensure a 1:1 non-blocking bandwidth ratio. The maximum number of endpoints (GPUs) a two-layer network can support is:
 
-$$Max\_Endpoints = R \times R/2 = \frac{R^2}{2}$$
+$$Max\_{Endpoints} = R \times R/2 = \frac{R^2}{2}$$
 
 where $R$ is the radix of switch. There are totally $R$ leaf switches because the spine switch has $R$ ports, and each leaf switch has $R/2$ ports connecting to endpoints (GPUs).
 
@@ -185,7 +185,7 @@ Alibaba proposed a dual-plane network architecture in 2024 [[Alibaba HPN, 2024]]
 
 So far, we have used "port" to mean a single physical port on a switch or NIC. In reality, a port is not a single unit — it is a bundle of links. Think of a port as a four-lane highway: each individual lane is a link. **Port splitting** divides one port's lanes into two independent groups, effectively turning one logical port into two.
 * Modern high-end switches often have 64 physical ports ($R=64$) running at 400G. the maximum size of a two-layer network is $\frac{64^2}{2} = 2,048$ GPUs. 
-* Dual-Plane 200G Split: By splitting a single 400G port into two group of independent 200G links, the switch's effective radix magically doubles from 64 to 128 ($R=128$). Now, look at how doubling the radix changes the math for a two-layer network:$$Max\_Endpoints = \frac{128^2}{2} = 8,192 \text{ GPUs per plane}$$
+* Dual-Plane 200G Split: By splitting a single 400G port into two group of independent 200G links, the switch's effective radix magically doubles from 64 to 128 ($R=128$). Now, look at how doubling the radix changes the math for a two-layer network:$$Max\_{Endpoints} = \frac{128^2}{2} = 8,192 \text{ GPUs per plane}$$
 
 ![Dual-Plane Networking](/static/HPN-dual-plane-design.png)
 
