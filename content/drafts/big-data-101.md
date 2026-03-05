@@ -46,11 +46,7 @@ MapReduce was revolutionary because it allowed distributed processing, but it ha
 
 * **Federated Querying (Trino):** As data exploded across different formats (relational databases, NoSQL like MongoDB, streams like Kafka), moving all of it into one central warehouse via ETL jobs became a bottleneck. Trino evolved into a "universal translator," allowing users to write one SQL query that reaches across these disparate, decoupled systems without having to move the data first.
 
----
-
-The overarching theme is that as network speeds caught up to processing demands, Big Data moved from clunky, disk-heavy, localized processing to fast, in-memory, decoupled, and federated networks.
-
-Would you like me to dive deeper into how Trino's "push down" optimization actually works across those different database types?
+![big data query architecture](/static/big-data-query-arch.png)
 
 
 # DataLake: Separated Storage Layer
