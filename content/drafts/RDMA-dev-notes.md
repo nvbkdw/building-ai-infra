@@ -316,11 +316,12 @@ This number comes from a standard calculation based on the PCIe Generation 4.0 s
 
 2. The Encoding Overhead (The "Tax")PCIe is a serial protocol. It doesn't send 100% user data; it has to mix in some "overhead" bits to keep the signal synchronized (clock recovery).PCIe 4.0 uses "128b/130b" encoding.This means for every 130 bits sent over the wire, 128 bits are actual data.Efficiency: $128 / 130 \approx 0.985$ (or 98.5% efficient).
 
-3. The CalculationTo get the bandwidth in Gigabytes per second (GB/s): Convert Transfers to Bits:$$16 \text{ GT/s} \times (128/130 \text{ encoding}) = 15.754 \text{ Gigabits/s (per lane)}$$Convert Bits to Bytes:$$15.754 \text{ Gbps} / 8 \text{ bits per Byte} = 1.969 \text{ GB/s (per lane)}
+3. The CalculationTo get the bandwidth in Gigabytes per second (GB/s): Convert Transfers to Bits:$$16 \text{ GT/s} \times (128/130 \text{ encoding}) = 15.754 \text{ Gigabits/s (per lane)}$$
+Convert Bits to Bytes: $$15.754 \text{ Gbps} / 8 \text{ bits per Byte} = 1.969 \text{ GB/s (per lane)}$$
 
-$$Multiply by Lane Width:Your output shows Width x16.$$1.969 \text{ GB/s} \times 16 \text{ lanes} = \mathbf{31.508 \text{ GB/s}}
+Multiply by Lane Width:Your output shows Width x16.$$1.969 \text{ GB/s} \times 16 \text{ lanes} = \mathbf{31.508 \text{ GB/s}}$$
 
-$$Important Context: Unidirectional vs. Bidirectional 31.5 GB/s is Unidirectional: This is the speed at which you can send data to the device OR receive data from the device.63.0 GB/s is Bidirectional: Since PCIe is full-duplex, you can technically send 31.5 GB/s and receive 31.5 GB/s simultaneously.However, when benchmarking storage or GPU loading, we usually care about the unidirectional speed (e.g., "How fast can I load this texture into VRAM?"), which is why 31.5 GB/s is the "speed limit" number you should keep in mind.
+Important Context: Unidirectional vs. Bidirectional 31.5 GB/s is Unidirectional: This is the speed at which you can send data to the device OR receive data from the device.63.0 GB/s is Bidirectional: Since PCIe is full-duplex, you can technically send 31.5 GB/s and receive 31.5 GB/s simultaneously.However, when benchmarking storage or GPU loading, we usually care about the unidirectional speed (e.g., "How fast can I load this texture into VRAM?"), which is why 31.5 GB/s is the "speed limit" number you should keep in mind.
 
 
 
