@@ -13,28 +13,85 @@ cover:
 
 # Introduction
 
-How does LLM inference done on a single node?
-TODO: high level architecture of a single node inference system.
-More details about the inference engine and kernels is covered in [LLM Inference Engine Design Doc](/drafts/LLM-inference-engine-design-doc.md).
+At a high level, the inference system is composed of four components:
 
-Design a distributed inference system for a large language model.
-Run on multi-node cluster, serving LLM models.
-High throughput, high GPU efficiency.
-Multi-tiered storage system, using GMEM, HBM, NVMe, DRAM, etc.
+- **Request Router:** Routes incoming requests to the appropriate LLM worker nodes, balancing cache affinity and load.
+- **Inference Worker:** Runs the LLM inference engine, handling both prefill and decode stages.
+- **KV Cache Manager:** Manages KV cache storage and transfer across a hierarchical storage system (HBM, DRAM, NVMe, remote storage, etc.).
+- **Control Plane:** Maintains cluster state and coordinates lifecycle events across all components.
 
-# High level architecture:
+![LLM Distributed Inference System](/static/llm-inference-architecture.png)
 
-- Routing layer: route request to LLM serving nodes.
-- LLM serving nodes: run LLM inference engine.
-- KV Cache Layer: manage KV cache storage and transfer across layers of storage hierarchy.
+### Data Flow
 
-# Routing layer:
+1. The **Request Router** receives a request from the API server and tokenizes the text input into token IDs.
 
-send request to available serving nodes.
-load balance requests to avoid overloading any one node.
-route request to a node the has warm KV cache.
+2. The router assigns the request to a **prefill worker** based on cache affinity and current load.
 
-TBD
+3. **Prefill stage:**
+    - (a) The prefill worker computes the KV cache for the input tokens.
+    - (b) The resulting KV cache is persisted to the **KV Cache Manager**, which stores it across the hierarchical storage system (HBM → DRAM → NVMe → remote storage).
+
+4. Once prefill completes, the router forwards the request to a **decode worker**.
+
+5. **Decode stage:**
+    - (a) The decode worker generates output tokens auto-regressively and streams them back to the client.
+    - (b) Newly produced KV cache entries are incrementally added to the **KV Cache Manager** for future reuse.
+
+# Request Router:
+
+The router is responsible for assigning each incoming request to the best worker node. It jointly optimizes two competing objectives:
+
+- **KV cache affinity**: Route requests to the worker that already caches the most relevant token prefixes, minimizing redundant prefill computation and lowering time to first token.
+- **Load balancing**: Spread requests across workers to prevent hotspots, keeping inter-token latency even and maximizing overall cluster throughput.
+
+For high availability, the router runs as multiple replicas behind a load balancer. Each replica independently maintains its own view of the cluster state, so the failure of one replica does not affect the others.
+
+![Routing layer](/static/llm-router.png)
+
+### Routing as a Multi-Objective Optimization Problem
+
+At its core, request routing is a **multi-objective optimization problem**. The router must jointly minimize two competing costs for every request:
+
+1. **Prefill cost** — how many tokens must be computed from scratch (i.e., not covered by existing KV cache on the target worker).
+2. **Queuing cost** — how loaded the target worker already is (active sequences, memory pressure).
+
+These two objectives are inherently in tension. Routing to the worker with the best cache overlap minimizes prefill but may overload a single worker. Routing to the least-loaded worker balances throughput but throws away cache locality. A well-designed router exposes this as a tunable weight so operators can slide between latency-optimized and throughput-optimized regimes depending on the workload.
+
+### Cache-Aware Routing: Knowing What Each Worker Has
+
+To make cache-aware decisions, the router needs a global view of which token prefixes are cached on which workers. The standard approach is to maintain a **prefix index** (e.g., a radix tree) at the router that maps token-block sequences to worker identifiers. Workers publish cache events (block insertions and evictions) to the router, which keeps its index up to date.
+
+When a request arrives, the router queries this index to compute the **overlap** between the request's input tokens and each worker's cached blocks. The worker with the longest prefix match can skip the most prefill computation.
+
+**Key trade-off: accuracy vs. coordination overhead.** Maintaining a globally consistent prefix index requires continuous event streaming from every worker. As cluster size grows, this coordination traffic can itself become a bottleneck. One mitigation is to make cache tracking optional — falling back to load-only routing when the coordination cost exceeds the benefit of cache-aware placement.
+
+### Load Estimation: Push vs. Pull
+
+The router also needs to know how busy each worker is. There are two broad approaches:
+
+- **Pull-based (metrics polling):** The router periodically scrapes load metrics from workers. Simple to implement, but the metrics are inherently stale — by the time the router reads them, the worker's state may have changed.
+- **Push-based (dispatch tracking):** Each router replica tracks the requests *it* has dispatched and knows about load changes the instant they happen. To achieve a cluster-wide view when multiple router replicas exist, replicas periodically broadcast their dispatch counts to peers.
+
+Push-based tracking is far more responsive, which matters when routing decisions are latency-sensitive. The trade-off is **approximate consistency**: each replica's view lags slightly behind reality, and brief double-counting can occur during broadcast propagation. In practice, this small inaccuracy is vastly preferable to the staleness of periodic polling.
+
+### Deterministic vs. Stochastic Selection
+
+Once the router scores every worker, it must choose one. The simplest policy is **greedy**: always pick the lowest-cost worker. This maximizes cache reuse but can create feedback loops where a popular worker attracts more requests, caches more data, and attracts even more requests — eventually becoming a hotspot.
+
+Introducing **stochastic selection** (e.g., softmax sampling over worker scores with a temperature parameter) breaks this feedback loop. Higher temperature spreads requests more evenly at the expense of cache locality. This gives operators a second tuning knob alongside the cache-vs-load weight.
+
+### Trade-off Summary
+
+| Dimension | Favoring Cache Affinity | Favoring Load Balance |
+| --- | --- | --- |
+| **Time to first token (TTFT)** | Lower — reuses prefill computation | Higher — may recompute cached tokens |
+| **Inter-token latency (ITL)** | Risk of hotspots on popular workers | More even across workers |
+| **GPU utilization** | Uneven — some workers idle | More balanced across the cluster |
+| **Best suited for** | Latency-sensitive, multi-turn conversations | Throughput-oriented batch workloads |
+
+Together, the **cache-vs-load weight** and **selection temperature** form a two-dimensional tuning surface: the weight controls *what* the router optimizes for, and the temperature controls *how deterministically* it pursues that optimum.
+
 
 # KV Cache Management:
 Reusing historical KV caches has been proven to be critical for high-performance LLM serving systems. In long multi-turn conversations, and Agentic workflows, context often stretched past hundreds of K tokens around multiple turns per session. Without full KV cache retention, nearly every request required costly re-computation. 
@@ -239,3 +296,7 @@ TODO: what's special about NIXL? How does GPU-direct storage work?
 
 
 
+# Inference Worker:
+TBD: inference engine design and implementation.
+
+TBD: prefill and decode stages.

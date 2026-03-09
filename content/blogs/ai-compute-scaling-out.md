@@ -17,9 +17,11 @@ For AI engineers, understanding scale-out networking topology is a force multipl
 # Server, Rack, Switch, and Fabric
 Computer servers in a data center are organized into racks, and racks are place in rows. All servers in the racks are connected to switches through a link (called an uplink), and switches are connected together into a inter-connect network **fabric**.
 
+In the broader world of high-performance computing (HPC) and networking, a **"fabric"** refers to the physical network topology. Unlike standard Ethernet where data hops from router to router, a "switched fabric" (like InfiniBand or RoCE) acts as a giant, highly interconnected web of switches. It allows any node to communicate with any other node with very low latency.
+
 ![Network Fabrics](/static/network-fabric.png)
 
-The arrangement of how servers, switches, and cables are interconnected is called the **network topology** — and choosing one is among the most consequential decisions in data center design. Every topology trades off throughput, fault tolerance, latency, cost, and scalability against each other. To help reasoning about the trade-offs, two mathematical concepts sit at the heart of topology evaluation: **Bisection Bandwidth** and the **Oversubscription Ratio**.
+The arrangement of how switches, and cables are interconnected in a network **fabric** is called the **network topology** — and choosing one is among the most consequential decisions in data center design. Every topology trades off throughput, fault tolerance, latency, cost, and scalability against each other. To help reasoning about the trade-offs, two mathematical concepts sit at the heart of topology evaluation: **Bisection Bandwidth** and the **Oversubscription Ratio**.
 
 ## Bisection Bandwidth
 
