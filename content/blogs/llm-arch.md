@@ -88,8 +88,8 @@ Rather than learning an embedding for every possible position (which would not g
 
 $$
 \begin{split}PE_{(pos,i)} = \begin{cases}
-    \sin\left(\frac{pos}{10000^{i/d}}\right) & \text{if}\hspace{3mm} i \text{ mod } 2=0\\\\
-    \cos\left(\frac{pos}{10000^{(i-1)/d}}\right) & \text{otherwise}\\\\
+    \sin\left(\frac{pos}{10000^{i/d}}\right) & \text{if}\hspace{3mm} i \text{ mod } 2=0\\
+    \cos\left(\frac{pos}{10000^{(i-1)/d}}\right) & \text{otherwise}\\
 \end{cases}\end{split}
 $$
 
@@ -104,7 +104,7 @@ The key property: $PE_{(pos+k,:)}$ can be expressed as a linear function of $PE_
 Most modern LLMs use **Rotary Positional Embedding (RoPE)**, which encodes position by rotating query and key vectors in 2D subspaces. RoPE applies a rotation matrix to each consecutive pair of dimensions $(2i, 2i+1)$:
 
 $$
-R_{\theta, pos} \begin{pmatrix} q_{2i} \\\\ q_{2i+1} \end{pmatrix} = \begin{pmatrix} \cos(pos \cdot \theta_i) & -\sin(pos \cdot \theta_i) \\\\ \sin(pos \cdot \theta_i) & \cos(pos \cdot \theta_i) \end{pmatrix} \begin{pmatrix} q_{2i} \\\\ q_{2i+1} \end{pmatrix}
+R_{\theta, pos} \begin{pmatrix} q_{2i} \\ q_{2i+1} \end{pmatrix} = \begin{pmatrix} \cos(pos \cdot \theta_i) & -\sin(pos \cdot \theta_i) \\ \sin(pos \cdot \theta_i) & \cos(pos \cdot \theta_i) \end{pmatrix} \begin{pmatrix} q_{2i} \\ q_{2i+1} \end{pmatrix}
 $$
 
 where $\theta_i = 10000^{-2i/d_k}$. RoPE is applied to Q and K (not V) after the linear projections.
@@ -219,7 +219,7 @@ Each decoder layer contains a position-wise feed-forward network applied indepen
 Two linear layers with a GeLU non-linearity:
 
 $$
-O_1 = \text{GeLU}(XW_1 + b_1) \\\\
+O_1 = \text{GeLU}(XW_1 + b_1) \\
 O_2 = O_1 W_2 + b_2
 $$
 
