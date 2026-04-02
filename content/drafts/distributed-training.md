@@ -14,12 +14,7 @@ cover:
 ## Introduction
 
 
-Mathematical formulation of training:
-TBD
 
-- Activation
-- Gradient
-- Optimizer
 
 
 

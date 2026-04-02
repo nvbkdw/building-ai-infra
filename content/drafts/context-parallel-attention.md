@@ -1,20 +1,18 @@
 ---
-title: "Attention Computation"
+title: "Context Parallel Attention Computation"
 date: 2026-03-05
 tags: ["attention"]
 author: "Ryan H."
-description: "This blog post covers the attention computation algorithm."
-summary: "This blog post covers the attention computation algorithm."
+description: "This blog post covers the context parallel attention computation algorithm."
+summary: "This blog post covers the context parallel attention computation algorithm."
 cover:
-    image: "attention-computation.png"
-    alt: "Attention Computation Algorithm"
+    image: "context-parallel-attention-computation.png"
+    alt: "Context Parallel Attention Computation Algorithm"
     relative: true
 ---
 
-# Attention Computation Algorithm
 
-
-## Attention Formula (The Problem)
+# Attention Formula (The Problem)
 
 In standard attention, for a given Query matrix $Q$, Key matrix $K$, and Value matrix $V$, the output $O$ is:
 
@@ -131,7 +129,7 @@ To combine an old accumulated block with a new incoming block, the combined outp
 $$Out_{new} = Out_{old} \cdot \exp(LSE_{old} - LSE_{new}) + Out_{block} \cdot \exp(LSE_{block} - LSE_{new})$$
 
 
-## Ring Attention
+# Ring Attention
 Diving into the math behind Ring Attention is where things get really elegant. It solves a fundamental problem: standard Self-Attention requires seeing the *entire* sequence at once to compute the probabilities (the softmax denominator).
 
 If GPU 0 only has tokens 0–48k, and GPU 1 has tokens 48k–96k, GPU 0 cannot compute the final attention scores for its tokens because it doesn't know how strongly they attend to GPU 1's tokens.
@@ -227,6 +225,7 @@ The exponents $(\dots - LSE_{new})$ act as **correction weights**. Because $LSE_
 ### Causal Masking
 How causal masking (where tokens can't look at future tokens) is applied mathematically when computing these blocks in a ring topology?
 
+
 Adding causal masking into the block-wise Ring Attention setup is a great next step. Causal masking ensures that when a model is predicting the next word, it cannot "cheat" by looking at future words.
 
 Mathematically, this means token $i$ can only attend to token $j$ if $j \le i$. Let's break down how this is applied within the distributed block topology of Ring Attention.
@@ -246,7 +245,7 @@ q_i k_j^T & \text{if } j \le i \\
 
 Because $\exp(-\infty) = 0$, these future tokens are completely zeroed out in the numerator, and they contribute exactly $0$ to the local denominator ($LSE$).
 
----
+![Causal Masking](/static/causal-masking.png)
 
 #### 2. Causal Masking in a Block Topology
 
@@ -302,6 +301,13 @@ $$O_{new} = O_{old} \cdot \exp(LSE_{old} - LSE_{new}) + O_{block} \cdot \exp(LSE
 ...it merges seamlessly. The formula doesn't even need to know that a mask was applied; the zeros are already perfectly baked into $O_{block}$ and $LSE_{block}$.
 
 
+
+![Load Imbalance](/static/ring-attention-load-imbalance.png)
+
+TODO:
+Causal masking cause load imbalance, solution? -> [Stripe Attention](https://arxiv.org/abs/2311.09431)
+
+
 ### The Backward Pass (Training Dynamics)
 
 During training, you have to run this ring in reverse to compute gradients. This is where Ring Attention gets computationally intense.
@@ -319,6 +325,8 @@ This combination of **Online Softmax** + **P2P Ring Communication** is a masterp
 
 
 TODO: Ring Attention algorithm in pytorch
+* https://github.com/gpu-mode/ring-attention/tree/main/notebooks
+* https://github.com/zhuzilin/ring-flash-attention
 
 
 TODO: overlapping computation and communication in ring attention
@@ -331,8 +339,16 @@ TODO: Ulysses Context Parallelism
 
 TODO: how to fuse pre-attention operations into context parallel
 
+# Optimize Attention for Decoding
+
+pass Q
+
+TODO: Flash Decoding
+
 TODO: Halix - context parallel for decoding
 https://arxiv.org/abs/2507.07120
+
+
 
 
 
@@ -342,3 +358,4 @@ https://arxiv.org/abs/2507.07120
 - [From Online Softmax to FlashAttention](https://courses.cs.washington.edu/courses/cse599m/23sp/notes/flashattn.pdf). University of Washington CSE 599m, Spring 2023.
 - Milakov, M., & Gimelshein, N. (2018). [Online Normalizer Calculation for Softmax](https://arxiv.org/abs/1805.02867). *arXiv preprint arXiv:1805.02867*.
 - [Lecture 13: Ring Attention](https://www.youtube.com/watch?v=ws7angQYIxI). GPU MODE
+    - [Notes on Ring Attention](https://christianjmills.com/posts/cuda-mode-notes/lecture-013/)
