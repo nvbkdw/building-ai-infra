@@ -74,7 +74,9 @@ You're not training a frontier 70B LLM. You're training a **<1B param multimodal
 
 ---
 
-## Phase Structure (12–18 months, 10–15 hrs/week)
+## Phase Structure (12–22 months, 10–15 hrs/week)
+
+Phases 0–6 are the core 12–18-month path. Phase 7 (quantization) is an optional 4-month specialization that runs after the core path — Vlad Feinberg's *["How to Land a Job at a Frontier Lab"](https://vladfeinberg.com/2026/05/10/how-to-land-a-job-at-a-frontier-lab.html)* calls out quantization and kernels as the two edges of the LLM stack with the lowest cost-to-impact ratio for landing a lab job.
 
 Each phase: **Theory (reading) → Noetik practice (work-integrated project) → Output → Validation gate.**
 
@@ -336,12 +338,81 @@ Multimodal inference has a problem most LLM-serving papers don't address: the im
 
 ---
 
+### Phase 7 — Quantization & Model Efficiency (Months 18–22, ~120 hrs) — *Specialization*
+
+**Why this phase:** Vlad Feinberg (ex-Google Brain, frontier-lab kernels engineer) explicitly calls out quantization as *"an excellent field to enter — exists at the edges of the LLM stack and requires minimal resources,"* making it one of the highest-leverage areas to demonstrate frontier-lab-ready skills. It's also one of the few places where you can ship measurable wins (2–4× throughput, 4× memory) on a single GPU without a 1000-GPU budget. Combined with the kernel chops from Phases 1–2, it makes you the person on the team who owns the *quality-vs.-performance tradeoff* end-to-end.
+
+**Goal:** Be able to take a model from FP16/BF16 → FP8/INT4 in production with measured, documented quality preservation; able to write or deeply read W4A16 / FP8 inference kernels; have one quantization-specific OSS contribution.
+
+**Theory anchor — MIT 6.5940 *Efficient Deep Learning Computing* (Song Han, Han Lab):**
+
+Take the [latest offering](https://hanlab.mit.edu/courses/2024-fall-65940) (lecture videos + slides are public). Core lectures for this phase:
+
+- Lectures 5–6: Quantization Part I & II — foundational (uniform vs. non-uniform, PTQ vs. QAT, per-channel vs. per-tensor, calibration)
+- Lecture 12: Transformer and LLM
+- Lecture 13: Efficient LLM Deployment
+- Lecture 14: LLM Post Training
+- Lecture 15: Long Context LLM
+- **Lab 2: Quantization** — the main programming assignment; do it on the Noetik multimodal model, not the canned course model
+
+**Paper reading (read in this order — Vlad's recommended progression + the LLM-specific canon):**
+
+1. [LLM.int8() (Dettmers et al., 2022)](https://arxiv.org/abs/2208.07339) — *Vlad: "classic which exposes you to a strong set of tricks to walk the quality-performance tradeoff."* Start here.
+2. [GPTQ (Frantar et al., 2022)](https://arxiv.org/abs/2210.17323) — second-order weight quantization to 4 bits; the post-training-quantization workhorse
+3. [SmoothQuant (Xiao et al., 2022)](https://arxiv.org/abs/2211.10438) — W8A8 by migrating activation outliers into weights
+4. [AWQ (Lin et al., 2023)](https://arxiv.org/abs/2306.00978) — Activation-aware Weight Quantization; the W4A16 production default
+5. [QuIP (Chee et al., 2023)](https://arxiv.org/abs/2307.13304) — 2-bit weights via incoherence processing *(Chris De Sa group progression)*
+6. [QuIP# (Tseng et al., 2024)](https://arxiv.org/abs/2402.04396) — E8 lattice codebooks for QuIP
+7. [QTIP (Tseng et al., 2024)](https://arxiv.org/abs/2406.11235) — trellis-coded quantization, current SOTA at low bits
+8. [AQLM (Egiazarian et al., 2024)](https://arxiv.org/abs/2401.06118) — additive quantization, the alternative branch
+9. [FP8 Formats for Deep Learning (Micikevicius et al., NVIDIA 2022)](https://arxiv.org/abs/2209.05433) — the E4M3/E5M2 spec; required for Hopper/Blackwell
+10. [Marlin: fast W4A16 inference kernels (IST-DASLab)](https://github.com/IST-DASLab/marlin) — read the source + paper if available
+11. [KV Cache Quantization survey / KVQuant (arXiv:2401.18079)](https://arxiv.org/abs/2401.18079) — especially relevant for your long-context gene-sequence decoder
+
+**Tools and source code to learn:**
+
+- [bitsandbytes](https://github.com/bitsandbytes-foundation/bitsandbytes) — LLM.int8(), 4-bit quant, the entry-point library
+- [AutoGPTQ](https://github.com/AutoGPTQ/AutoGPTQ) + [AutoAWQ](https://github.com/casper-hansen/AutoAWQ) — production PTQ pipelines
+- [llm-compressor](https://github.com/vllm-project/llm-compressor) — vLLM's compression toolkit; read the source
+- [NVIDIA Transformer Engine](https://github.com/NVIDIA/TransformerEngine) — FP8 training/inference primitives on Hopper
+- [TensorRT-LLM quantization](https://github.com/NVIDIA/TensorRT-LLM) — production-grade quantization pipeline
+- [Marlin kernels](https://github.com/IST-DASLab/marlin) — W4A16 fast GPU inference; read the CUDA
+- vLLM / SGLang quantization integration points (look at how W4A16 hooks into PagedAttention)
+
+**Noetik practice (this is where you collect the portfolio gold):**
+
+Your <1B-param multimodal model is an ideal quantization testbed: small enough to iterate fast, real enough that the quality measurements matter. ViTs tolerate FP8 very well; long-context decoders benefit massively from KV-cache quantization.
+
+1. **End-to-end PTQ baseline.** Quantize the Noetik model with bitsandbytes + AutoAWQ at multiple precisions (W8A16, W4A16, FP8). Measure throughput, memory, and *task-specific* quality (e.g., AUROC on a medical-imaging task, perplexity on gene sequences). Build a quality-vs-throughput Pareto curve.
+2. **KV-cache quantization for the gene-sequence decoder.** Long context = KV cache dominates memory. Try FP8 and INT4 KV cache. Measure quality cliff: where does it start to hurt?
+3. **Mixed-precision strategy.** Image encoders tolerate FP8 well; decoders may need W4A16 with FP16 activations; sensitive layers (embeddings, lm_head, layernorms) stay BF16. Build the right mix for *your* model and document why.
+4. **Write a custom W4A16 Triton kernel** (Marlin-style: dequantize-and-matmul fused). Benchmark against `bitsandbytes` and against AWQ's reference kernel on H100. This is the capstone artifact — it combines everything from Phase 1 (kernels) + Phase 7 (quantization).
+5. **Bonus:** contribute a real quantization improvement upstream — a calibration-set bug fix, a new mixed-precision config, a kernel optimization. vLLM's `llm-compressor` and AutoAWQ both have active issue queues.
+
+**Outputs:**
+
+- Blog post #13 — *"Quantizing a 1B multimodal model: the quality-throughput Pareto curve from BF16 to W4A16 to FP8"*
+- Blog post #14 — *"A Triton W4A16 Marlin-style kernel: how dequantize-and-matmul fusion actually works"*
+- Blog post #15 — *"KV cache quantization for long-context decoders: where the quality cliffs hide"*
+- Merged OSS PR to vLLM `llm-compressor`, AutoAWQ, or bitsandbytes
+
+**Gate (this is the final readiness check for frontier-lab quant interviews):**
+
+- [ ] Can explain GPTQ vs. AWQ vs. SmoothQuant vs. AQLM differences and when each applies
+- [ ] Have a Pareto curve (quality vs. throughput) for the Noetik model across ≥4 precision configs
+- [ ] Have a working custom W4A16 kernel benchmarked against state-of-the-art (Marlin / AWQ)
+- [ ] Understand the FP8 hardware story on Hopper (E4M3 for forward, E5M2 for gradients) and what Blackwell adds (FP4, MXFP variants)
+- [ ] Can answer "why is your quantized model slower than FP16?" by hypothesis (kernel not fused? dequant on critical path? memory layout? batch size too small?)
+
+---
+
 ## Critical Files / Resources (one-stop reference)
 
 **Courses:**
 
-- [Stanford CS336 Spring 2025](https://cs336.stanford.edu/spring2025/) — foundation
-- [GPU MODE Lectures](https://github.com/gpu-mode/lectures) — kernel writing
+- [Stanford CS336 Spring 2025](https://cs336.stanford.edu/spring2025/) — foundation (Phase 0)
+- [GPU MODE Lectures](https://github.com/gpu-mode/lectures) — kernel writing (Phases 0–2)
+- [MIT 6.5940 Efficient Deep Learning Computing](https://hanlab.mit.edu/courses/2024-fall-65940) (Song Han) — quantization, pruning, distillation (Phase 7)
 
 **Books:**
 
@@ -355,7 +426,9 @@ Multimodal inference has a problem most LLM-serving papers don't address: the im
 - [Megatron-Core](https://github.com/NVIDIA/Megatron-LM) `megatron/core/parallel_state.py`
 - [NCCL](https://github.com/NVIDIA/nccl) `src/transport/`, `src/collectives/`
 
-**Must-read papers (10):**
+**Must-read papers:**
+
+*Phases 0–6 (systems + training + inference):*
 
 1. [FlashAttention v1](https://arxiv.org/abs/2205.14135) / [v2](https://arxiv.org/abs/2307.08691) / [v3](https://arxiv.org/abs/2407.08608)
 2. [Megatron-LM 3D](https://arxiv.org/abs/2104.04473)
@@ -367,6 +440,17 @@ Multimodal inference has a problem most LLM-serving papers don't address: the im
 8. [PagedAttention / vLLM](https://arxiv.org/abs/2309.06180)
 9. [SARATHI (chunked prefill)](https://arxiv.org/abs/2308.16369)
 10. [Demystifying NCCL](https://arxiv.org/html/2507.04786v1)
+
+*Phase 7 (quantization):*
+
+11. [LLM.int8() (Dettmers)](https://arxiv.org/abs/2208.07339)
+12. [GPTQ (Frantar)](https://arxiv.org/abs/2210.17323)
+13. [SmoothQuant (Xiao)](https://arxiv.org/abs/2211.10438)
+14. [AWQ (Lin)](https://arxiv.org/abs/2306.00978)
+15. [QuIP](https://arxiv.org/abs/2307.13304) / [QuIP#](https://arxiv.org/abs/2402.04396) / [QTIP](https://arxiv.org/abs/2406.11235) — Chris De Sa group progression
+16. [AQLM (Egiazarian)](https://arxiv.org/abs/2401.06118)
+17. [FP8 Formats for Deep Learning (Micikevicius, NVIDIA)](https://arxiv.org/abs/2209.05433)
+18. [KVQuant](https://arxiv.org/abs/2401.18079) — relevant to long-context gene decoder
 
 **Reference docs (bookmark):**
 
