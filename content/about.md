@@ -11,7 +11,7 @@ Tech Lead specializing in multimodal AI infrastructure at a biotech AI research 
 * Build data loading pipeline with distributed cache to accelerate multimodal data loading.
 * Build distributed training framework in PyTorch with model (FSDP/context) parallelism.
 * Build large-scale batch inference system deployed across multiple cloud providers.
-* Optimize inference engine optimization with KV cache optimization, SGLang, quantization.
+* Optimize inference engine optimization with KV cache optimization, SGLang, dynamic batching, and quantization.
 * Develop custom CUDA/CUTLASS kernel libraries for both training and inference workloads.
 * Build agentic workflows to automate daily engineering and operation tasks.
 
