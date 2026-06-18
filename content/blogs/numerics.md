@@ -21,7 +21,7 @@ Integers can be represented in different ways:
     - $5_{10} = 0101_2$
     - $-5_{10}$: invert $0101_2 \rightarrow 1010_2$, add 1 $\rightarrow 1011_2$
   - Range for n-bit: $[-2^{n-1}, 2^{n-1} - 1]$
-    - the code 1000...0 represents -2^(n-1)
+    - the code 1000...0 represents -2^(n-1Markdown Preview Enhanced)
     - only one zero representation: 0000...0 represents 0
   - Key advantage: arithmetic operations work uniformly for both positive and negative numbers without special handling
 
@@ -73,8 +73,8 @@ While integer representation provides equal spacing sampling, floating point rep
 ***Special interpretation of exponents bits:***
 - Freeze the exponent bits to all 0s. Thus exponent is $2^0 - bias$ -- the min debiased exponent value
   - for example, $2^0 - 15 = -14$ for FP16
-- Not implied 1 bit in front of the mantissa bits
-  - $0.00000.1010000000_2 = 2^{-14} * \mathbf{0}.101_2 = 2^{-15} * (1 + 2^{-2})_{10} = ...$
+- NOT implied 1 bit in front of the mantissa bits
+  - $0.00000.1010000000_2 = 2^{-14} * \mathbf{0}.101_2 = 2^{-14} * (2^{-1} + 2^{-3})_{10} = ...$
 - zero is represented as $0.00000.0000000000_2$
 
 ***Purpose:***

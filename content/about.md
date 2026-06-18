@@ -9,7 +9,7 @@ I am a Software Engineer specializing in AI infrastructure with 10+ years of ind
 
 As Tech Lead at an AI research startup, I built an unified ML platform from scratch. This platform is the foundation of the company's AI research. Every day ML research is done on this platform, ranging from notebook, distributed training, large batch inference, real-time inference, and agentic workflows, etc.
 
-In addition, I optimize the entire ML infrastructure stack. On the training side, this includes distributed training with model parallelism, faster dataloading (RDMA), and custom kernel fusion. On the inference side, I work on quantization, context parallelism, KV cache optimization, and continuous batch scheduling. I also build AI agent to automate daily engineering and operation tasks.
+In addition, I optimize the entire ML infrastructure stack. On the training side, this includes distributed training with model (FSDP/context) parallelism, faster dataloading, custom kernel fusion with CUDA/CUTLASS. On the inference side, I built a large-scale batch inference system across multiple cloud providers. I also work on inference engine optimization with KV cache optimization, SGLang, quantization, and customer CUDA kernels. I also build AI agent to automate daily engineering and operation tasks.
 
 ## Previous Experience
 
