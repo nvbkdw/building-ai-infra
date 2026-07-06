@@ -113,7 +113,7 @@ The platform should also encourage a configuration-driven approach. Training, in
 
 This makes workloads easier to inspect, reproduce, compare, and track. Instead of relying on hidden command-line arguments or undocumented script changes, the important choices are captured in structured configuration.
 
-Configuration-driven workloads also create a cleaner boundary between research logic and platform execution. Researchers can focus on what they want to run, while the platform handles how to run it.
+**Configuration-driven workloads** also create a cleaner boundary between research logic and platform execution. Researchers can focus on what they want to run, while the platform handles how to run it.
 
 ---
 
