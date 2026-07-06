@@ -6,7 +6,7 @@ author: "Ryan H."
 description: "This blog post covers the MLOps platform design principles for research lab."
 summary: "This blog post covers the MLOps platform design principles for research lab."
 cover:
-    image: "mlops-platform-for-research-lab.png"
+    image: "speed-racer.webp"
     alt: "MLOps Platform for Research Lab"
     relative: true
 ---
