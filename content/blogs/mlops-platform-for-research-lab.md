@@ -7,7 +7,7 @@ description: "This blog post covers the MLOps platform design principles for res
 summary: "This blog post covers the MLOps platform design principles for research lab."
 ---
 
-![Speed Racer](/static/MLOps.png)
+![Speed Racer](/static/mlops-speed-runner.png)
 
 MLOps refers to the practice of applying DevOps principles to machine learning workflows. In many organizations, especially large technology companies, MLOps grew naturally out of mature DevOps systems and infrastructure. Once a company already has strong engineering discipline around deployment, monitoring, reproducibility, and reliability, it makes sense to apply the same rigor to ML-related workflows.
 
