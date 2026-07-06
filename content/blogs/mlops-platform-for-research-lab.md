@@ -1,6 +1,6 @@
 ---
 title: "What Makes a Good MLOps Platform for an AI Research Lab?"
-date: 2025-11-19
+date: 2026-07-05
 tags: ["mlops","platform"]
 author: "Ryan H."
 description: "This blog post covers the MLOps platform design principles for research lab."
