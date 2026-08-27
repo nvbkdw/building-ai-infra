@@ -1,23 +1,24 @@
-{{- $scratch := newScratch }}
+{{- /* Labelled meta line, e.g. "Date: May 1, 2025  |  Estimated Reading Time: 12 min  |  Author: Ryan H." */ -}}
+{{- $meta := slice }}
 
-{{- if not .Date.IsZero -}}
-{{- $scratch.Add "meta" (slice (printf "<span title='%s'>%s</span>" (.Date) (.Date | time.Format (default "January 2, 2006" site.Params.DateFormat)))) }}
+{{- if not .Date.IsZero }}
+{{- $meta = $meta | append (printf "<span title='%s'>Date: %s</span>" .Date (.Date | time.Format (default "January 2, 2006" site.Params.DateFormat))) }}
 {{- end }}
 
-{{- if (.Param "ShowReadingTime") -}}
-{{- $scratch.Add "meta" (slice (i18n "read_time" .ReadingTime | default (printf "%d min" .ReadingTime))) }}
+{{- if (.Param "ShowReadingTime") }}
+{{- $meta = $meta | append (printf "Estimated Reading Time: %d min" .ReadingTime) }}
 {{- end }}
 
-{{- if (.Param "ShowWordCount") -}}
-{{- $scratch.Add "meta" (slice (i18n "words" .WordCount | default (printf "%d words" .WordCount))) }}
+{{- if (.Param "ShowWordCount") }}
+{{- $meta = $meta | append (printf "%d words" .WordCount) }}
 {{- end }}
 
-{{- if not (.Param "hideAuthor") -}}
+{{- if not (.Param "hideAuthor") }}
 {{- with (partial "author.html" .) }}
-{{- $scratch.Add "meta" (slice .) }}
+{{- $meta = $meta | append (printf "Author: %s" .) }}
 {{- end }}
 {{- end }}
 
-{{- with ($scratch.Get "meta") }}
-{{- delimit . "&nbsp;&middot;&nbsp;" | safeHTML -}}
-{{- end -}}
+{{- with $meta }}
+{{- delimit . "<span class='meta-sep'>|</span>" | safeHTML }}
+{{- end }}

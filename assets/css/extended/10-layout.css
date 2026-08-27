@@ -1,0 +1,242 @@
+/* ---------------------------------------------------------------------------
+   Global type, header, homepage welcome card, post cards, footer, archive.
+   --------------------------------------------------------------------------- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+code, kbd, pre, samp {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+h1, h2, h3, h4 {
+    letter-spacing: -0.01em;
+}
+
+/* ---- header ---- */
+.logo a {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.logo a:hover {
+    color: var(--accent);
+}
+
+#menu a {
+    font-size: 15px;
+    color: var(--secondary);
+}
+
+#menu a:hover {
+    color: var(--primary);
+}
+
+#menu .active {
+    color: var(--primary);
+    font-weight: 500;
+    border-bottom: 2px solid var(--accent);
+}
+
+button#theme-toggle {
+    color: var(--secondary);
+}
+
+button#theme-toggle:hover {
+    color: var(--accent);
+}
+
+/* ---- homepage welcome card ---- */
+.first-entry.home-info {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 28px;
+    min-height: 0;
+    margin: 36px 0 44px;
+}
+
+.home-info-avatar {
+    flex: none;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--entry);
+    box-shadow: var(--shadow);
+    margin-top: 4px;
+}
+
+.home-info-body {
+    min-width: 0;
+}
+
+.home-info .entry-header {
+    display: block;
+    overflow: visible;
+}
+
+.home-info .entry-header h1 {
+    font-size: 32px;
+    line-height: 1.25;
+}
+
+.home-info .entry-content {
+    margin: 12px 0 4px;
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--content);
+}
+
+.home-info .entry-content p + p {
+    margin-top: 10px;
+}
+
+.home-info .entry-content a {
+    color: var(--accent);
+    box-shadow: 0 1px 0 var(--accent-soft);
+}
+
+.home-info .entry-content a:hover {
+    box-shadow: 0 1px 0 var(--accent);
+}
+
+.home-info .social-icons {
+    padding: 6px 0 0;
+}
+
+.home-info .social-icons a {
+    padding: 8px 14px 8px 0;
+    color: var(--secondary);
+}
+
+.home-info .social-icons a:hover {
+    color: var(--accent);
+}
+
+.home-info .social-icons a svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* ---- post cards ---- */
+.post-entry {
+    padding: 22px 24px;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+.post-entry:hover {
+    border-color: var(--accent-soft);
+    box-shadow: var(--shadow);
+}
+
+.post-entry:active {
+    transform: scale(0.99);
+}
+
+.entry-header h2 {
+    font-size: 22px;
+    line-height: 1.3;
+}
+
+.entry-content {
+    margin: 8px 0 12px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--secondary);
+    -webkit-line-clamp: 3;
+}
+
+.entry-footer {
+    font-size: 13px;
+    color: var(--secondary);
+}
+
+.meta-sep {
+    margin: 0 8px;
+    opacity: 0.6;
+}
+
+/* ---- section / taxonomy page headers ---- */
+.page-header h1 {
+    font-size: 32px;
+}
+
+.post-description {
+    color: var(--secondary);
+}
+
+/* ---- footer ---- */
+.footer {
+    font-size: 12.5px;
+}
+
+.footer a {
+    border-bottom-color: var(--border);
+}
+
+.footer a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
+.top-link {
+    background: var(--tertiary);
+    color: var(--primary);
+}
+
+/* ---- archive ---- */
+.archive-year {
+    margin-top: 32px;
+}
+
+.archive-year-header {
+    font-size: 26px;
+}
+
+.archive-month-header {
+    width: 160px;
+    margin: 18px 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--secondary);
+}
+
+.archive-entry {
+    padding: 4px 0;
+}
+
+.archive-entry-title {
+    font-size: 17px;
+    transition: color 0.15s ease;
+}
+
+.archive-entry:hover .archive-entry-title {
+    color: var(--accent);
+}
+
+.archive-count,
+.archive-meta {
+    font-size: 13px;
+}
+
+/* ---- pagination ---- */
+.pagination a {
+    background: var(--primary);
+    color: var(--theme);
+}
+
+.pagination a:hover {
+    background: var(--accent);
+}
+
+/* ---- 404 ---- */
+.not-found {
+    color: var(--tertiary);
+}

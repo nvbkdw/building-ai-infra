@@ -1,0 +1,299 @@
+/* ---------------------------------------------------------------------------
+   Single post: title/meta, long-form typography, figures, tables, code, TOC,
+   footer (prev/next).
+   --------------------------------------------------------------------------- */
+.post-header {
+    margin: 32px auto 28px;
+}
+
+.post-title {
+    font-size: 34px;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-bottom: 10px;
+}
+
+.post-meta {
+    font-size: 14px;
+    color: var(--secondary);
+}
+
+/* ---- body copy ---- */
+.post-content {
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+.post-content h1 {
+    font-size: 28px;
+    line-height: 1.25;
+    margin: 48px 0 16px;
+}
+
+.post-content h2 {
+    font-size: 24px;
+    line-height: 1.3;
+    margin: 40px 0 14px;
+}
+
+.post-content h3 {
+    font-size: 19px;
+    margin: 30px 0 10px;
+}
+
+.post-content h4 {
+    font-size: 16.5px;
+    margin: 24px 0 8px;
+}
+
+.post-content h5,
+.post-content h6 {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--secondary);
+    margin: 22px 0 8px;
+}
+
+.post-content a {
+    color: var(--accent);
+    box-shadow: 0 1px 0 var(--accent-soft);
+}
+
+.post-content a:hover {
+    box-shadow: 0 1px 0 var(--accent);
+}
+
+.post-content a code {
+    color: var(--accent);
+    box-shadow: none;
+}
+
+.post-content li {
+    margin-top: 6px;
+}
+
+.post-content li::marker {
+    color: var(--secondary);
+}
+
+.post-content blockquote {
+    margin: 22px 0;
+    padding: 2px 18px;
+    color: var(--secondary);
+    border-inline-start: 3px solid var(--accent);
+}
+
+.post-content hr {
+    height: 1px;
+    margin: 36px 0;
+    background: var(--border);
+}
+
+.post-content strong {
+    color: var(--primary);
+}
+
+/* ---- images & figures ---- */
+.post-content img {
+    display: block;
+    margin: 1.25rem auto;
+    border-radius: 6px;
+}
+
+.dark .post-content img {
+    filter: brightness(0.9);
+}
+
+/* Numbered captions for {{< figure >}} shortcodes: "Figure N. caption" */
+.post-content {
+    counter-reset: figure-counter;
+}
+
+.post-content figure {
+    counter-increment: figure-counter;
+    margin: 1.5rem auto;
+}
+
+.post-content figure img {
+    margin: 0 auto;
+}
+
+.post-content figure > figcaption {
+    width: 85%;
+    margin: 12px auto 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--secondary);
+}
+
+.post-content figure > figcaption::before {
+    content: "Figure " counter(figure-counter) ". ";
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.post-content figure > figcaption > p {
+    display: inline;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* ---- tables ---- */
+.post-content table {
+    font-size: 15px;
+}
+
+.post-content table th {
+    font-size: 12.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--secondary);
+    border-bottom: 2px solid var(--border);
+}
+
+.post-content table th,
+.post-content table:not(.highlighttable, .highlight table, .gist .highlight) td {
+    padding: 8px 10px;
+}
+
+/* ---- code ---- */
+.post-content code {
+    margin: 0 1px;
+    padding: 2px 6px;
+    font-size: 0.85em;
+    color: var(--primary);
+    background: var(--code-bg);
+    border-radius: 4px;
+}
+
+.post-content .highlight:not(table),
+.post-content pre {
+    margin: 20px 0;
+    border-radius: var(--radius);
+}
+
+.dark .post-content .highlight:not(table),
+.dark .post-content pre {
+    border: 1px solid var(--border);
+}
+
+.post-content pre code {
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #ebdbb2;
+    border-radius: var(--radius);
+}
+
+.copy-code {
+    top: 8px;
+    right: 8px;
+    padding: 1px 8px;
+    font-size: 12px;
+    color: rgba(235, 219, 178, 0.85);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+}
+
+/* ---- math ---- */
+.katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 4px 0;
+}
+
+/* ---- table of contents ---- */
+.toc {
+    margin: 0 0 36px;
+    padding: 10px 6px;
+    font-size: 15px;
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+}
+
+.dark .toc {
+    background: var(--entry);
+}
+
+.toc details summary {
+    margin-inline-start: 14px;
+}
+
+.toc .details {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--secondary);
+}
+
+.toc .inner {
+    margin: 8px 14px 0;
+    padding: 0 10px;
+    opacity: 1;
+}
+
+/* No bullets: posts don't always start at the same heading level, and Hugo emits
+   empty wrapper <li>s for skipped levels — bullets would render as stray dots. */
+.toc .inner ul {
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.toc li {
+    margin: 5px 0;
+}
+
+.toc li ul {
+    margin-inline-start: 16px;
+}
+
+.toc a {
+    color: var(--content);
+}
+
+.toc a:hover {
+    color: var(--accent);
+    box-shadow: 0 1px 0 var(--accent-soft);
+}
+
+/* ---- post footer: prev/next ---- */
+.post-footer {
+    margin-top: 56px;
+}
+
+.paginav {
+    padding: 6px 0;
+    line-height: 1.4;
+    background: var(--entry);
+}
+
+.paginav a {
+    padding: 10px 14px;
+}
+
+.paginav a:hover {
+    background: var(--code-bg);
+}
+
+.paginav .title {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+}
+
+.paginav span:hover:not(.title) {
+    box-shadow: none;
+    color: var(--accent);
+}
+
+/* ---- footnotes ---- */
+.post-content .footnotes {
+    font-size: 14.5px;
+    color: var(--secondary);
+}

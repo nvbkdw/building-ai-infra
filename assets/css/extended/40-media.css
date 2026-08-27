@@ -1,0 +1,64 @@
+/* ---------------------------------------------------------------------------
+   Responsive adjustments (theme breakpoints: 768px)
+   --------------------------------------------------------------------------- */
+@media screen and (max-width: 768px) {
+    .logo a {
+        font-size: 18px;
+    }
+
+    .first-entry.home-info {
+        flex-direction: column;
+        gap: 16px;
+        margin: 20px 0 32px;
+    }
+
+    .home-info-avatar {
+        width: 72px;
+        height: 72px;
+    }
+
+    .home-info .entry-header h1 {
+        font-size: 26px;
+    }
+
+    .post-entry {
+        padding: 18px;
+    }
+
+    .entry-header h2 {
+        font-size: 20px;
+    }
+
+    .post-title {
+        font-size: 28px;
+    }
+
+    .post-content {
+        font-size: 16px;
+    }
+
+    .post-content h1 {
+        font-size: 24px;
+    }
+
+    .post-content h2 {
+        font-size: 21px;
+    }
+
+    .post-content h3 {
+        font-size: 18px;
+    }
+
+    .archive-month-header {
+        width: auto;
+        margin: 12px 0 0;
+    }
+}
+
+@media (prefers-reduced-motion) {
+    .post-entry,
+    .project-card,
+    .archive-entry-title {
+        transition: none;
+    }
+}

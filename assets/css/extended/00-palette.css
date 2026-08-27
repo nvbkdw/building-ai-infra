@@ -1,0 +1,54 @@
+/* ---------------------------------------------------------------------------
+   Palette: warm "hearth" theme.
+   Dark mode (default)  — firewood: deep brown-black ground, cream text, ember accent.
+   Light mode           — hearthstone: parchment ground, dark-wood text, sienna accent.
+
+   These redefine PaperMod's core variables (theme-vars.css). Extended CSS is
+   concatenated after the theme's, so a plain redefinition wins.
+   --------------------------------------------------------------------------- */
+:root {
+    --main-width: 720px;
+    --nav-width: 720px;            /* header aligns with the reading column */
+    --header-height: 64px;
+    --footer-height: 64px;
+    --radius: 8px;
+
+    --theme: #fbf7f1;              /* page background */
+    --list-bg: #f3ece1;            /* ground behind cards on list pages */
+    --entry: #fffdf9;              /* cards */
+    --primary: #2b1d14;            /* headings, brand, strong text */
+    --content: #3d2c21;            /* body copy */
+    --secondary: #7b6656;          /* meta, captions, muted text */
+    --tertiary: #e8dccd;           /* chips, buttons */
+    --border: #e3d6c6;
+    --code-bg: #f0e7da;            /* inline code, toc box */
+    --code-block-bg: #2a1e17;      /* code blocks stay dark wood in both modes */
+    --accent: #9a4f27;             /* burnt sienna: links, active nav */
+    --accent-soft: rgba(154, 79, 39, 0.35);
+    --shadow: 0 1px 2px rgba(43, 29, 20, 0.04), 0 10px 28px -14px rgba(43, 29, 20, 0.22);
+}
+
+.dark {
+    --theme: #1a120d;
+    --list-bg: #150e0a;
+    --entry: #251a13;
+    --primary: #f3e9dc;
+    --content: #d9ccbd;
+    --secondary: #ab967f;
+    --tertiary: #3b2c22;
+    --border: #382920;
+    --code-bg: #2e2119;
+    --code-block-bg: #120c09;
+    --accent: #e39a5a;             /* ember glow */
+    --accent-soft: rgba(227, 154, 90, 0.4);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 12px 30px -14px rgba(0, 0, 0, 0.65);
+}
+
+.list,
+.dark.list {
+    background: var(--list-bg);
+}
+
+::selection {
+    background: var(--accent-soft);
+}

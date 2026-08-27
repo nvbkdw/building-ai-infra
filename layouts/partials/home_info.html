@@ -1,0 +1,19 @@
+{{- /* Homepage welcome card: avatar + greeting + intro + social links, followed by the post list (see PaperMod list.html). */ -}}
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info">
+    {{- with .Image }}
+    <img class="home-info-avatar" src="{{ . | absURL }}" alt="{{ site.Params.author }}" width="96" height="96">
+    {{- end }}
+    <div class="home-info-body">
+        <header class="entry-header">
+            <h1>{{ .Title | markdownify }}</h1>
+        </header>
+        <div class="entry-content">
+            {{ .Content | markdownify }}
+        </div>
+        <footer class="entry-footer">
+            {{ partial "social_icons.html" (dict "align" .AlignSocialIconsTo) }}
+        </footer>
+    </div>
+</article>
+{{- end -}}

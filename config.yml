@@ -1,5 +1,5 @@
 baseURL: "https://www.ryhuang.blog"
-title: Building AI Infrastructure 
+title: Building AI Infrastructure
 theme: PaperMod
 
 enableInlineShortcodes: true
@@ -7,91 +7,117 @@ enableRobotsTXT: true
 pagination:
   pagerSize: 20
 
+# No taxonomy pages; `tags` in frontmatter is metadata only (SEO keywords).
 taxonomies: {}
 
 menu:
-    main:
-        - name: Blog
-          url: blogs/
-          weight: 2
+  main:
+    - name: Posts
+      url: /
+      weight: 1
+    - name: Archive
+      url: /archives/
+      weight: 2
+    - name: Projects
+      url: /projects/
+      weight: 3
+    - name: About
+      url: /about/
+      weight: 4
 
 params:
-    description: "This website hosts Ryan H.'s blog posts, books, course materials, data, curriculum vitae, and contact information."
-    author: Ryan H.
-    # googleAnalyticsID: "G-XXXXX"
-    DateFormat: "January 2006"
-    defaultTheme: light
-    hideFooter: false
-    disableThemeToggle: true
-    ShowShareButtons: false
-    ShowReadingTime: false
-    disableSpecial1stPost: true
-    disableAnchoredHeadings: true
-    ShowPostNavLinks: false
-    ShowBreadCrumbs: false
-    ShowCodeCopyButtons: true
-    ShowAllPagesInArchive: false
-    MainSections: ["blogs"]
-    ShowToc: false
-    disableScrollToTop: true
-    TocOpen: true
-    ShowWordCount: false
-    UseHugoToc: true
-    comments: false
-    math: true
-    profileMode:
-          enabled: true
-          title: Ryan H.
-          subtitle: "I have broad experience across applications, infrastructure, and ML. I've built systems at scale (1→100) within large tech companies and also led 0→1 product development in nimble startups."
-          imageUrl: "picture.jpeg"
-          imageWidth: 160
-          imageHeight: 160
-          buttons:
-            - name: About
-              url: about/
-            - name: Blog
-              url: blogs/
-            - name: Projects
-              url: projects/
-    socialIcons:
-        - name: linkedin
-          title: LinkedIn
-          url: "https://www.linkedin.com/in/ruoyu/"
-        - name: github
-          title: GitHub
-          url: "https://github.com/nvbkdw"
-        - name: email
-          title: Email
-          url: "mailto:huangruoyu666@gmail.com"
-        
-    assets:
-        disableScrollBarStyle: true
-    cover:
-        hiddenInList: false
-        hiddenInSingle: true
-    label:
-      text: "Ryan H."
-      icon: favicon.ico
-      iconHeight: 18
+  description: "Ryan H.'s notes on building AI infrastructure: GPU kernels, distributed training, LLM inference, and ML platforms."
+  keywords: ["AI infrastructure", "GPU", "CUDA", "distributed training", "LLM inference", "MLOps"]
+  author: Ryan H.
+  DateFormat: "January 2, 2006"
+
+  # Appearance: warm firewood/hearthstone palette (assets/css/extended/00-palette.css).
+  # Dark is the default; readers can flip to the light "parchment" mode with the header toggle.
+  defaultTheme: dark
+  disableThemeToggle: false
+
+  # Post page
+  ShowReadingTime: true
+  ShowWordCount: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: false
+  ShowShareButtons: false
+  ShowCodeCopyButtons: true
+  ShowRssButtonInSectionTermList: false
+  ShowToc: false          # enabled for blog posts only via `cascade` below
+  TocOpen: true
+  UseHugoToc: true
+  disableAnchoredHeadings: false
+  disableScrollToTop: false
+  comments: false
+  math: true
+
+  # Lists
+  mainSections: ["blogs"]
+  disableSpecial1stPost: true
+  ShowAllPagesInArchive: false
+  hideFooter: false
+
+  # Homepage: welcome card followed by the post list (PaperMod "home-info" mode).
+  homeInfoParams:
+    Title: "Hi, I'm Ryan 👋"
+    Image: "picture.jpeg"
+    Content: |
+      I have broad experience across applications, infrastructure, and ML. I've built systems at scale (1→100) within large tech companies and also led 0→1 ML infrastructure development in nimble startups.
+
+      This blog collects my notes on building AI infrastructure — GPU kernels, distributed training, LLM inference, and ML platforms. Read more [about me](/about/) or browse my [projects](/projects/).
+
+  socialIcons:
+    - name: github
+      title: GitHub
+      url: "https://github.com/nvbkdw"
+    - name: linkedin
+      title: LinkedIn
+      url: "https://www.linkedin.com/in/ruoyu/"
+    - name: email
+      title: Email
+      url: "mailto:huangruoyu666@gmail.com"
+
+  label:
+    text: "Building AI Infrastructure"
+
+  assets:
+    disableScrollBarStyle: true
+    theme_color: "#1a120d"
+    msapplication_TileColor: "#1a120d"
+
+  cover:
+    hiddenInList: false
+    hiddenInSingle: true
+
+# Blog posts get a table of contents; standalone pages (About, Projects) do not.
+cascade:
+  - target:
+      path: "/blogs/**"
+    params:
+      ShowToc: true
 
 markup:
-    goldmark:
-        extensions:
-            passthrough:
-                delimiters:
-                    block:
-                        - - "$$"
-                          - "$$"
-                    inline:
-                        - - "$"
-                          - "$"
-                enable: true
-        renderer:
-            unsafe: true
-    highlight:
-        guessSyntax: true
-        style: autumn 
-    tableOfContents:
-        endLevel: 2
-        ordered: false
-        startLevel: 2
+  goldmark:
+    extensions:
+      passthrough:
+        enable: true
+        delimiters:
+          block:
+            - - "$$"
+              - "$$"
+          inline:
+            - - "$"
+              - "$"
+    renderer:
+      unsafe: true
+  highlight:
+    # Class-based highlighting so the syntax theme lives in
+    # assets/css/includes/chroma-styles.css and follows the site palette.
+    noClasses: false
+    guessSyntax: true
+    lineNos: false
+  tableOfContents:
+    startLevel: 1
+    endLevel: 3
+    ordered: false

@@ -1,0 +1,4 @@
+{{- /* Site-wide additions to <head>. Math (KaTeX) is opt-in per page via `math: true`, or globally via params.math. */ -}}
+{{- if or .Params.math site.Params.math }}
+{{- partial "math.html" . }}
+{{- end }}
