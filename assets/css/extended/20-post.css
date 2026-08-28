@@ -297,3 +297,21 @@
     font-size: 14.5px;
     color: var(--secondary);
 }
+
+/* ---- mermaid diagrams (```mermaid fences → render-codeblock-mermaid.html) ---- */
+.post-content pre.mermaid {
+    display: flex;
+    justify-content: center;
+    margin: 1.25rem 0;
+    padding: 0.5rem 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow-x: auto;
+}
+
+.post-content pre.mermaid svg {
+    max-width: 100%;
+    height: auto;
+}

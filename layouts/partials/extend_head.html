@@ -2,3 +2,13 @@
 {{- if or .Params.math site.Params.math }}
 {{- partial "math.html" . }}
 {{- end }}
+{{- /* Mermaid is loaded only on pages that contain a ```mermaid block. The flag is set by
+       layouts/_default/_markup/render-codeblock-mermaid.html while the content renders, so force
+       content rendering here first (the head is built before the body). This must live in the head:
+       PaperMod renders the footer via partialCached, so per-page flags are not visible there. */ -}}
+{{- if .IsPage }}
+{{- $_ := .Content }}
+{{- if .Store.Get "hasMermaid" }}
+{{- partial "mermaid.html" . }}
+{{- end }}
+{{- end }}

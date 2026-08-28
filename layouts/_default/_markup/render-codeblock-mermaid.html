@@ -1,0 +1,5 @@
+{{- /* ```mermaid fences → a Mermaid diagram. The source is HTML-escaped so labels like `<br>` and `&lt;`
+       survive as text for Mermaid to parse; the script itself is loaded by partials/extend_head.html only
+       on pages that set this flag. */ -}}
+<pre class="mermaid">{{ .Inner | htmlEscape | safeHTML }}</pre>
+{{- .Page.Store.Set "hasMermaid" true -}}

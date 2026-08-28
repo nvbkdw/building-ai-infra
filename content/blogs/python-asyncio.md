@@ -49,17 +49,18 @@ The **Global Interpreter Lock** is why "just add threads" disappoints: only one 
 
 ### How the event loop works
 
-```
- ┌────────────────────── one thread, one event loop ──────────────────────┐
- │                                                                        │
- │  ready: [ task A ][ task B ][ task C ]       parked on I/O: { D, E }   │
- │            │                                                           │
- │            ▼  run A until it hits `await <something not ready>`        │
- │  A: await sock.recv()  ──►  "wake A when fd 7 is readable"; park A     │
- │  run B … park B;   run C … park C                                      │
- │  ready queue empty  ──►  select()/epoll/kqueue: sleep until the OS     │
- │  says fd 7 is readable  ──►  A back to ready  ──►  repeat              │
- └────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph loop["one thread, one event loop"]
+        direction TB
+        ready["ready queue<br>[ task A ] [ task B ] [ task C ]"]
+        run["pop the next ready task and run it until it hits <b>await</b> on something not ready yet<br><br>A: await sock.recv() → ask the OS to wake A when fd 7 is readable; park A with the other waiters { D, E }"]
+        more{"anything else<br>ready?"}
+        poll["select() / epoll / kqueue: sleep until the OS reports an event<br><br>fd 7 readable → A goes back to the ready queue"]
+        ready --> run --> more
+        more -- "yes: run B …, run C …" --> run
+        more -- "no" --> poll --> ready
+    end
 ```
 
 Three consequences worth internalizing:
@@ -80,9 +81,7 @@ if __name__ == "__main__":
     asyncio.run(main())
 ```
 
-`asyncio.run()` creates the loop, runs `main()` to completion, cancels leftover tasks, shuts down async generators and the default thread pool, and closes the loop. Call it **once, at the program boundary**. Inside the loop you never call it again — you `await` things. Since 3.11 it also handles Ctrl-C properly: the first SIGINT cancels the main task (so cleanup runs), then raises `KeyboardInterrupt`.
-
-Two relatives: `asyncio.Runner` (3.11) is the context-manager form for tests and REPLs that need several runs on one loop, and `python -m asyncio` opens a REPL where top-level `await` works.
+`asyncio.run()` creates the loop, runs `main()` to completion, cancels leftover tasks, and closes the loop. Call it **once, at the program boundary**. Inside the loop you never call it again — you `await` things.
 
 ---
 
@@ -92,7 +91,7 @@ The module exposes well over a hundred names, but almost everything you will use
 
 | Group | APIs | Reach for it when |
 |---|---|---|
-| **1. Run the loop** | `asyncio.run()`, `asyncio.Runner` | Once, at the top of the program (or per test) |
+| **1. Run the loop** | `asyncio.run()` | Once, at the top of the program |
 | **2. Define work** | `async def`, `await`, `async with`, `async for` | Everything that executes inside the loop |
 | **3. Schedule work** | `asyncio.create_task()`, `asyncio.TaskGroup`, `asyncio.Task` | You want two things to make progress at the same time |
 | **4. Wait for many** | `TaskGroup`, `gather()`, `as_completed()`, `wait()` | Collect results, react as they finish, or race |

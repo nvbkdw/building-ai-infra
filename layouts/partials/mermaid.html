@@ -1,0 +1,52 @@
+{{- /* Mermaid, themed from the palette variables in assets/css/extended/00-palette.css and re-rendered when the
+       header color-mode toggle is clicked. Loaded on demand — see render-codeblock-mermaid.html. */ -}}
+<script type="module">
+  import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.esm.min.mjs";
+
+  const diagrams = [...document.querySelectorAll("pre.mermaid")];
+  diagrams.forEach((el) => { el.dataset.src = el.textContent; });
+
+  function paletteTheme() {
+    const css = getComputedStyle(document.body);
+    const v = (name) => css.getPropertyValue(name).trim();
+    return {
+      theme: "base",
+      fontFamily: css.fontFamily,
+      themeVariables: {
+        fontSize: "14px",
+        background: v("--theme"),
+        primaryColor: v("--entry"),
+        primaryTextColor: v("--primary"),
+        primaryBorderColor: v("--accent"),
+        secondaryColor: v("--tertiary"),
+        secondaryTextColor: v("--primary"),
+        secondaryBorderColor: v("--border"),
+        tertiaryColor: v("--theme"),
+        tertiaryTextColor: v("--content"),
+        tertiaryBorderColor: v("--border"),
+        clusterBkg: v("--theme"),
+        clusterBorder: v("--border"),
+        lineColor: v("--secondary"),
+        textColor: v("--content"),
+        edgeLabelBackground: v("--theme"),
+        nodeTextColor: v("--primary"),
+        titleColor: v("--primary"),
+      },
+    };
+  }
+
+  async function render() {
+    diagrams.forEach((el) => { el.removeAttribute("data-processed"); el.textContent = el.dataset.src; });
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: "strict",
+      flowchart: { wrappingWidth: 240, htmlLabels: true, curve: "basis" },   // 240 keeps a TD flowchart inside the 720px column at natural size
+      ...paletteTheme(),
+    });
+    await mermaid.run({ nodes: diagrams });
+  }
+
+  // Serialize renders: a toggle click while a render is still in flight must not start a second one.
+  let chain = render();
+  document.getElementById("theme-toggle")?.addEventListener("click", () => { chain = chain.then(render, render); });
+</script>

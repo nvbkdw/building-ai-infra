@@ -36,7 +36,7 @@ The design follows [lilianweng.github.io](https://lilianweng.github.io/) (Lil'Lo
   - `layouts/partials/home_info.html` — homepage welcome card (avatar + greeting + intro + social icons); content comes from `params.homeInfoParams` in `config.yml`.
   - `layouts/partials/post_meta.html` — the labelled meta line used on cards, archive entries, and post headers.
   - `layouts/projects/list.html` — card grid for the Projects section (reads `description`, `tags`, `externalUrl`, `cover` from each project's frontmatter).
-  - Markdown render hooks: `layouts/_default/_markup/render-link.html` (external links open in a new tab), `render-passthrough-{block,inline}.html` (math delimiters passed through to KaTeX), `layouts/blogs/_markup/render-image.html` (rewrites `/static/...` image paths).
+  - Markdown render hooks: `layouts/_default/_markup/render-link.html` (external links open in a new tab), `render-passthrough-{block,inline}.html` (math delimiters passed through to KaTeX), `layouts/blogs/_markup/render-image.html` (rewrites `/static/...` image paths), `layouts/_default/_markup/render-codeblock-mermaid.html` (```` ```mermaid ```` fences → `<pre class="mermaid">`; `layouts/partials/extend_head.html` → `mermaid.html` loads Mermaid from jsDelivr only on pages that use it (checked in the head because PaperMod's footer is `partialCached`), themes it from the palette variables, and re-renders on the color-mode toggle).
 - **Content**: blog posts in `content/blogs/`; standalone pages `content/about.md`, `content/archives.md` (PaperMod `archives` layout); project pages in `content/projects/`.
 - **Static files**: images, PDFs, favicons, `CNAME` in `static/`. Post images are referenced as `/static/<file>` (the render hook fixes the path).
 - **Config**: `config.yml` is the single Hugo configuration file. Homepage = PaperMod home-info mode (welcome card + post list); navigation = `menu.main`; only `blogs` is a main section (home list + archive); taxonomies are disabled (`tags:` frontmatter is metadata only, no `/tags/` pages); TOC is enabled for `/blogs/**` only via `cascade`.
@@ -67,5 +67,6 @@ cover:                             # optional
 - Math: inline `$...$`, display `$$...$$` (KaTeX)
 - Code blocks: fenced with language specifier; copy buttons enabled
 - Figures: use `{{< figure src="..." caption="..." >}}` for auto-numbered "Figure N." captions; plain markdown images render centered without a caption
+- Diagrams: fenced ```` ```mermaid ```` blocks render client-side with Mermaid (flowchart, sequence, etc.); keep them narrow enough for the 720px column
 - Tags: lowercase, hyphens for multi-word (e.g., `distributed-training`, `gpu-kernel`); used as SEO keywords only
 - Images: place in `static/` and reference as `/static/<file>`
