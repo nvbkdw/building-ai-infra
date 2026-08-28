@@ -142,7 +142,7 @@ async def concurrent():
     b = await tb
 ```
 
-A `Task` is a coroutine plus a handle: `.result()`, `.exception()`, `.done()`, `.cancel()`, `.cancelled()`, `.get_name()`, `.add_done_callback()`. `create_task()` returns immediately; the task begins running the next time the current task awaits. Two rules:
+`create_task()` schedule coroutine on to event loop queue, and returns a `Task` immediately; A `Task` is a coroutine plus a handle with methods: `.result()`, `.exception()`, `.done()`, `.cancel()`, `.cancelled()`, `.get_name()`, `.add_done_callback()`.  Two rules:
 
 - **Keep a reference.** The loop holds only weak references; an un-referenced task can be garbage-collected mid-flight. `TaskGroup` (next section) does this for you.
 - **A task that raises does not crash your program by itself.** The exception is stored in the task and re-raised when you `await` it; if you never do, you get a "Task exception was never retrieved" log at garbage collection. Again, `TaskGroup` fixes this.
@@ -153,7 +153,7 @@ Three awaitables to keep straight:
 |---|---|---|
 | **coroutine** | A paused function; nothing runs until awaited | Calling an `async def` |
 | **Task** | A coroutine scheduled on the loop, with a handle | `create_task()`, `TaskGroup.create_task()` |
-| **Future** | Low-level promise: a slot a result will be set into. `Task` is a subclass | `loop.run_in_executor()`, `loop.create_future()` — rarely by hand |
+| **Future** | Low-level promise: a slot a result will be set into. `Task` is a subclass | `loop.run_in_executor()`, `loop.create_future()` — rarely use in application program |
 
 ---
 
@@ -163,7 +163,7 @@ Four APIs wait for a group of tasks. They differ in what they return and, more i
 
 | API | Returns | On first exception | Cancels the others? | Use when |
 |---|---|---|---|---|
-| `await t1; await t2` | Each value in turn | Raises at that await | — | Steps depend on each other |
+| `await t1; await t2` | Each value in turn | Raises at that await | — | Sequential steps depend on each other |
 | `asyncio.gather(*aws)` | List, **in input order** | Raises immediately (`return_exceptions=True` → exceptions become list items) | **No** — siblings keep running | You need an ordered list of results |
 | `asyncio.TaskGroup` | Nothing; read `task.result()` | Cancels siblings, waits for them, raises `ExceptionGroup` | **Yes** | Default for any group of related work |
 | `asyncio.as_completed(aws)` | Iterator, **in completion order** | Raises when you await that item | No | Stream results as they arrive |
@@ -211,8 +211,6 @@ tasks = [asyncio.create_task(fetch(n, d)) for n, d in [("slow", .3), ("fast", .1
 async for task in asyncio.as_completed(tasks):
     print("received:", task.result())      # fast, medium, slow
 ```
-
-On older versions use the classic form, `for fut in asyncio.as_completed(aws): result = await fut`.
 
 ### `wait()`: races and custom policies
 
