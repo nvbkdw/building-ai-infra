@@ -3,8 +3,8 @@ title: "Python asyncio Primer"
 date: 2026-08-26
 tags: ["python", "asyncio", "concurrency", "data-loading"]
 author: "Ryan H."
-description: "A mental model of modern Python asyncio (3.11+): why it is the top choice for high-throughput I/O, how the event loop, coroutines, tasks, TaskGroup, timeouts, queues, and to_thread fit together, which API to reach for when, and the design patterns behind fast I/O-bound programs — with runnable examples, a prefetching data loader, a staged pipeline, and a request-batching server."
-summary: "Modern asyncio in one sitting: why it is the default for high-throughput Python, the event-loop mental model, the API groups (run → define → schedule → wait → bound → coordinate → escape), when to use which, common concurrency patterns, and three worked programs — a data loader, a pipeline, and a batching server."
+description: "A mental model of modern Python asyncio (3.11+): why it is the top choice for high-throughput I/O, how the event loop, coroutines, tasks, TaskGroup, timeouts, queues, and to_thread fit together, which API to reach for when, and the design patterns behind fast I/O-bound programs — with runnable examples, a prefetching data loader, and a request-batching server."
+summary: "Modern asyncio in one sitting: why it is the default for high-throughput Python, the event-loop mental model, the API groups (run → define → schedule → wait → bound → coordinate → escape), when to use which, common concurrency patterns, and two worked programs — a data loader and a batching server."
 ---
 
 ![Handling many task in flight](/static/asyncio-illustration.jpg)
@@ -23,7 +23,7 @@ The hard part is not the idea but the API. `asyncio` has been redesigned twice s
 2. **The API map** — eight groups (run, define, schedule, wait, bound, coordinate, escape, I/O) and which to reach for when.
 3. **The core groups in detail** — coroutines and tasks; waiting for many (`gather` vs. `TaskGroup` vs. `as_completed` vs. `wait`); timeouts and cancellation; synchronization primitives; blocking code and threads.
 4. **Design patterns** — bounded fan-out, worker pools, pipelines, races, retries, rate limiting, micro-batching, graceful shutdown.
-5. **Three complete programs** — a prefetching data loader, a staged pipeline, and a request-batching server. I work on ML infrastructure, so the examples lean that way; the patterns are the same for any I/O-heavy service.
+5. **Two complete programs** — a prefetching data loader and a request-batching server. I work on ML infrastructure, so the examples lean that way; the patterns are the same for any I/O-heavy service.
 6. **A legacy → modern translation table**, plus a curated reading and exercise list.
 7. **An appendix that measures threads vs. asyncio** — per-waiter memory, context-switch cost, the concurrency cliff, the GIL convoy effect, and a quantitative tipping point.
 
@@ -47,7 +47,7 @@ The **Global Interpreter Lock** is why "just add threads" disappoints: only one 
 
 [Appendix](#appendix-measuring-threads-vs-asyncio) contains detailed analysis of [the concurrency cliff](#3-scaling-n-waiters-each-doing-10--10-ms-of-io), and [the resulting tipping point](#the-tipping-point) between threads and `asyncio`.
 
-### How the event loop works
+## How the event loop works
 
 ```mermaid
 flowchart TD
@@ -69,7 +69,7 @@ Three consequences worth internalizing:
 2. **Switches happen only at `await`.** Code between two awaits is atomic with respect to other tasks. The flip side: a task that never awaits — a CPU loop, `time.sleep()`, a blocking `requests.get()` — freezes *everyone*.
 3. **Waiting is free.** A parked task costs a few KB and zero CPU. Ten thousand idle connections are fine.
 
-### `asyncio.run()`: the entry point
+## `asyncio.run()`: the entry point
 
 ```python
 import asyncio
@@ -84,7 +84,7 @@ if __name__ == "__main__":
 `asyncio.run()` creates the loop, runs `main()` to completion, cancels leftover tasks, and closes the loop. Call it **once, at the program boundary**. Inside the loop you never call it again — you `await` things.
 
 ---
-# Basics of `asyncio`
+# API of modern `asyncio`
 
 ## The `asyncio` API map
 
@@ -420,9 +420,9 @@ The primitives compose into a small number of recurring shapes. Recognizing them
 | **Micro-batching** | Amortize a fixed cost (GPU launch, DB round trip) across requests | `Queue` of `(item, Future)` + a batch worker |
 | **Graceful shutdown** | Finish or flush in-flight work on SIGTERM | Signal handler → cancel → `TaskGroup` unwinds → `finally` |
 
-Bounded fan-out and the worker pool appeared in previous section; the pipeline and ordered prefetch are worked in full in the next section. Here are the other five.
+Bounded fan-out, worker pool and race/hedging appeared in the previous section; ordered prefetch is worked in full in the next section (a staged pipeline is the same worker-pool shape, chained through bounded queues). Here are the other four.
 
-### Retry with backoff and a per-attempt timeout
+## Retry with backoff and a per-attempt timeout
 
 Each attempt gets its own deadline; delays grow exponentially with jitter so a thousand clients do not retry in lockstep. Because `CancelledError` is a `BaseException`, the `except` tuple cannot accidentally retry a cancellation.
 
@@ -440,7 +440,7 @@ async def retry(fn, *, attempts=5, base=0.1, cap=2.0, per_try=1.0,
             await asyncio.sleep(delay)
 ```
 
-### Rate limiting: token bucket
+## Rate limiting: token bucket
 
 Tokens refill at `rate` per second up to `burst`; each call takes one or waits for it. The `Lock` makes waiters take turns instead of all waking at once.
 
@@ -465,7 +465,7 @@ class RateLimiter:
 
 With `RateLimiter(rate=5, burst=2)`, six concurrent calls run at t = 0, 0, 0.2, 0.4, 0.6, 0.8 s.
 
-### Micro-batching: request coalescing
+## Micro-batching: request coalescing
 
 A GPU forward pass costs about the same for 1 input as for 16, so a server that runs one forward per request wastes most of the GPU. The batcher lets callers `await submit(x)` as if it were a per-item call, while a single worker collects concurrent submissions into batches. This is the one place a `Future` is the right tool: each caller gets a receipt that the worker later fills in.
 
@@ -493,18 +493,13 @@ class Batcher:
             except TimeoutError:
                 pass
             try:
-                for f, r in zip(futs, await self.run_batch(items)):
+                results = await self.run_batch(items)
+                for f, r in zip(futs, results):
                     f.set_result(r)
             except Exception as e:
                 for f in futs:
                     f.set_exception(e)
 ```
-
-Twenty concurrent `submit()` calls against a 50 ms "model" finished in 0.17 s using 3 batches, versus 1.0 s one at a time. `max_wait` is the latency you are willing to trade for throughput.
-
-### Race / hedged requests
-
-Send the same request to two replicas, take the first answer, cancel the other. This is the `wait(FIRST_COMPLETED)` snippet from earlier; the important detail is to `await` the cancelled losers so their cleanup actually runs before you move on.
 
 ### Graceful shutdown
 
@@ -535,7 +530,7 @@ For queue-fed workers, prefer *drain then exit* over cancellation: stop the prod
 
 # Put it together
 
-Three complete programs that compose the pieces. Each ran as shown; the stand-in `time.sleep()` calls play the role of real network and GPU latency.
+Two complete programs that compose the pieces. Each ran as shown; the stand-in `time.sleep()` calls play the role of real network and GPU latency.
 
 ### Parallel data loader
 
@@ -589,56 +584,17 @@ asyncio.run(main())
 
 Sequential `read → step` took **4.2 s** for 32 shards; the prefetching version took **0.89 s**, close to the 0.64 s floor set by the GPU alone. The loader has disappeared from the critical path, which is the whole goal. Memory is bounded by `window + maxsize` shards regardless of dataset size, and a failure in any read cancels everything cleanly via the `TaskGroup`.
 
-### Producer/consumer pipeline
-
-Goal: download → decode → upload, where downloading is I/O (wants many workers), decoding is CPU (wants a few threads, or a process pool), and uploading is I/O again. Pattern: **staged pipeline** — one generic `stage()` worker pool, chained by bounded queues, with shutdown propagating stage to stage.
-
-```python
-async def download(url: str) -> bytes:        # async-native I/O (aiohttp / httpx)
-    ...
-
-def decode(raw: bytes) -> "Tensor":           # CPU: image decode, tokenization
-    ...
-
-async def upload(item) -> None:
-    ...
-
-async def stage(inp: asyncio.Queue, out: asyncio.Queue | None, fn, workers: int) -> None:
-    """A worker pool: pull from `inp`, apply async `fn`, push to `out`.
-    When `inp` is shut down and drained, shut `out` down so the next stage finishes too."""
-    async def worker():
-        while True:
-            try:
-                item = await inp.get()
-            except asyncio.QueueShutDown:
-                return
-            result = await fn(item)
-            if out is not None:
-                await out.put(result)
-
-    async with asyncio.TaskGroup() as tg:
-        for _ in range(workers):
-            tg.create_task(worker())
-    if out is not None:
-        out.shutdown()
-
-async def main():
-    urls, raws, decoded = asyncio.Queue(), asyncio.Queue(maxsize=16), asyncio.Queue(maxsize=16)
-    for u in list_urls():
-        urls.put_nowait(u)
-    urls.shutdown()
-
-    async with asyncio.TaskGroup() as tg:
-        tg.create_task(stage(urls, raws, download, workers=16))
-        tg.create_task(stage(raws, decoded, lambda r: asyncio.to_thread(decode, r), workers=4))
-        tg.create_task(stage(decoded, None, upload, workers=8))
-```
-
-Forty items that would take ~6.8 s sequentially finished in **0.39 s**. Each stage's `workers` is tuned independently — 16 for the network-bound download, 4 threads for CPU-bound decode — and the `maxsize=16` queues keep a fast stage from flooding a slow one. To scale decode past the GIL, swap `to_thread` for `loop.run_in_executor(process_pool, decode, r)`; nothing else changes.
-
 ### Async web server
 
 Goal: an inference server where one task per connection handles requests, per-request deadlines are enforced, and the "model" runs on batches, not single items. Pattern: **streams + micro-batching** — `asyncio.start_server()` spawns `handle()` per connection; every handler awaits `Batcher.submit()`, and one worker feeds the GPU.
+
+Three APIs appear here for the first time. They are asyncio's high-level **streams** layer — the `async`/`await`-friendly wrapper over sockets, group 8 in the API map:
+
+- [`asyncio.start_server(client_connected_cb, host, port)`](https://docs.python.org/3/library/asyncio-stream.html#asyncio.start_server) binds a listening socket and returns a [`Server`](https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.Server). For every accepted connection it creates a new task running `client_connected_cb(reader, writer)`, so "one task per connection" comes for free. `async with server:` closes it cleanly on exit; `await server.serve_forever()` runs it until cancelled.
+- [`asyncio.StreamReader`](https://docs.python.org/3/library/asyncio-stream.html#asyncio.StreamReader) is the readable end: `await reader.read(n)`, `readline()`, `readexactly(n)`, `readuntil(sep)`. Each suspends the *task* — not the loop — until bytes arrive, and signals EOF with `b""` (or `IncompleteReadError`).
+- [`asyncio.StreamWriter`](https://docs.python.org/3/library/asyncio-stream.html#asyncio.StreamWriter) is the writable end: `writer.write(data)` only buffers and is synchronous; `await writer.drain()` waits until the buffer drops below its high-water mark — this is where backpressure lives; `writer.close()` followed by `await writer.wait_closed()` shuts the connection down.
+
+The client side is the mirror image: [`asyncio.open_connection(host, port)`](https://docs.python.org/3/library/asyncio-stream.html#asyncio.open_connection) returns the same `(reader, writer)` pair.
 
 ```python
 def model_forward(batch: list[str]) -> list[str]:
@@ -667,13 +623,13 @@ async def main():
         await server.serve_forever()
 ```
 
-Fifty concurrent connections, one request each, were served in **0.23 s using 4 GPU batches** — versus 2.5 s if each request ran its own forward pass. In production you would put FastAPI/Starlette + uvicorn in place of `start_server()`, but the shape is identical: a task per connection, `await` on I/O, and a batcher between the handlers and the accelerator.
+In production you would put FastAPI/Starlette + uvicorn in place of `start_server()`, but the shape is identical: a task per connection, `await` on I/O, and a batcher between the handlers and the accelerator.
 
 ---
 
 # Reference
 
-### Official documentation
+## Official documentation
 
 - [High-level API index](https://docs.python.org/3.14/library/asyncio-api-index.html) — one page listing everything worth knowing, grouped the same way as the map above.
 - [Coroutines and Tasks](https://docs.python.org/3.14/library/asyncio-task.html) — the page to actually read: `run`, `create_task`, `TaskGroup`, `gather`, `timeout`, `wait`, `as_completed`, `to_thread`, and the cancellation section.
@@ -681,7 +637,7 @@ Fifty concurrent connections, one request each, were served in **0.23 s using 4 
 - [Developing with asyncio](https://docs.python.org/3.14/library/asyncio-dev.html) — debug mode, the "never awaited" and "exception was never retrieved" warnings, and thread-safety rules.
 - What's New: [3.11](https://docs.python.org/3/whatsnew/3.11.html#asyncio) (TaskGroup, timeout, Runner), [3.12](https://docs.python.org/3/whatsnew/3.12.html#asyncio) (performance, eager tasks), [3.13](https://docs.python.org/3/whatsnew/3.13.html#asyncio) (`Queue.shutdown`, async `as_completed`), [3.14](https://docs.python.org/3/whatsnew/3.14.html#asyncio) (introspection, free-threading).
 
-### Tutorials and talks, in reading order
+## Tutorials and talks, in reading order
 
 Everything here was checked for which API generation it teaches. The docs and the first three entries are enough to become productive; the rest deepen specific corners.
 
@@ -698,15 +654,15 @@ Everything here was checked for which API generation it teaches. The docs and th
 
 Two popular resources to read with care: Real Python's [Python's asyncio: A Hands-On Walkthrough](https://realpython.com/async-io-python/) was rewritten in 2025 yet still teaches `gather` everywhere and never mentions `TaskGroup`, `asyncio.timeout()`, or `to_thread()` — fine as a gentle first read, not as a model for new code. The 500 Lines chapter [A Web Crawler With asyncio Coroutines](https://aosabook.org/en/500L/a-web-crawler-with-asyncio-coroutines.html) (Davis & van Rossum) is superb pedagogy — non-blocking sockets → callbacks → generators → Futures and Tasks — but its code is Python 3.4 (`@asyncio.coroutine`, `yield from`, `run_until_complete`); read it for the concepts and do not copy the code.
 
-### Exercises
+## Exercises
 
 - [asyncio_puzzles](https://github.com/martianlantern/asyncio_puzzles) — twenty fill-in-the-`TODO` puzzles with pytest tests and a `solutions` branch, progressing from `sleep(0)` yielding through tasks, timeouts, cancellation cleanup, `Semaphore`, `Queue` pipelines, executors, TCP streams, signal shutdown, `TaskGroup` vs `gather`, `shield`, and retry with backoff. Young and lightly reviewed, but the best-structured asyncio exercise set available and modern-API throughout.
 - **Port the 500 Lines crawler** to `TaskGroup` + `asyncio.timeout()` + `httpx.AsyncClient`. mCoding's [Intro to async Python: Writing a Web Crawler](https://www.youtube.com/watch?v=ftmdDlwMwwQ) ([code](https://github.com/mCodingLLC/VideosSampleCode/tree/master/videos/117_hello_async)) is a modern reference solution.
 - **Build your own scheduler.** Work through Beazley's "Build Your Own Async" gist *before* watching the talk, then compare. The fastest route to really understanding `send()`, Futures, and cancellation.
 - **Build a Redis clone** with `asyncio.start_server()` — CodeCrafters' [Build your own Redis](https://app.codecrafters.io/courses/redis/overview) stages are readable for free; the first several (RESP parsing, concurrent clients) are the asyncio-relevant part.
-- **Extend this post's programs.** (a) Give the data loader a `RateLimiter` and a per-shard `retry()`, then read Guido's semaphore post. (b) Implement the S3 bulk read three ways — `to_thread(boto3)`, `aiobotocore`, `obstore` — and benchmark them. (c) Move the pipeline's decode stage onto a `ProcessPoolExecutor`. (d) Add SIGTERM handling and `Queue.shutdown()` to the server so in-flight batches finish. (e) Reproduce the "swallowed `CancelledError` defeats `asyncio.timeout()`" bug from the cancellation section, then fix it with `uncancel()`-free code.
+- **Extend this post's programs.** (a) Give the data loader a `RateLimiter` and a per-shard `retry()`, then read Guido's semaphore post. (b) Implement the S3 bulk read three ways — `to_thread(boto3)`, `aiobotocore`, `obstore` — and benchmark them. (c) Chain the data loader into a download → decode → upload pipeline, with the decode stage on a `ProcessPoolExecutor`. (d) Add SIGTERM handling and `Queue.shutdown()` to the server so in-flight batches finish. (e) Reproduce the "swallowed `CancelledError` defeats `asyncio.timeout()`" bug from the cancellation section, then fix it with `uncancel()`-free code.
 
-### Libraries worth knowing
+## Libraries worth knowing
 
 Async-native (they speak to the event loop directly):
 
@@ -921,7 +877,7 @@ Measure the wake-up latency of `time.sleep(0.001)` in an I/O thread while K othe
 | 1 | **6.5 ms** | 6.6 ms | 6.6 ms |
 | 2 | 5.3 ms | **24 ms** | 24 ms |
 
-A single CPU-bound thread adds roughly one `switchinterval` (5 ms) to *every* I/O wake-up in the process, because the woken thread must wait for the GIL holder to be forced off it. This is why "just run the decode in a background thread" quietly ruins tail latency for every request in the same process — and why the pipeline example moves CPU stages to a process pool. (In asyncio the equivalent mistake is worse — a CPU-bound task stops the loop entirely — which is what `to_thread()` and executors are for.)
+A single CPU-bound thread adds roughly one `switchinterval` (5 ms) to *every* I/O wake-up in the process, because the woken thread must wait for the GIL holder to be forced off it. This is why "just run the decode in a background thread" quietly ruins tail latency for every request in the same process — and why CPU-heavy stages belong in a process pool (`run_in_executor`), as the `to_thread()` section recommends. (In asyncio the equivalent mistake is worse — a CPU-bound task stops the loop entirely — which is what `to_thread()` and executors are for.)
 
 ### Cross-check on Linux
 
