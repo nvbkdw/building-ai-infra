@@ -532,7 +532,7 @@ For queue-fed workers, prefer *drain then exit* over cancellation: stop the prod
 
 Two complete programs that compose the pieces. Each ran as shown; the stand-in `time.sleep()` calls play the role of real network and GPU latency.
 
-### Parallel data loader
+## Parallel data loader
 
 Goal: feed a training loop from object storage using a blocking SDK, keep shards in order, bound memory, and never let the GPU wait. Pattern: **ordered prefetch** — a sliding window of `window` in-flight `to_thread()` reads, results forwarded in order into a bounded queue that the trainer consumes.
 
@@ -584,7 +584,7 @@ asyncio.run(main())
 
 Sequential `read → step` took **4.2 s** for 32 shards; the prefetching version took **0.89 s**, close to the 0.64 s floor set by the GPU alone. The loader has disappeared from the critical path, which is the whole goal. Memory is bounded by `window + maxsize` shards regardless of dataset size, and a failure in any read cancels everything cleanly via the `TaskGroup`.
 
-### Async web server
+## Async web server
 
 Goal: an inference server where one task per connection handles requests, per-request deadlines are enforced, and the "model" runs on batches, not single items. Pattern: **streams + micro-batching** — `asyncio.start_server()` spawns `handle()` per connection; every handler awaits `Batcher.submit()`, and one worker feeds the GPU.
 
@@ -637,7 +637,7 @@ In production you would put FastAPI/Starlette + uvicorn in place of `start_serve
 - [Developing with asyncio](https://docs.python.org/3.14/library/asyncio-dev.html) — debug mode, the "never awaited" and "exception was never retrieved" warnings, and thread-safety rules.
 - What's New: [3.11](https://docs.python.org/3/whatsnew/3.11.html#asyncio) (TaskGroup, timeout, Runner), [3.12](https://docs.python.org/3/whatsnew/3.12.html#asyncio) (performance, eager tasks), [3.13](https://docs.python.org/3/whatsnew/3.13.html#asyncio) (`Queue.shutdown`, async `as_completed`), [3.14](https://docs.python.org/3/whatsnew/3.14.html#asyncio) (introspection, free-threading).
 
-## Tutorials and talks, in reading order
+## Tutorials and talks
 
 Everything here was checked for which API generation it teaches. The docs and the first three entries are enough to become productive; the rest deepen specific corners.
 
