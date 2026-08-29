@@ -9,7 +9,7 @@ summary: "Modern asyncio in one sitting: why it is the default for high-throughp
 
 ![Handling many task in flight](/static/asyncio-illustration.jpg)
 
-## Why `asyncio`
+# Why `asyncio`
 
 Most server-side and data-plane Python programs spend the bulk of their wall-clock time *waiting*: for a socket to deliver bytes, for an HTTP response, for a database row, for an object in blob storage. The CPU is idle during those waits, and a program that performs them one at a time has its throughput capped by latency — 1,000 requests at 50 ms each is 50 seconds of mostly doing nothing.
 
@@ -84,6 +84,7 @@ if __name__ == "__main__":
 `asyncio.run()` creates the loop, runs `main()` to completion, cancels leftover tasks, and closes the loop. Call it **once, at the program boundary**. Inside the loop you never call it again — you `await` things.
 
 ---
+# Basics of `asyncio`
 
 ## The `asyncio` API map
 
@@ -318,6 +319,8 @@ async def get_token():
         return cache["token"]
 ```
 
+Note what this lock is *for*. In threaded code a lock guards against hazards at the level of memory: two threads can be inside the same statement at the same instant, so even `counter += 1` needs protection. That hazard does not exist in asyncio — exactly one task runs at a time, and it can only be interrupted at an `await`. What `asyncio.Lock` provides instead is *isolation for a multi-step operation that spans awaits*: it serializes the whole read → await → write sequence so that no other task's run of the same sequence can interleave with it — a transaction, not a memory barrier. The rule that follows is simple: a critical section needs a lock exactly when it contains an `await`; a sequence with no `await` in it is already atomic.
+
 ### `Event`: one-shot broadcast
 
 "Model loaded", "config ready", "shutdown requested". Waiters park on `wait()`; one `set()` wakes them all:
@@ -388,8 +391,10 @@ async def main():
 Three things to know:
 
 1. **It shares one default thread pool**, sized `min(32, cpu_count + 4)`. Ten thousand `to_thread()` calls do not spawn ten thousand threads; they queue. Bound them yourself with a `Semaphore`, or install a bigger pool with `loop.set_default_executor(ThreadPoolExecutor(max_workers=64))`.
-2. **It does not speed up CPU-bound Python.** Threads share the GIL. In my run, four 0.3 s CPU calls took 1.1 s via `to_thread()` and 0.37 s via a process pool. For CPU work use `loop.run_in_executor(ProcessPoolExecutor(), fn, *args)`, native code that releases the GIL (NumPy, PyTorch, PIL decode), or a free-threaded (`python3.14t`) build where `to_thread()` does parallelize — if your dependencies support it.
+2. **It does not speed up CPU-bound Python.** Threads share the GIL. For example, four 0.3 s CPU calls took 1.1 s via `to_thread()` and 0.37 s via a process pool. For CPU work use `loop.run_in_executor(ProcessPoolExecutor(), fn, *args)`, native code that releases the GIL (NumPy, PyTorch, PIL decode), or a free-threaded (`python3.14t`) build where `to_thread()` does parallelize — if your dependencies support it.
 3. **The reverse direction exists.** From a plain thread (a callback from a C library, say) you cannot `await`; use `asyncio.run_coroutine_threadsafe(coro, loop)` to hand a coroutine to the loop, or `loop.call_soon_threadsafe(fn)` for a plain function. These are the thread-safe entry points into a running loop; nearly everything else in `asyncio` is not thread-safe.
+
+For code with blocking CPU work use `loop.run_in_executor(ProcessPoolExecutor(), fn, *args)` to run it in python process with separate GIL:
 
 ```python
 loop = asyncio.get_running_loop()
@@ -399,7 +404,7 @@ with ProcessPoolExecutor() as pool:
 
 ---
 
-## Design patterns for concurrent `asyncio`
+# Design patterns for concurrent `asyncio`
 
 The primitives compose into a small number of recurring shapes. Recognizing them is most of the skill.
 
@@ -415,7 +420,7 @@ The primitives compose into a small number of recurring shapes. Recognizing them
 | **Micro-batching** | Amortize a fixed cost (GPU launch, DB round trip) across requests | `Queue` of `(item, Future)` + a batch worker |
 | **Graceful shutdown** | Finish or flush in-flight work on SIGTERM | Signal handler → cancel → `TaskGroup` unwinds → `finally` |
 
-Bounded fan-out and the worker pool appeared above; the pipeline and ordered prefetch are worked in full in the next section. Here are the other five.
+Bounded fan-out and the worker pool appeared in previous section; the pipeline and ordered prefetch are worked in full in the next section. Here are the other five.
 
 ### Retry with backoff and a per-attempt timeout
 
@@ -528,7 +533,7 @@ For queue-fed workers, prefer *drain then exit* over cancellation: stop the prod
 
 ---
 
-## Put it together
+# Put it together
 
 Three complete programs that compose the pieces. Each ran as shown; the stand-in `time.sleep()` calls play the role of real network and GPU latency.
 
@@ -666,31 +671,7 @@ Fifty concurrent connections, one request each, were served in **0.23 s using 4 
 
 ---
 
-## Modern vs. legacy API
-
-Most of the fragmentation in asyncio tutorials comes from the API having been redesigned twice: `async`/`await` replaced generator coroutines in 3.5, and 3.7–3.11 replaced explicit loop management with `asyncio.run()`, `create_task()`, `TaskGroup`, and `timeout()`. If a tutorial's first line is `loop = asyncio.get_event_loop()`, it predates the modern API. The translation table:
-
-| If you see (legacy) | Write instead (modern) | Since |
-|---|---|---|
-| `loop = asyncio.get_event_loop()`<br>`loop.run_until_complete(main())` | `asyncio.run(main())` | 3.7 (`get_event_loop()` raises with no loop in 3.14) |
-| `@asyncio.coroutine` + `yield from` | `async def` + `await` | 3.5; decorator removed in 3.11 |
-| `asyncio.ensure_future(coro)` | `asyncio.create_task(coro)` or `tg.create_task(coro)` | 3.7 / 3.11 |
-| `asyncio.gather(*coros)` as the default fan-out | `async with asyncio.TaskGroup() as tg:` | 3.11 |
-| `await asyncio.wait_for(coro, t)` | `async with asyncio.timeout(t): await coro` | 3.11 |
-| `loop.run_in_executor(None, fn, *args)` | `await asyncio.to_thread(fn, *args, **kwargs)` | 3.9 |
-| `asyncio.get_event_loop()` inside a coroutine | `asyncio.get_running_loop()` | 3.7 |
-| `asyncio.wait([coro1, coro2])` | `asyncio.wait([task1, task2])` — coroutines are a `TypeError` | 3.11 |
-| `for f in as_completed(aws): await f` | `async for t in as_completed(tasks): t.result()` | 3.13 |
-| `q.put(None)` sentinels to stop consumers | `q.shutdown()` → consumers see `QueueShutDown` | 3.13 |
-| `asyncio.TimeoutError` | builtin `TimeoutError` (the alias is deprecated) | 3.11 |
-| `some_api(..., loop=loop)` | drop `loop=` — high-level APIs find the running loop | removed 3.10 |
-| `asyncio.set_event_loop_policy(...)` | `asyncio.run(main(), loop_factory=...)` (e.g. `uvloop.new_event_loop`) | 3.12; policies deprecated 3.14, removed 3.16 |
-
-Two practical notes on versions. **3.12** made asyncio substantially faster (task creation, `current_task()` in C, an opt-in eager task factory). **3.14** added first-class free-threading support and the `python -m asyncio ps <pid>` / `pstree <pid>` introspection commands, which show the live task tree of a running process — the first good answer to "what is my program waiting on?".
-
----
-
-## Reference
+# Reference
 
 ### Official documentation
 
@@ -739,7 +720,32 @@ Thread-backed (blocking underneath, async on top): [aiofiles](https://github.com
 
 ---
 
-## Appendix: measuring threads vs. `asyncio`
+# Appendix: 
+
+## Modern vs. legacy API
+
+Most of the fragmentation in asyncio tutorials comes from the API having been redesigned twice: `async`/`await` replaced generator coroutines in 3.5, and 3.7–3.11 replaced explicit loop management with `asyncio.run()`, `create_task()`, `TaskGroup`, and `timeout()`. If a tutorial's first line is `loop = asyncio.get_event_loop()`, it predates the modern API. The translation table:
+
+| If you see (legacy) | Write instead (modern) | Since |
+|---|---|---|
+| `loop = asyncio.get_event_loop()`<br>`loop.run_until_complete(main())` | `asyncio.run(main())` | 3.7 (`get_event_loop()` raises with no loop in 3.14) |
+| `@asyncio.coroutine` + `yield from` | `async def` + `await` | 3.5; decorator removed in 3.11 |
+| `asyncio.ensure_future(coro)` | `asyncio.create_task(coro)` or `tg.create_task(coro)` | 3.7 / 3.11 |
+| `asyncio.gather(*coros)` as the default fan-out | `async with asyncio.TaskGroup() as tg:` | 3.11 |
+| `await asyncio.wait_for(coro, t)` | `async with asyncio.timeout(t): await coro` | 3.11 |
+| `loop.run_in_executor(None, fn, *args)` | `await asyncio.to_thread(fn, *args, **kwargs)` | 3.9 |
+| `asyncio.get_event_loop()` inside a coroutine | `asyncio.get_running_loop()` | 3.7 |
+| `asyncio.wait([coro1, coro2])` | `asyncio.wait([task1, task2])` — coroutines are a `TypeError` | 3.11 |
+| `for f in as_completed(aws): await f` | `async for t in as_completed(tasks): t.result()` | 3.13 |
+| `q.put(None)` sentinels to stop consumers | `q.shutdown()` → consumers see `QueueShutDown` | 3.13 |
+| `asyncio.TimeoutError` | builtin `TimeoutError` (the alias is deprecated) | 3.11 |
+| `some_api(..., loop=loop)` | drop `loop=` — high-level APIs find the running loop | removed 3.10 |
+| `asyncio.set_event_loop_policy(...)` | `asyncio.run(main(), loop_factory=...)` (e.g. `uvloop.new_event_loop`) | 3.12; policies deprecated 3.14, removed 3.16 |
+
+Two practical notes on versions. **3.12** made asyncio substantially faster (task creation, `current_task()` in C, an opt-in eager task factory). **3.14** added first-class free-threading support and the `python -m asyncio ps <pid>` / `pstree <pid>` introspection commands, which show the live task tree of a running process — the first good answer to "what is my program waiting on?".
+
+
+## Compare threads vs. `asyncio`
 
 The introduction asserted that threads are a poor fit for high concurrency. This appendix shows how to *measure* that claim on your own machine, and what the measurements look like on mine: Python 3.14.7, macOS, 14 cores, GIL enabled, default 5 ms switch interval. Every number below comes from [one ~270-line script](/python-asyncio-bench.py); each case runs in a fresh subprocess so memory and context-switch counters start clean.
 
