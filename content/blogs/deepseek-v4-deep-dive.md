@@ -1,7 +1,7 @@
 ---
-title: "Deepseek V4 Deep Dive"
+title: "DeepSeek V4 Deep Dive"
 date: 2026-08-30
-tags: ["Deepseek", "LLM", "Inference"]
+tags: ["DeepSeek", "LLM", "Inference"]
 author: "Ryan H."
 description: "This blog post covers Deepseek V4 model architecture and inference"
 summary: "This blog post covers Deepseek V4 model architecture and inference."
@@ -306,11 +306,218 @@ Where the FLOPs come from:
 Plugging in DeepSeek-V4-Pro numbers ($n = 4$, $C = 7168$): the FLOPs overhead is $2n^3C + 6n^2C + 5nC \approx 1.75$ MFLOPs per token per layer — roughly $0.1\%$ of the $\approx 1.6$ GFLOPs the layer itself costs ($\approx 49\text{B}/61$ activated parameters). The memory side is a different story: reads grow from $2C$ to $(5n+1)C + n^2 + 2n \approx 21C$, a $10.5\times$ blow-up in residual-stream traffic. Since decode is memory-bound, this — not compute — is the real serving cost of mHC, and it is why the mappings and residual merge must be fused rather than launched as separate elementwise kernels.
 
 # Efficient Attention Kernels & KV Cache
+As the context length reaches extreme scales, the attention mechanism emerges as the dominant computational bottleneck in a model. For DeepSeek-V4, we design two efficient attention architectures — Compressed Sparse Attention (CSA) and Heavily Compressed Attention (HCA) — and employ their interleaved hybrid configuration, which substantially reduces the computational cost of attention in long-text scenarios.
+
+## Compressed Sparse Attention (CSA)
+
+CSA integrates both compression and sparse attention strategies: it first compresses the Key-Value (KV) cache of every $m$ tokens into one entry, and then applies DeepSeek Sparse Attention (DSA) (DeepSeek-AI, 2025b) where each query token attends to only $k$ compressed KV entries.
+
+The intuition: instead of every query token scanning every past token, CSA (1) **summarizes** each block of $m$ consecutive tokens into a single compressed KV entry, then (2) lets a lightweight **indexer** score those summaries so each query reads only the $k$ most relevant ones. At a 1M-token context with $m = 4$ and $k = 512$, core attention touches 512 entries instead of 1,048,576 tokens — a ~2000× reduction in KV reads — and the cache itself shrinks by $m\times$.
+
+Notation follows the symbol table above ($S$, $D$, $D_h$, $H_q$, $R_q$, $G$, $R_o$), with two section-local additions: $H_q^{I}$ indexer heads of dimension $D_h^{I}$ (64 heads of 128, per the model config).
+
+### Step 1 — Compress: every $m$ tokens become one KV entry
+
+From the input hidden states $X \in \mathbb{R}^{S \times D}$, CSA computes two series of candidate KV entries and their per-channel compression weights:
+
+$$
+C^a = X W^{aKV}, \quad C^b = X W^{bKV}, \qquad Z^a = X W^{aZ}, \quad Z^b = X W^{bZ},
+$$
+
+where all four weight matrices are in $\mathbb{R}^{D \times D_h}$, so $C^a, C^b, Z^a, Z^b \in \mathbb{R}^{S \times D_h}$. Think of $C$ as "what each token contributes to the summary" and $Z$ as "how loudly it gets to contribute, per channel".
+
+The $i$-th compressed entry then merges $2m$ tokens — block $i$'s entries from the $a$-series and block $i{-}1$'s from the $b$-series — with a softmax over the $2m$ candidates (per channel), shifted by learnable positional biases $B^a, B^b \in \mathbb{R}^{m \times D_h}$:
+
+$$
+[A^a_{mi:m(i+1)-1}; A^b_{m(i-1):mi-1}] = \mathrm{Softmax}_{\mathrm{row}}\left([Z^a_{mi:m(i+1)-1} + B^a;\; Z^b_{m(i-1):mi-1} + B^b]\right),
+$$
+
+$$
+C^{\mathrm{Comp}}_i = \sum_{j=mi}^{m(i+1)-1} A^a_j \odot C^a_j \;+ \sum_{j=m(i-1)}^{mi-1} A^b_j \odot C^b_j,
+$$
+
+where $\odot$ is the Hadamard (elementwise) product. For $i = 0$ the $b$-series is padded ($-\infty$ in $Z^b$, zeros in $C^b$). Consecutive entries overlap: entry $i$ reads blocks $i{-}1$ and $i$, entry $i{+}1$ reads blocks $i$ and $i{+}1$ — so every token contributes to two summaries and no information sits on a hard block boundary. The result $C^{\mathrm{Comp}} \in \mathbb{R}^{\frac{S}{m} \times D_h}$ compresses the sequence length by $m\times$.
+
+### Step 2 — Select: a lightning indexer picks top-$k$ entries
+
+Attending to all $S/m$ compressed entries would still be expensive, so CSA applies the DSA strategy on top: a cheap scoring pass decides which $k$ entries each query actually reads.
+
+The indexer gets its own compressed keys $K^{I\mathrm{Comp}} \in \mathbb{R}^{\frac{S}{m} \times D_h^{I}}$, produced by the same compression mechanism as Step 1. On the query side, token $t$'s hidden state $\mathbf{h}_t \in \mathbb{R}^{D}$ is first down-projected to a compressed latent, which is then up-projected into indexer queries:
+
+$$
+\mathbf{c}^Q_t = \mathbf{h}_t W^{DQ} \in \mathbb{R}^{R_q}, \qquad [\mathbf{q}^{I}_{t,1}; \ldots; \mathbf{q}^{I}_{t,H_q^{I}}] = \mathbf{c}^Q_t W^{IUQ}.
+$$
+
+Each indexer head $h$ scores each compressed entry $s$ with a ReLU'd dot product, and the heads vote with learned per-token weights $\mathbf{w}^{I}_t = \mathbf{h}_t W^{w} \in \mathbb{R}^{H_q^{I}}$:
+
+$$
+I_{t,s} = \sum_{h=1}^{H_q^{I}} w^{I}_{t,h} \, \mathrm{ReLU}\left(\mathbf{q}^{I}_{t,h} \cdot K^{I\mathrm{Comp}}_{s}\right).
+$$
+
+Only the entries with top-$k$ scores survive for core attention:
+
+$$
+C^{\mathrm{Sprs}}_t = \left\{ C^{\mathrm{Comp}}_s \;\middle|\; I_{t,s} \in \mathrm{Top}\text{-}k(I_{t,:}) \right\}.
+$$
+
+This is cheap by construction: scores are ReLU dot products (no softmax), heads are narrow ($D_h^{I} = 128$), and the scan runs over $S/m$ summaries rather than $S$ tokens.
+
+### Step 3 — Attend: MQA where key = value
+
+Core attention reuses the *same* compressed latent $\mathbf{c}^Q_t$ from Step 2 — one down-projection serves both the indexer and the attention queries:
+
+$$
+[\mathbf{q}_{t,1}; \ldots; \mathbf{q}_{t,H_q}] = \mathbf{c}^Q_t W^{UQ}, \qquad \mathbf{o}_{t,i} = \mathrm{CoreAttn}\left(\mathbf{q}_{t,i},\; \underbrace{C^{\mathrm{Sprs}}_t}_{\text{key}},\; \underbrace{C^{\mathrm{Sprs}}_t}_{\text{value}}\right).
+$$
+
+This is Multi-Query Attention with a twist: all $H_q$ query heads share a single KV head (`num_key_value_heads: 1`), and each compressed entry serves as **both** the key and the value. The cache stores one $D_h$-dim vector per compressed position — nothing else.
+
+### Step 4 — Project: grouped output projection
+
+With $H_q = 128$ heads of $D_h = 512$, concatenated head outputs span $H_q D_h = 65{,}536$ dims; projecting that straight to $D = 7{,}168$ would need a ~470M-parameter matrix (V4-Pro). CSA instead splits the heads into $G$ groups, bottlenecks each group's concat ($\frac{H_q D_h}{G}$ dims) down to $R_o$ dims, then projects the concatenated $G R_o$ dims to $D$:
+
+$$
+\mathbf{o}^{G\prime}_i = \mathbf{o}^{G}_i W^{O_1}_i \in \mathbb{R}^{R_o}, \qquad \hat{\mathbf{o}}_t = [\mathbf{o}^{G\prime}_1; \ldots; \mathbf{o}^{G\prime}_G] \, W^{O_2} \in \mathbb{R}^{D}.
+$$
+
+For V4-Pro ($G = 16$, $R_o = 1{,}024$) that is $H_q D_h R_o + G R_o D \approx 184\text{M}$ parameters — a ~2.6× reduction with a low-rank structure per group.
+
+### The whole pipeline
+
+Rounded nodes are tensors (with shapes), rectangles are operations, for a single query token $t$ at decode:
+
+```mermaid
+flowchart TD
+    CTX(["X : (S × D)<br/>context hidden states"])
+    HT(["h_t : (1 × D)<br/>query token"])
+
+    subgraph COMPRESS["compress — once per token, cached"]
+        MERGE["per-block softmax merge<br/>2m entries → 1, overlapping"]
+        CCOMP(["C_comp : (S/m × D_h)<br/>shared K = V cache"])
+        KIDX(["K_icomp : (S/m × D_h_I)<br/>indexer keys"])
+    end
+
+    subgraph SELECT["lightning indexer"]
+        DQ["down-proj W_DQ<br/>(1 × D) · (D × R_q) → (1 × R_q)"]
+        CQ(["c_q : (1 × R_q)<br/>shared query latent"])
+        UQI["up-proj W_IUQ<br/>(1 × R_q) → (H_q_I × D_h_I)"]
+        SCORE["score : Σ_h w_h · ReLU(q_I,h · K_icomp)<br/>→ I_t : (1 × S/m)"]
+        TOPK["top-k select : keep k of S/m"]
+        SEL(["C_sprs : (k × D_h)"])
+    end
+
+    subgraph CORE["core attention"]
+        UQ["up-proj W_UQ<br/>(1 × R_q) → (H_q × D_h)"]
+        MQA["MQA : key = value = C_sprs<br/>(H_q × D_h) vs (k × D_h) → (H_q × D_h)"]
+        GRP["grouped output proj<br/>G × [(H_q·D_h/G) → R_o], concat → (1 × G·R_o)<br/>then (G·R_o × D) → (1 × D)"]
+    end
+
+    OUT(["o_t : (1 × D)<br/>attention output"])
+
+    CTX -->|"C_a, C_b, Z_a, Z_b : 4 × (D × D_h) projections"| MERGE
+    MERGE --> CCOMP
+    MERGE -->|"same op, indexer weights"| KIDX
+    HT --> DQ --> CQ
+    CQ --> UQI -->|"q_I : (H_q_I × D_h_I)"| SCORE
+    KIDX --> SCORE
+    SCORE --> TOPK
+    CCOMP --> TOPK
+    TOPK --> SEL
+    CQ --> UQ -->|"q : (H_q × D_h)"| MQA
+    SEL --> MQA
+    MQA --> GRP --> OUT
+```
+
+Three sharing tricks keep the serving cost down: the query latent $\mathbf{c}^Q_t$ is computed once and feeds both indexer and core queries; each compressed entry is simultaneously key and value, halving the cache; and the grouped output projection cuts the largest dense matrix in the attention block by ~2.6×. Per CSA layer, the cache holds $\frac{S}{m}(D_h + D_h^{I})$ elements — with $m = 4$, that is just 160 elements per raw context token.
+
+
+
+## Heavily Compressed Attention (HCA) 
+
+HCA is CSA's blunt sibling: it compresses the KV cache much harder — every $m'$ tokens become one entry, with $m' \gg m$ — but then skips sparsity entirely and attends **densely** to every compressed entry. No overlapping blocks, no lightning indexer, no top-$k$. In DeepSeek-V4 the HCA layers use $m' = 128$ (vs. $m = 4$ for CSA), so even a 1M-token context collapses to just $S/m' = 8{,}192$ entries — small enough that reading all of them is cheap.
+
+| | CSA | HCA |
+|---|---|---|
+| Compression rate | $m = 4$ | $m' = 128$ |
+| Overlapped blocks | yes ($2m$ tokens per entry) | no ($m'$ tokens per entry) |
+| Sparse selection | top-$k$, $k = 512$ | none — dense over all entries |
+| Entries read per query (1M ctx) | $512$ | $8{,}192$ |
+| Cache per raw token | $(D_h + D_h^{I})/m = 160$ elements | $D_h/m' = 4$ elements |
+
+### Step 1 — Compress harder: every $m'$ tokens become one entry
+
+The mechanism is a simplified version of CSA's Step 1: a single series of candidate entries and weights (no $a$/$b$ pair, since there is no overlap):
+
+$$
+C = X W^{KV}, \qquad Z = X W^{Z},
+$$
+
+with $W^{KV}, W^{Z} \in \mathbb{R}^{D \times D_h}$, so $C, Z \in \mathbb{R}^{S \times D_h}$. Block $i$ covers tokens $m'i$ through $m'(i+1)-1$; a per-channel softmax over the $m'$ candidates (shifted by learnable positional biases $B \in \mathbb{R}^{m' \times D_h}$) decides how much each token contributes to the block's summary:
+
+$$
+A_{m'i:m'(i+1)-1} = \mathrm{Softmax}_{\mathrm{row}}\left(Z_{m'i:m'(i+1)-1} + B\right),
+$$
+
+$$
+C^{\mathrm{Comp}}_i = \sum_{j=m'i}^{m'(i+1)-1} A_j \odot C_j.
+$$
+
+(As in the CSA section, we write $A$ for the paper's softmax scores $S$ to avoid clashing with the sequence length.) The result $C^{\mathrm{Comp}} \in \mathbb{R}^{\frac{S}{m'} \times D_h}$ compresses the sequence length by $m'\times$ — at $m' = 128$, the KV cache costs 4 elements per raw context token.
+
+### Step 2 — Attend to everything: dense shared-KV MQA
+
+With only $S/m'$ entries left, HCA does not bother selecting among them. The query path is the same low-rank two-step as CSA's:
+
+$$
+\mathbf{c}^Q_t = \mathbf{h}_t W^{DQ} \in \mathbb{R}^{R_q}, \qquad [\mathbf{q}_{t,1}; \ldots; \mathbf{q}_{t,H_q}] = \mathbf{c}^Q_t W^{UQ},
+$$
+
+and core attention is MQA over **all** compressed entries, each again serving as both key and value:
+
+$$
+\mathbf{o}_{t,i} = \mathrm{CoreAttn}\left(\mathbf{q}_{t,i},\; \underbrace{C^{\mathrm{Comp}}}_{\text{key}},\; \underbrace{C^{\mathrm{Comp}}}_{\text{value}}\right).
+$$
+
+The head outputs go through the same grouped output projection as CSA's Step 4: $H_q$ heads split into $G$ groups, each group bottlenecked to $R_o$ dims, then projected to $D$.
+
+### The whole pipeline
+
+Rounded nodes are tensors (with shapes), rectangles are operations, for a single query token $t$ at decode:
+
+```mermaid
+flowchart TD
+    CTX(["X : (S × D)<br/>context hidden states"])
+    HT(["h_t : (1 × D)<br/>query token"])
+
+    subgraph COMPRESS["compress — once per token, cached"]
+        PROJ["C = X · W_KV, Z = X · W_Z<br/>(S × D) · (D × D_h) → (S × D_h)"]
+        MERGE["per-block softmax merge<br/>softmax(Z + B), m′ entries → 1<br/>non-overlapping"]
+        CCOMP(["C_comp : (S/m′ × D_h)<br/>shared K = V cache"])
+    end
+
+    subgraph CORE["core attention"]
+        DQ["down-proj W_DQ<br/>(1 × D) · (D × R_q) → (1 × R_q)"]
+        CQ(["c_q : (1 × R_q)"])
+        UQ["up-proj W_UQ<br/>(1 × R_q) → (H_q × D_h)"]
+        MQA["dense MQA : key = value = C_comp<br/>(H_q × D_h) vs (S/m′ × D_h) → (H_q × D_h)"]
+        GRP["grouped output proj<br/>G × [(H_q·D_h/G) → R_o], concat → (1 × G·R_o)<br/>then (G·R_o × D) → (1 × D)"]
+    end
+
+    OUT(["o_t : (1 × D)<br/>attention output"])
+
+    CTX --> PROJ --> MERGE --> CCOMP
+    HT --> DQ --> CQ --> UQ --> MQA
+    CCOMP --> MQA
+    MQA --> GRP --> OUT
+```
+
+The two architectures are complementary, which is why V4 interleaves them (CSA on even layers 2–60, HCA on layers 0–1 and odd layers 3–59): a 128× summary cannot preserve token-level detail, but it gives every layer a cheap **global view** of the whole context; CSA's finer 4× summaries plus top-$k$ selection provide **precise retrieval** where it matters. HCA layers also dominate the cache savings — at 4 elements per token they are nearly free next to CSA's 160.
 
 
 
 
-# MoE serving
+
+# DeepSeek MoE
 
 
 
@@ -331,3 +538,4 @@ TBD: quantization kernels
 1. DeepSeek-AI. "DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence." *arXiv preprint* [arXiv:2606.19348](https://arxiv.org/abs/2606.19348), 2026.
 2. DeepSeek-AI. *DeepSeek-V4-Pro: reference inference implementation* [Computer software]. [Hugging Face](https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/tree/main/inference), 2026.
 3. Xie, Z., Wei, Y., Cao, H., Zhao, C., Deng, C., Li, J., Dai, D., Gao, H., Chang, J., Yu, K., Zhao, L., Zhou, S., Xu, Z., Zhang, Z., Zeng, W., Hu, S., Wang, Y., Yuan, J., Wang, L., and Liang, W. "mHC: Manifold-Constrained Hyper-Connections." *arXiv preprint* [arXiv:2512.24880](https://arxiv.org/abs/2512.24880), 2025.
+4. Dai, D., Deng, C., Zhao, C., Xu, R. X., Gao, H., Chen, D., Li, J., Zeng, W., Yu, X., Wu, Y., Xie, Z., Li, Y. K., Huang, P., Luo, F., Ruan, C., Sui, Z., and Liang, W. "DeepSeekMoE: Towards Ultimate Expert Specialization in Mixture-of-Experts Language Models." *arXiv preprint* [arXiv:2401.06066](https://arxiv.org/abs/2401.06066), 2024.
