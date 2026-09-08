@@ -74,6 +74,9 @@ params:
     - name: linkedin
       title: LinkedIn
       url: "https://www.linkedin.com/in/ruoyu/"
+    - name: x
+      title: X
+      url: "https://x.com/nvbkdw"
     - name: email
       title: Email
       url: "mailto:huangruoyu666@gmail.com"
