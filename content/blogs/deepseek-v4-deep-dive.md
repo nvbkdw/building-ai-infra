@@ -312,7 +312,7 @@ As the context length reaches extreme scales, the attention mechanism emerges as
 
 CSA integrates both compression and sparse attention strategies: it first compresses the Key-Value (KV) cache of every $m$ tokens into one entry, and then applies DeepSeek Sparse Attention (DSA) (DeepSeek-AI, 2025b) where each query token attends to only $k$ compressed KV entries.
 
-The intuition: instead of every query token scanning every past token, CSA (1) **summarizes** each block of $m$ consecutive tokens into a single compressed KV entry, then (2) lets a lightweight **indexer** score those summaries so each query reads only the $k$ most relevant ones. At a 1M-token context with $m = 4$ and $k = 512$, core attention touches 512 entries instead of 1,048,576 tokens — a ~2000× reduction in KV reads — and the cache itself shrinks by $m\times$.
+The intuition: instead of every query token scanning every past token, CSA (1) **summarizes** each block of $m$ consecutive tokens into a single compressed KV entry, then (2) lets a lightweight **indexer** score those summaries so each query reads only the $k$ most relevant ones ($k = 512$ for V4-Flash, $1{,}024$ for V4-Pro), plus a local sliding window of the last $W = 128$ tokens. At a 1M-token context with $m = 4$, core attention touches on the order of a thousand entries instead of 1,048,576 tokens — a three-orders-of-magnitude reduction in KV reads — and the cache itself shrinks by $m\times$.
 
 Notation follows the symbol table above ($S$, $D$, $D_h$, $H_q$, $R_q$, $G$, $R_o$), with two section-local additions: $H_q^{I}$ indexer heads of dimension $D_h^{I}$ (64 heads of 128, per the model config).
 
@@ -342,11 +342,23 @@ where $\odot$ is the Hadamard (elementwise) product. For $i = 0$ the $b$-series 
 
 Attending to all $S/m$ compressed entries would still be expensive, so CSA applies the DSA strategy on top: a cheap scoring pass decides which $k$ entries each query actually reads.
 
-The indexer gets its own compressed keys $K^{I\mathrm{Comp}} \in \mathbb{R}^{\frac{S}{m} \times D_h^{I}}$, produced by the same compression mechanism as Step 1. On the query side, token $t$'s hidden state $\mathbf{h}_t \in \mathbb{R}^{D}$ is first down-projected to a compressed latent, which is then up-projected into indexer queries:
+The indexer needs something to score — and scoring the full-width KV entries directly would defeat the purpose. So CSA runs the **same compression operation as Step 1 a second time**, with its own small set of parameters: indexer-specific projection matrices of shape $D \times D_h^{I}$ (playing the roles of $W^{aKV}, W^{bKV}, W^{aZ}, W^{bZ}$) and its own positional biases in $\mathbb{R}^{m \times D_h^{I}}$, but the identical overlapped two-series structure, block boundaries, and per-channel softmax over $2m$ candidates. The output is one compressed indexer key per block, $K^{I\mathrm{Comp}} \in \mathbb{R}^{\frac{S}{m} \times D_h^{I}}$.
+
+Three details matter here:
+
+- **Same mechanism, separate weights.** $K^{I\mathrm{Comp}}$ is computed from the raw hidden states $X$, not by re-projecting $C^{\mathrm{Comp}}$ — it has to be, since the widths differ ($D_h^{I} = 128$ vs $D_h = 512$). The indexer learns its *own* view of what makes a block findable, independent of what the block stores.
+- **Aligned by construction.** Because both compressions share the same block boundaries and overlap pattern, indexer key $s$ and KV entry $s$ summarize exactly the same $2m$ tokens. That strict 1:1 correspondence is what lets a top-$k$ over indexer scores be used directly as gather indices into $C^{\mathrm{Comp}}$.
+- **Narrow on purpose.** A key only needs enough capacity to *rank* blocks, not to reconstruct their content — and $K^{I\mathrm{Comp}}$ is the one tensor the indexer must scan end-to-end, so its width is the scan's cost. Both arrays sit in the cache side by side, which is where the $(D_h + D_h^{I})/m = 160$ elements-per-token figure comes from.
+
+On the query side, token $t$'s hidden state $\mathbf{h}_t \in \mathbb{R}^{D}$ is first down-projected to a compressed latent, which is then up-projected into indexer queries:
 
 $$
 \mathbf{c}^Q_t = \mathbf{h}_t W^{DQ} \in \mathbb{R}^{R_q}, \qquad [\mathbf{q}^{I}_{t,1}; \ldots; \mathbf{q}^{I}_{t,H_q^{I}}] = \mathbf{c}^Q_t W^{IUQ}.
 $$
+
+Unpacking that second equation: $W^{IUQ} \in \mathbb{R}^{R_q \times H_q^{I} D_h^{I}}$ is a single matrix that emits **all indexer heads in one GEMV**. Multiplying $\mathbf{c}^Q_t$ of shape ($1 \times R_q$) by $W^{IUQ}$ yields one flat vector of length $H_q^{I} \cdot D_h^{I} = 64 \times 128 = 8{,}192$, which is then just reshaped — sliced into $H_q^{I} = 64$ chunks of $D_h^{I} = 128$ — to give the per-head queries $\mathbf{q}^{I}_{t,h}$. There is no per-head weight matrix; head $h$'s query is simply columns $[(h{-}1)D_h^{I} : hD_h^{I}]$ of the product. Each head is therefore a different learned linear *view* of the same $R_q$-dim latent — 64 retrieval patterns asking different questions about the same token.
+
+The down-then-up detour is a low-rank factorization of the map $\mathbb{R}^{D} \to \mathbb{R}^{H_q^{I} D_h^{I}}$. A direct projection would cost $D \times H_q^{I}D_h^{I} = 7{,}168 \times 8{,}192 \approx 59\text{M}$ parameters (V4-Pro); going through the latent bottleneck costs only $R_q \times H_q^{I}D_h^{I} = 1{,}536 \times 8{,}192 \approx 12.6\text{M}$, because the down-projection $W^{DQ}$ is shared with the core attention queries (Step 3) and is paid for once. The factorization also caps the rank of the query map at $R_q$ and keeps the per-token activation small — $\mathbf{c}^Q_t$ is 1,536 dims instead of 7,168, which matters when it is cached and reused across the indexer and core paths. This is the query-side analogue of the KV compression trick MLA introduced in DeepSeek-V2/V3.
 
 Each indexer head $h$ scores each compressed entry $s$ with a ReLU'd dot product, and the heads vote with learned per-token weights $\mathbf{w}^{I}_t = \mathbf{h}_t W^{w} \in \mathbb{R}^{H_q^{I}}$:
 
@@ -360,7 +372,23 @@ $$
 C^{\mathrm{Sprs}}_t = \left\{ C^{\mathrm{Comp}}_s \;\middle|\; I_{t,s} \in \mathrm{Top}\text{-}k(I_{t,:}) \right\}.
 $$
 
-This is cheap by construction: scores are ReLU dot products (no softmax), heads are narrow ($D_h^{I} = 128$), and the scan runs over $S/m$ summaries rather than $S$ tokens.
+This is cheap by construction — though not mainly because the softmax is missing. For a fixed query, softmax is a monotone transform of the scores, so $\mathrm{TopK}(\mathrm{softmax}(I_{t,:})) = \mathrm{TopK}(I_{t,:})$: it is simply unnecessary for ranking, not the bottleneck. The real savings: heads are narrow ($D_h^{I} = 128$), no values are aggregated, the QK products run in low-precision FP4, and the scan covers $S/m$ summaries rather than $S$ tokens.
+
+### Indexer fine print: what the report omits, the code confirms
+
+The equations above are the paper's story; the [reference implementation](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/blob/main/inference/model.py#L574) adds a few details worth knowing if you re-implement or debug the indexer:
+
+- **The head weights are secretly scaled.** The code multiplies the projected weights by a shared constant before the weighted sum:
+
+$$
+w^{\mathrm{impl}}_{t,h} = \frac{w^{I}_{t,h}}{\sqrt{D_h^{I}}\,\sqrt{H_q^{I}}},
+$$
+
+  and the $1/\sqrt{D_h^{I}}$ factor is even named `softmax_scale` — despite there being no softmax in the indexer. As a shared positive constant it cannot change the top-$k$ ordering in exact arithmetic (mathematically it could be absorbed into $W^{w}$); its job is to keep score magnitudes tame in low-precision arithmetic.
+- **The head weights are unconstrained.** $\mathbf{w}^{I}_t = \mathbf{h}_t W^{w}$ passes through no sigmoid or softmax, so the per-head votes are *signed*: a head adds positive evidence when $w^{I}_{t,h} > 0$ and negative evidence when $w^{I}_{t,h} < 0$. The ReLU gates the query–key dot product, not the signed head contribution.
+- **QK runs in FP4.** Indexer queries and keys are quantized before the score einsum (`fp4_act_quant`, with a rotation applied on the key path) — the scoring pass is deliberately the lowest-precision compute in the layer.
+- **The window rides along.** The indexer's top-$k$ is not the whole attention set: indices for the last $W = 128$ tokens are computed separately (`get_window_topk_idxs`) and concatenated with the top-$k$ indices before the sparse kernel, so core attention always sees the local window regardless of scores.
+- **$k$ differs by model.** `index_topk` is $512$ for V4-Flash and $1{,}024$ for V4-Pro.
 
 ### Step 3 — Attend: MQA where key = value
 
@@ -370,7 +398,15 @@ $$
 [\mathbf{q}_{t,1}; \ldots; \mathbf{q}_{t,H_q}] = \mathbf{c}^Q_t W^{UQ}, \qquad \mathbf{o}_{t,i} = \mathrm{CoreAttn}\left(\mathbf{q}_{t,i},\; \underbrace{C^{\mathrm{Sprs}}_t}_{\text{key}},\; \underbrace{C^{\mathrm{Sprs}}_t}_{\text{value}}\right).
 $$
 
-This is Multi-Query Attention with a twist: all $H_q$ query heads share a single KV head (`num_key_value_heads: 1`), and each compressed entry serves as **both** the key and the value. The cache stores one $D_h$-dim vector per compressed position — nothing else.
+This is Multi-Query Attention with two twists. First, all $H_q$ query heads share a single KV head (`num_key_value_heads: 1`), and each compressed entry serves as **both** the key and the value — the cache stores one $D_h$-dim vector per compressed position, nothing else. Second, neither the attention set nor the softmax is quite standard. The set is $\mathcal{S}_t = C^{\mathrm{Sprs}}_t \cup \{\text{last } W = 128 \text{ tokens}\}$ — the local window is always attended, however the indexer scored it. And the softmax denominator carries a learned per-head **attention-sink** logit $z'_h$:
+
+$$
+a_{h,t,s} = \frac{\exp(z_{h,t,s})}{\sum_{u \in \mathcal{S}_t} \exp(z_{h,t,u}) + \exp(z'_h)},
+$$
+
+so a head's attention weights can sum to *less than one*: a head that finds nothing relevant dumps its probability mass into the sink instead of being forced to smear it across irrelevant entries. The [official sparse-attention kernel](https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/blob/main/inference/kernel.py#L470) confirms the whole picture: scaled QK scoring ($1/\sqrt{D_h}$), online softmax with the sink folded into the running denominator, and value mixing from the same gathered tensor.
+
+Putting Steps 2–3 in one sentence: *the Lightning Indexer is a low-precision, ReLU-gated, multi-head retrieval scorer — it scans compressed index keys and returns top-$k$ indices without producing any attention output; the actual scaled-dot-product value mixing happens afterwards, over the selected compressed blocks plus the local sliding window, under an attention-sink-modified softmax.*
 
 ### Step 4 — Project: grouped output projection
 
@@ -402,13 +438,13 @@ flowchart TD
         CQ(["c_q : (1 × R_q)<br/>shared query latent"])
         UQI["up-proj W_IUQ<br/>(1 × R_q) → (H_q_I × D_h_I)"]
         SCORE["score : Σ_h w_h · ReLU(q_I,h · K_icomp)<br/>→ I_t : (1 × S/m)"]
-        TOPK["top-k select : keep k of S/m"]
-        SEL(["C_sprs : (k × D_h)"])
+        TOPK["top-k select : keep k of S/m<br/>+ always include last W tokens"]
+        SEL(["C_sprs ∪ window : ((k+W) × D_h)"])
     end
 
     subgraph CORE["core attention"]
         UQ["up-proj W_UQ<br/>(1 × R_q) → (H_q × D_h)"]
-        MQA["MQA : key = value = C_sprs<br/>(H_q × D_h) vs (k × D_h) → (H_q × D_h)"]
+        MQA["MQA + attention sink : key = value = C_sprs ∪ window<br/>(H_q × D_h) vs ((k+W) × D_h) → (H_q × D_h)"]
         GRP["grouped output proj<br/>G × [(H_q·D_h/G) → R_o], concat → (1 × G·R_o)<br/>then (G·R_o × D) → (1 × D)"]
     end
 
@@ -440,8 +476,8 @@ HCA is CSA's blunt sibling: it compresses the KV cache much harder — every $m'
 |---|---|---|
 | Compression rate | $m = 4$ | $m' = 128$ |
 | Overlapped blocks | yes ($2m$ tokens per entry) | no ($m'$ tokens per entry) |
-| Sparse selection | top-$k$, $k = 512$ | none — dense over all entries |
-| Entries read per query (1M ctx) | $512$ | $8{,}192$ |
+| Sparse selection | top-$k$ ($k = 512$ Flash, $1{,}024$ Pro) + $W$-token window | none — dense over all entries |
+| Entries read per query (1M ctx) | $k + W = 640$ (Flash) / $1{,}152$ (Pro) | $8{,}192$ |
 | Cache per raw token | $(D_h + D_h^{I})/m = 160$ elements | $D_h/m' = 4$ elements |
 
 ### Step 1 — Compress harder: every $m'$ tokens become one entry

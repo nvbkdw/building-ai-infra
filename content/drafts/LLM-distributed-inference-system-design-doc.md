@@ -294,6 +294,8 @@ TODO: what's special about NIXL? How does GPU-direct storage work?
 - https://github.com/ai-dynamo/dynamo/blob/main/docs/pages/components/kvbm/README.md
 
 
+Autoscaling:
+
 
 
 # Inference Worker:
