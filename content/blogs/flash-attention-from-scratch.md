@@ -2,7 +2,6 @@
 ---
 title: "FlashAttention from Scratch: From Softmax to Blackwell"
 date: 2026-09-27
-draft: true
 tags: ["flash-attention", "gpu-kernels", "cuda", "cute-dsl", "llm-inference"]
 author: "Ryan H."
 description: "A guided tutorial through attention math, online softmax, GPU tiling, backward recomputation, FlashAttention 1–4, and recent low-precision research."
