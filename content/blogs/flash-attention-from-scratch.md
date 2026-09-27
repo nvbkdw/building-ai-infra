@@ -21,7 +21,7 @@ We will build that understanding one step at a time. First compute an attention 
 
 You need basic Python, matrix multiplication, exponentials, and sums to begin. GPU programming becomes necessary in Section 6; derivatives become necessary in Section 8. You can run the mathematical examples on a CPU with PyTorch. Keep the hardware experiments for a compatible GPU.
 
-The [companion learning plan]({{< relref "flashattention_kernel_learning_path.md" >}}) provides a weekly schedule, serving-framework exercises, and a larger benchmark matrix. This tutorial supplies the explanations and worked examples behind that schedule.
+Each stage pairs explanations and worked examples with a checkpoint or experiment. Use the progression below to decide what to study and implement next.
 
 | Stage | What you should be able to explain | What you produce |
 |---|---|---|
@@ -936,7 +936,7 @@ $$
 
 If $f=0.3$ and $s=2$, the model improves by about $1.18\times$. Measure $f$ for the workload; it changes with context, batching, and model architecture.
 
-**Capstone:** Produce one forward kernel you understand, a checked mathematical backward, and a report explaining one performance reversal. Then choose either Hopper/Blackwell pipeline work or serving integration from the companion plan. The final report should state the hypothesis, numerical contract, reproducible setup, measured result, and the shapes where the optimization loses.
+**Capstone:** Produce one forward kernel you understand, a checked mathematical backward, and a report explaining one performance reversal. Then extend the project with either Hopper/Blackwell pipeline work or serving integration. The final report should state the hypothesis, numerical contract, reproducible setup, measured result, and the shapes where the optimization loses.
 
 ### Validation status
 
