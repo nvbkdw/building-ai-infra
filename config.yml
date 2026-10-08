@@ -67,6 +67,8 @@ params:
 
       This blog collects my notes on building AI infrastructure — GPU kernels, distributed training, LLM inference, and ML platforms. Read more [about me](/about/) or browse my [projects](/projects/).
 
+      Want to chat about AI infrastructure? [Book a call with me](https://calendly.com/ai-infra-dev/intro-call).
+
   socialIcons:
     - name: github
       title: GitHub
